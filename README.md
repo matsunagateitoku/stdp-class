@@ -3,11 +3,18 @@
 
 | Section          |         Discription                                | Colab link    |
 |-------------------|----------------------------------------------|------|
-| **Module Introduction: Identify Keywords and Keyphrases From Text**   | Identify Keywords and Keyphrases From Text    |                [![Open in Google Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/matsunagateitoku/Portfolio/blob/main/notebooks/GS.ipynb)                     |
+| **Module Introduction: Identify Keywords and Keyphrases From Text**   | Identify Keywords and Keyphrases From Text    |                                  |
+| **Introduction to Text Summarization**   | Identify Keywords and Keyphrases From Text    |                                  |
+| **Overview of Unsupervised Learning**   | Identify Keywords and Keyphrases From Text    |                                  |
+| **Module Introduction: Identify Keywords and Keyphrases From Text**   | Identify Keywords and Keyphrases From Text    |                                  |
 | **NBA Over/Unders Bets Project**     | Using the NBA's API to track team win totals  |[![Open in Google Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/matsunagateitoku/Portfolio/blob/main/notebooks/NBA_OU.ipynb)  
 
 
 
+Review Text Summarization
+Identify Collocations
+The Importance of Collocation
+Practice Identifying Collocations
 
 
 
@@ -17,13 +24,8 @@
 | **NBA Over/Unders Bets Project**     | Using the NBA's API to track team win totals  |[![Open in Google Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/matsunagateitoku/Portfolio/blob/main/notebooks/NBA_OU.ipynb)  
 
 
-Module Introduction: Identify Keywords and Keyphrases From Text
-Introduction to Text Summarization
-Overview of Unsupervised Learning
-Review Text Summarization
-Identify Collocations
-The Importance of Collocation
-Practice Identifying Collocations
+
+
 Keyword Extraction Methods
 Keyword Extraction With RAKE
 Determine Relative Importance With RAKE
