@@ -13,11 +13,10 @@
 | **Identify Collocations**   | Identify Keywords and Keyphrases From Text    |                                  |
 | **Review Text Summarization**   | Identify Keywords and Keyphrases From Text    |                                  |
 | **Practice Identifying Collocations**     | Using the NBA's API to track team win totals  |[![Open in Google Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/Practice_Identifying_Collocations.ipynb) 
-
-Keyword Extraction Methods
-Keyword Extraction With RAKE
-Determine Relative Importance With RAKE
-Practice Extracting Keywords With RAKE
+|Keyword Extraction Methods||
+|Keyword Extraction With RAKE||
+|Determine Relative Importance With RAKE||
+|Practice Extracting Keywords With RAKE||
 Keyword Extraction With TextRank
 Implement the TextRank Algorithm for Keyword Extraction
 Practice Extracting Keywords With TextRank
