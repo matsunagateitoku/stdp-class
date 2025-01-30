@@ -66,6 +66,7 @@ Course Transcript
 
 
 # Class 5: Clustering Documents With Unsupervised Machine Learning
+
 ## Section 1: Use Metrics To Determine Text Similarity
 | Lesson          |         Discription                                | Colab link    |
 |-------------------|----------------------------------------------|------|
@@ -74,47 +75,25 @@ Course Transcript
 |**Compare Texts Using Similarity Metrics**|1 how to calculate **Jaccard similarity** and use a correlation function to compare two words. 2 practice applying Jaccard similarity to both characters and words.|
 |**Code: Practice Comparing Texts Using Similarity Metrics**|Binary comparison 2 Jaccard similarity 3. Correlation 4 using ord() to convert to ASCII |[![Open in Google Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/4.1.1.Practice_Comparing_Texts.ipynb) |
 |**Find Mismatches With Hamming Distance**||
+|**Practice Finding Mismatches With Hamming Distance**||
+|**Similarity Measures**||
+|**Comparing Sequences With Levenshtein Distance**||
+|**Compute Levenshtein Distance**||
+|**Practice Comparing Sequences With Levenshtein Distance**||
+|**Use Levenshtein Distance To Autocorrect Text**||
+|**Practice Using Levenshtein Distance To Autocorrect Text**||
+|**Review: Similarity and Distances Metrics**||
+|**Course Project, Part One — Using Metrics To Determine Text Similarity**||
+|**Module Wrap-up: Use Metrics To Determine Text Similarity**||
+
+## Section 1: Use Metrics To Determine Text Similarity
+| Lesson          |         Discription                                | Colab link    |
+|**Module Introduction: Perform Hierarchical Clustering on Sentence Embeddings To Group Similar Texts**||
+|**Embed Sentences Into Vectors**||
+|****||
 |****||
 
 
-
-|****||
-|||
-|||
-|||
-|||
-|||
-|||
-|||
-|||
-|||
-|||
-|||
-|||
-|||
-|||
-|||
-|||
-| **NBA Over/Unders Bets Project**     | Using the NBA's API to track team win totals  |[![Open in Google Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/matsunagateitoku/Portfolio/blob/main/notebooks/NBA_OU.ipynb)  
-
-
-
-
-
-
-
-Practice Finding Mismatches With Hamming Distance
-Similarity Measures
-Comparing Sequences With Levenshtein Distance
-Compute Levenshtein Distance
-Practice Comparing Sequences With Levenshtein Distance
-Use Levenshtein Distance To Autocorrect Text
-Practice Using Levenshtein Distance To Autocorrect Text
-Review: Similarity and Distances Metrics
-Course Project, Part One — Using Metrics To Determine Text Similarity
-Module Wrap-up: Use Metrics To Determine Text Similarity
-Module Introduction: Perform Hierarchical Clustering on Sentence Embeddings To Group Similar Texts
-Embed Sentences Into Vectors
 Practice Embedding Sentences Into Vectors
 Compute Similarity of Sentence Embeddings To Find Similar Movies
 Practice Computing Similarity of Sentence Embeddings To Find Similar Movies
