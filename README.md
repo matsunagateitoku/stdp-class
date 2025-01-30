@@ -3,10 +3,10 @@
 
 | Section          |         Discription                                | Colab link    |
 |-------------------|----------------------------------------------|------|
-| **Module Introduction: Identify Keywords and Keyphrases From Text**   | Identify Keywords and Keyphrases From Text    |                                  |
+| **Module Introduction: Identify Keywords and Keyphrases From Text**   | Identify Keywords and Keyphrases From Text    |                                  
 | **Introduction to Text Summarization**   | Identify Keywords and Keyphrases From Text    |                                  |
 | **Overview of Unsupervised Learning**   | Identify Keywords and Keyphrases From Text    |                                  |
-| **Module Introduction: Identify Keywords and Keyphrases From Text**   | Identify Keywords and Keyphrases From Text    |                                  |
+| **Module Introduction: Identify Keywords and Keyphrases From Text**   | Identify Keywords and Keyphrases From Text    |                                  
 | **Review Text Summarization**   | Identify Keywords and Keyphrases From Text    |                                  |
 | **Identify Collocations**   | Identify Keywords and Keyphrases From Text    |                                  |
 | **Review Text Summarization**   | Identify Keywords and Keyphrases From Text    |                                  |
