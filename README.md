@@ -70,10 +70,11 @@ Course Transcript
 | Lesson          |         Discription                                | Colab link    |
 |-------------------|----------------------------------------------|------|
 | **Module Intro**   | - become familiar with two major similarity measures: lexical and semantic similarity practice evaluating the similarity between words by computing the distance virus identification and spell-check problems using the Hamming and Levenshtein distance metrics    Measuring the similarity between words in this module will prepare you for the document categorization     |  |
-|**Vid: pare Texts Using Similarity Metrics**|exical similarity, which is based on syntax, structure, and content, is commonly used for autocomplete and spell check applications. Semantic similarity, by contrast, uses context to evaluate the similarity in meaning between words or documents.|
-|**Compare Texts Using Similarity Metrics**||
-
-
+|**Vid: pare Texts Using Similarity Metrics**|lexical similarity, which is based on syntax, structure, and content, is commonly used for autocomplete and spell check applications. Semantic similarity, by contrast, uses context to evaluate the similarity in meaning between words or documents.|
+|**Compare Texts Using Similarity Metrics**|1 how to calculate **Jaccard similarity** and use a correlation function to compare two words. 2 practice applying Jaccard similarity to both characters and words.|
+|**Practice Comparing Texts Using Similarity Metrics**||
+|****||
+|****||
 
 
 
@@ -99,7 +100,7 @@ Course Transcript
 
 
 
-Compare Texts Using Similarity Metrics
+
 Practice Comparing Texts Using Similarity Metrics
 Find Mismatches With Hamming Distance
 Practice Finding Mismatches With Hamming Distance
