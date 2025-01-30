@@ -14,20 +14,6 @@
 | **Review Text Summarization**   | Identify Keywords and Keyphrases From Text    |                                  |
 | **Practice Identifying Collocations**     | Using the NBA's API to track team win totals  |[![Open in Google Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/Practice_Identifying_Collocations.ipynb) 
 
-(https://colab.research.google.com/github/matsunagateitoku/Portfolio/blob/main/notebooks/VISTA%20Vision.ipynb)  |
-
-
-
-
-
-| Notebook          |         Discription                                | Colab link    |
-|-------------------|----------------------------------------------|------|
-| **Great Schools**   | Leveraging the Great School's API to compare local schools      |                [![Open in Google Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/matsunagateitoku/Portfolio/blob/main/notebooks/GS.ipynb)                     |
-| **NBA Over/Unders Bets Project**     | Using the NBA's API to track team win totals  |[![Open in Google Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/matsunagateitoku/Portfolio/blob/main/notebooks/NBA_OU.ipynb)  
-
-
-
-
 Keyword Extraction Methods
 Keyword Extraction With RAKE
 Determine Relative Importance With RAKE
@@ -76,4 +62,73 @@ Thank You and Farewell
 Stay Connected
 Glossary
 Project Forum
+Course Transcript
+
+
+
+# Class 5: Clustering Documents With Unsupervised Machine Learning
+## Section 1: 
+| Notebook          |         Discription                                | Colab link    |
+|-------------------|----------------------------------------------|------|
+| **Great Schools**   | Leveraging the Great School's API to compare local schools      |                [![Open in Google Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/matsunagateitoku/Portfolio/blob/main/notebooks/GS.ipynb)                     |
+| **NBA Over/Unders Bets Project**     | Using the NBA's API to track team win totals  |[![Open in Google Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/matsunagateitoku/Portfolio/blob/main/notebooks/NBA_OU.ipynb)  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Module Introduction: Use Metrics To Determine Text Similarity
+Compare Texts Using Similarity Metrics
+Practice Comparing Texts Using Similarity Metrics
+Find Mismatches With Hamming Distance
+Practice Finding Mismatches With Hamming Distance
+Similarity Measures
+Comparing Sequences With Levenshtein Distance
+Compute Levenshtein Distance
+Practice Comparing Sequences With Levenshtein Distance
+Use Levenshtein Distance To Autocorrect Text
+Practice Using Levenshtein Distance To Autocorrect Text
+Review: Similarity and Distances Metrics
+Course Project, Part One — Using Metrics To Determine Text Similarity
+Module Wrap-up: Use Metrics To Determine Text Similarity
+Module Introduction: Perform Hierarchical Clustering on Sentence Embeddings To Group Similar Texts
+Embed Sentences Into Vectors
+Practice Embedding Sentences Into Vectors
+Compute Similarity of Sentence Embeddings To Find Similar Movies
+Practice Computing Similarity of Sentence Embeddings To Find Similar Movies
+Methods for Clustering
+Hierarchical Clustering of Movies Based on Their Descriptions
+Practice Hierarchical Clustering of Movies Based on Their Descriptions
+The Anatomy of a Dendrogram
+Interpreting a Dendrogram
+Build Dendrograms Using Different Linkages
+Practice Building Dendrograms Using Different Linkages
+Identify Linkages in Dendrograms
+Measure Clustering Performance
+Practice Measuring Clustering Performance
+Course Project, Part Two — Performing Hierarchical Clustering on Sentence Embeddings To Group Similar Texts
+Module Wrap-up: Perform Hierarchical Clustering on Sentence Embeddings To Group Similar Texts
+Module Introduction: Perform K-Means Clustering on Sentence Embeddings To Group Similar Texts
+Calculate Centroids and Medoids To Find a Representative Data Point
+Practice Calculating Centroids and Medoids To Find a Representative Data Point
+Compute the Medoid To Find a Representative Movie
+Practice Computing the Medoid To Find a Representative Movie
+Clustering Movies With K-Means and Evaluating Performance
+Practice Clustering Movies With K-Means and Evaluating Performance
+Hierarchical and K-Means Clustering
+Course Project, Part Three — Perform K-Means Clustering on Sentence Embeddings To Group Similar Texts
+Module Wrap-up: Perform K-Means Clustering on Sentence Embeddings To Group Similar Texts
+Course Exit Survey
+Thank You and Farewell
+Stay Connected
+Glossary
 Course Transcript
