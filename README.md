@@ -10,7 +10,9 @@
 | **Review Text Summarization**   | Identify Keywords and Keyphrases From Text    |                                  |
 | **Identify Collocations**   | Identify Keywords and Keyphrases From Text    |                                  |
 | **Review Text Summarization**   | Identify Keywords and Keyphrases From Text    |                                  |
-| **Practice Identifying Collocations**     | Using the NBA's API to track team win totals  |[![Open in Google Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/Practice Identifying Collocations.ipynb)  |
+| **Practice Identifying Collocations**     | Using the NBA's API to track team win totals  |[![Open in Google Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/Practice Identifying Collocations.ipynb) 
+
+(https://colab.research.google.com/github/matsunagateitoku/Portfolio/blob/main/notebooks/VISTA%20Vision.ipynb)  |
 
 
 
