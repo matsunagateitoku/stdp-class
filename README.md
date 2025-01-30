@@ -7,14 +7,13 @@
 | **Introduction to Text Summarization**   | Identify Keywords and Keyphrases From Text    |                                  |
 | **Overview of Unsupervised Learning**   | Identify Keywords and Keyphrases From Text    |                                  |
 | **Module Introduction: Identify Keywords and Keyphrases From Text**   | Identify Keywords and Keyphrases From Text    |                                  |
-| **NBA Over/Unders Bets Project**     | Using the NBA's API to track team win totals  |[![Open in Google Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/matsunagateitoku/Portfolio/blob/main/notebooks/NBA_OU.ipynb)  
+| **Review Text Summarization**   | Identify Keywords and Keyphrases From Text    |                                  |
+| **Identify Collocations**   | Identify Keywords and Keyphrases From Text    |                                  |
+| **Review Text Summarization**   | Identify Keywords and Keyphrases From Text    |                                  |
+| **Practice Identifying Collocations**     | Using the NBA's API to track team win totals  |[![Open in Google Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/matsunagateitoku/Portfolio/blob/main/notebooks/NBA_OU.ipynb)  
 
 
 
-Review Text Summarization
-Identify Collocations
-The Importance of Collocation
-Practice Identifying Collocations
 
 
 
