@@ -88,6 +88,7 @@ Course Transcript
 
 ## Section 1: Use Metrics To Determine Text Similarity
 | Lesson          |         Discription                                | Colab link    |
+|-------------------|----------------------------------------------|------|
 |**Module Introduction: Perform Hierarchical Clustering on Sentence Embeddings To Group Similar Texts**||
 |**Embed Sentences Into Vectors**||
 |****||
