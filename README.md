@@ -69,8 +69,7 @@ Course Transcript
 ## Section 1: Use Metrics To Determine Text Similarity
 | Lesson          |         Discription                                | Colab link    |
 |-------------------|----------------------------------------------|------|
-| **Module Introduction: Use Metrics To Determine Text Similarity**   | - become familiar with two major similarity measures: lexical and semantic similarity 
-                                                                        - practice evaluating the similarity between words by computing the distance 
+| **Module Introduction: Use Metrics To Determine Text Similarity**   | - become familiar with two major similarity measures: lexical and semantic similarity - practice evaluating the similarity between words by computing the distance 
                                                                         - virus identification and spell-check problems using the Hamming and Levenshtein distance metrics
                                                                         - Measuring the similarity between words in this module will prepare you for the document categorization   |                                 |
 |**Compare Texts Using Similarity Metrics**||
