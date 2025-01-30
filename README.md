@@ -1,7 +1,9 @@
 
-**Class 4: Topic Modeling With Unsupervised Machine Learning**
+# Class 4: Topic Modeling With Unsupervised Machine Learning
 
-| Section          |         Discription                                | Colab link    |
+## Section 1: 
+
+| Lesson          |         Discription                                | Colab link    |
 |-------------------|----------------------------------------------|------|
 | **Module Introduction: Identify Keywords and Keyphrases From Text**   | Identify Keywords and Keyphrases From Text    |                                  
 | **Introduction to Text Summarization**   | Identify Keywords and Keyphrases From Text    |                                  |
