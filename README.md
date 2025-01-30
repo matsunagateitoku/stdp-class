@@ -66,26 +66,33 @@ Course Transcript
 
 
 # Class 5: Clustering Documents With Unsupervised Machine Learning
-## Section 1: 
-| Notebook          |         Discription                                | Colab link    |
+## Section 1: Use Metrics To Determine Text Similarity
+| Lesson          |         Discription                                | Colab link    |
 |-------------------|----------------------------------------------|------|
-| **Great Schools**   | Leveraging the Great School's API to compare local schools      |                [![Open in Google Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/matsunagateitoku/Portfolio/blob/main/notebooks/GS.ipynb)                     |
+| **Module Introduction: Use Metrics To Determine Text Similarity**   |    |                                 |
+|**Compare Texts Using Similarity Metrics**||
+|****||
+|||
+|||
+|||
+|||
+|||
+|||
+|||
+|||
+|||
+|||
+|||
+|||
+|||
+|||
+|||
+|||
 | **NBA Over/Unders Bets Project**     | Using the NBA's API to track team win totals  |[![Open in Google Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/matsunagateitoku/Portfolio/blob/main/notebooks/NBA_OU.ipynb)  
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-Module Introduction: Use Metrics To Determine Text Similarity
 Compare Texts Using Similarity Metrics
 Practice Comparing Texts Using Similarity Metrics
 Find Mismatches With Hamming Distance
