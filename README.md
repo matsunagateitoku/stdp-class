@@ -88,6 +88,12 @@ Course Transcript
 |**Comparing Sequences With Levenshtein Distance**||
 |**Compute Levenshtein Distance**||
 |**Practice Comparing Sequences With Levenshtein Distance**||
+
+[![Open in Google Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/Practice_Finding_Mismatches.ipynb)|
+
+
+
+|
 |**Use Levenshtein Distance To Autocorrect Text**||
 |**Practice Using Levenshtein Distance To Autocorrect Text**||
 |**Review: Similarity and Distances Metrics**||
