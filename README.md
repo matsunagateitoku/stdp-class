@@ -92,7 +92,7 @@ Course Transcript
 |**Course Project, Part One — Using Metrics To Determine Text Similarity**||
 |**Module Wrap-up: Use Metrics To Determine Text Similarity**||
 
-## Section 1: Use Metrics To Determine Text Similarity
+## Section 2: Use Metrics To Determine Text Similarity
 | Lesson          |         Discription                                | Colab link    |
 |-------------------|----------------------------------------------|------|
 |**Module Introduction: Perform Hierarchical Clustering on Sentence Embeddings To Group Similar Texts**||
