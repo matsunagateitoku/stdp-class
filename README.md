@@ -82,7 +82,7 @@ Course Transcript
 |**Vid: pare Texts Using Similarity Metrics**|lexical similarity, which is based on syntax, structure, and content, is commonly used for autocomplete and spell check applications. Semantic similarity, by contrast, uses context to evaluate the similarity in meaning between words or documents.|
 |**Compare Texts Using Similarity Metrics**|1 how to calculate **Jaccard similarity** and use a correlation function to compare two words. 2 practice applying Jaccard similarity to both characters and words.|
 |**Code: Practice Comparing Texts Using Similarity Metrics**|Binary comparison 2 Jaccard similarity 3. Correlation 4 using ord() to convert to ASCII |[![Open in Google Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/4.1.1.Practice_Comparing_Texts.ipynb) |
-|**Find Mismatches With Hamming Distance**||
+|**Find Mismatches With Hamming Distance**|**Hamming distance** is another way to measure the distance between words, when working with two strings of equal length|
 |**Practice Finding Mismatches With Hamming Distance**||
 |**Similarity Measures**||
 |**Comparing Sequences With Levenshtein Distance**||
