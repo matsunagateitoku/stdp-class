@@ -17,14 +17,20 @@
 |Keyword Extraction With RAKE||
 |Determine Relative Importance With RAKE||
 |Practice Extracting Keywords With RAKE||
-Keyword Extraction With TextRank
-Implement the TextRank Algorithm for Keyword Extraction
-Practice Extracting Keywords With TextRank
-Interpreting Graph Outputs From TextRank
-Measuring Keyword Quality
-Practice Measuring Keyword Quality
-Course Project, Part One — Identifying Keywords and Keyphrases From Text
-Module Wrap-up: Identify Keywords and Keyphrases From Text
+|**Keyword Extraction With TextRank**||
+|**Implement the TextRank Algorithm for Keyword Extraction**||
+|**Practice Extracting Keywords With TextRank**||
+|**Interpreting Graph Outputs From TextRank**||
+|**Measuring Keyword Quality**||
+|**Practice Measuring Keyword Quality**||
+|**Course Project, Part One — Identifying Keywords and Keyphrases From Text**||
+|**Module Wrap-up: Identify Keywords and Keyphrases From Text**||
+
+
+## Section 2: 
+| Lesson          |         Discription                                | Colab link    |
+|-------------------|----------------------------------------------|------|
+
 Module Introduction: Identify Topics From Documents
 Introduction to Topic Modeling
 Basic Matrix Operations
