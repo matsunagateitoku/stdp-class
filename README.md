@@ -13,10 +13,10 @@
 | **Identify Collocations**   | Identify Keywords and Keyphrases From Text    |                                  |
 | **Review Text Summarization**   | Identify Keywords and Keyphrases From Text    |                                  |
 | **Practice Identifying Collocations**     | Using the NBA's API to track team win totals  |[![Open in Google Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/4.1.1.Practice_Comparing_Texts.ipynb) 
-|Keyword Extraction Methods||
-|Keyword Extraction With RAKE||
-|Determine Relative Importance With RAKE||
-|Practice Extracting Keywords With RAKE||
+|**Keyword Extraction Methods**||
+|**Keyword Extraction With RAKE**||
+|**Determine Relative Importance With RAKE**||
+|**Practice Extracting Keywords With RAKE**||
 |**Keyword Extraction With TextRank**||
 |**Implement the TextRank Algorithm for Keyword Extraction**||
 |**Practice Extracting Keywords With TextRank**||
@@ -51,6 +51,10 @@ Latent Dirichlet Allocation (LDA)
 Practice Identifying Topics Using LDA
 Course Project, Part Two — Identifying Topics From Documents
 Module Wrap-up: Identify Topics From Documents
+
+## Section 3: 
+| Lesson          |         Discription                                | Colab link    |
+|-------------------|----------------------------------------------|------|
 Module Introduction: Extract Summary Sentences From Documents
 Introduction to Document Summarization
 Practice Extracting a Summary With NLTK
@@ -62,9 +66,7 @@ Summary Extraction With PageRank
 Practice Extracting a Summary With PageRank
 Course Project, Part Three — Extracting Summary Sentences From Documents
 Module Wrap-up: Extract Summary Sentences From Documents
-Course Exit Survey
-Thank You and Farewell
-Stay Connected
+
 Glossary
 Project Forum
 Course Transcript
