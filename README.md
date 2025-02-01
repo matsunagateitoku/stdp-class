@@ -105,22 +105,29 @@ Course Transcript
 |**Methods for Clustering**||
 |**Hierarchical Clustering of Movies Based on Their Descriptions**||
 |**Practice Hierarchical Clustering of Movies Based on Their Descriptions**||
+|**The Anatomy of a Dendrogram**||
+|**Interpreting a Dendrogram**||
+|**Build Dendrograms Using Different Linkages**||
+|**Practice Building Dendrograms Using Different Linkages**||
+|**Identify Linkages in Dendrograms**||
+|**Measure Clustering Performance**||
+|**Practice Measuring Clustering Performance**||
+|**Course Project, Part Two — Performing Hierarchical Clustering on Sentence Embeddings To Group Similar Texts**||
+|**Module Wrap-up: Perform Hierarchical Clustering on Sentence Embeddings To Group Similar Texts**||
+
+## Section 3: Perform K-Means Clustering on Sentence Embeddings To Group Similar Texts
+| Lesson          |         Discription                                | Colab link    |
+|-------------------|----------------------------------------------|------|
+|**Module Introduction: Perform K-Means Clustering on Sentence Embeddings To Group Similar Texts**||
 |****||
 |****||
 |****||
 |****||
 
 
-The Anatomy of a Dendrogram
-Interpreting a Dendrogram
-Build Dendrograms Using Different Linkages
-Practice Building Dendrograms Using Different Linkages
-Identify Linkages in Dendrograms
-Measure Clustering Performance
-Practice Measuring Clustering Performance
-Course Project, Part Two — Performing Hierarchical Clustering on Sentence Embeddings To Group Similar Texts
-Module Wrap-up: Perform Hierarchical Clustering on Sentence Embeddings To Group Similar Texts
-Module Introduction: Perform K-Means Clustering on Sentence Embeddings To Group Similar Texts
+
+
+
 Calculate Centroids and Medoids To Find a Representative Data Point
 Practice Calculating Centroids and Medoids To Find a Representative Data Point
 Compute the Medoid To Find a Representative Movie
