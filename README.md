@@ -119,26 +119,15 @@ Course Transcript
 | Lesson          |         Discription                                | Colab link    |
 |-------------------|----------------------------------------------|------|
 |**Module Introduction: Perform K-Means Clustering on Sentence Embeddings To Group Similar Texts**||
-|****||
-|****||
-|****||
-|****||
+|**Calculate Centroids and Medoids To Find a Representative Data Point**||
+|**Practice Calculating Centroids and Medoids To Find a Representative Data Point**||
+|**Compute the Medoid To Find a Representative Movie**||
+|**Practice Computing the Medoid To Find a Representative Movie**||
+|**Clustering Movies With K-Means and Evaluating Performance**||
+|**Practice Clustering Movies With K-Means and Evaluating Performance**||
+|**Hierarchical and K-Means Clustering**||
+|**Course Project, Part Three — Perform K-Means Clustering on Sentence Embeddings To Group Similar Texts**||
+|**Module Wrap-up: Perform K-Means Clustering on Sentence Embeddings To Group Similar Texts**||
+|**Glossary**||
+|**Course Transcript**||
 
-
-
-
-
-Calculate Centroids and Medoids To Find a Representative Data Point
-Practice Calculating Centroids and Medoids To Find a Representative Data Point
-Compute the Medoid To Find a Representative Movie
-Practice Computing the Medoid To Find a Representative Movie
-Clustering Movies With K-Means and Evaluating Performance
-Practice Clustering Movies With K-Means and Evaluating Performance
-Hierarchical and K-Means Clustering
-Course Project, Part Three — Perform K-Means Clustering on Sentence Embeddings To Group Similar Texts
-Module Wrap-up: Perform K-Means Clustering on Sentence Embeddings To Group Similar Texts
-Course Exit Survey
-Thank You and Farewell
-Stay Connected
-Glossary
-Course Transcript
