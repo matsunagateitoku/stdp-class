@@ -99,16 +99,18 @@ Course Transcript
 |-------------------|----------------------------------------------|------|
 |**Module Introduction: Perform Hierarchical Clustering on Sentence Embeddings To Group Similar Texts**||
 |**Embed Sentences Into Vectors**||
+|**Practice Embedding Sentences Into Vectors**||
+|**Compute Similarity of Sentence Embeddings To Find Similar Movies**||
+|**Practice Computing Similarity of Sentence Embeddings To Find Similar Movies**||
+|**Methods for Clustering**||
+|**Hierarchical Clustering of Movies Based on Their Descriptions**||
+|**Practice Hierarchical Clustering of Movies Based on Their Descriptions**||
+|****||
+|****||
 |****||
 |****||
 
 
-Practice Embedding Sentences Into Vectors
-Compute Similarity of Sentence Embeddings To Find Similar Movies
-Practice Computing Similarity of Sentence Embeddings To Find Similar Movies
-Methods for Clustering
-Hierarchical Clustering of Movies Based on Their Descriptions
-Practice Hierarchical Clustering of Movies Based on Their Descriptions
 The Anatomy of a Dendrogram
 Interpreting a Dendrogram
 Build Dendrograms Using Different Linkages
