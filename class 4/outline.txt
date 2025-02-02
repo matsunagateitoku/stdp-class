@@ -1,1 +1,51 @@
-
+Dashboard
+Dashboard
+Courses
+Keynotes
+Calendar
+Inbox
+Portal
+Account
+History
+Help
+Student Lounge
+Datasets Disclaimer
+Using Python and Jupyter Notebooks in This Course
+Writing and Navigating Jupyter Notebooks
+Codio AI Coach Test Pilot Overview
+Module Introduction: Identify Keywords and Keyphrases From Text
+Introduction to Text Summarization
+Overview of Unsupervised Learning
+Review Text Summarization
+Identify Collocations
+The Importance of Collocation
+Practice Identifying Collocations
+Keyword Extraction Methods
+Keyword Extraction With RAKE
+Determine Relative Importance With RAKE
+Practice Extracting Keywords With RAKE
+Keyword Extraction With TextRank
+Implement the TextRank Algorithm for Keyword Extraction
+Practice Extracting Keywords With TextRank
+Interpreting Graph Outputs From TextRank
+Measuring Keyword Quality
+Practice Measuring Keyword Quality
+Course Project, Part One — Identifying Keywords and Keyphrases From Text
+Module Wrap-up: Identify Keywords and Keyphrases From Text
+Module Introduction: Extract Summary Sentences From Documents
+Introduction to Document Summarization
+Practice Extracting a Summary With NLTK
+Approaches to Summary Extraction
+Review Summary Extraction
+Summary Extraction With LSA
+Practice Extracting a Summary With LSA
+Summary Extraction With PageRank
+Practice Extracting a Summary With PageRank
+Course Project, Part Three — Extracting Summary Sentences From Documents
+Module Wrap-up: Extract Summary Sentences From Documents
+Course Exit Survey
+Thank You and Farewell
+Stay Connected
+Glossary
+Project Forum
+Course Transcript
