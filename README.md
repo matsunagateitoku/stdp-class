@@ -5,10 +5,10 @@
 
 | Lesson          |         Discription                                | Colab link    |
 |-------------------|----------------------------------------------|------|
-| **Module Introduction: Identify Keywords and Keyphrases From Text**   | Identify Keywords and Keyphrases From Text    |                                  
+| **Module Introduction: Identify Keywords and Keyphrases From Text**   | Identify Keywords and Keyphrases From Text    |                                 
 | **Introduction to Text Summarization**   | Identify Keywords and Keyphrases From Text    |                                  |
 | **Overview of Unsupervised Learning**   | Identify Keywords and Keyphrases From Text    |                                  |
-| **Module Introduction: Identify Keywords and Keyphrases From Text**   | Identify Keywords and Keyphrases From Text    |                                  
+| **Module Introduction: Identify Keywords and Keyphrases From Text**   | Identify Keywords and Keyphrases From Text    |                                 
 | **Review Text Summarization**   | Identify Keywords and Keyphrases From Text    |                                  |
 | **Identify Collocations**   | Identify Keywords and Keyphrases From Text    |                                  |
 | **Review Text Summarization**   | Identify Keywords and Keyphrases From Text    |                                  |
@@ -55,7 +55,7 @@ Module Wrap-up: Identify Topics From Documents
 ## Section 3: 
 | Lesson          |         Discription                                | Colab link    |
 |-------------------|----------------------------------------------|------|
-|** Module Introduction: Extract Summary Sentences From Documents** ||
+|**Module Introduction: Extract Summary Sentences From Documents** ||
 |** ** ||
 
 
