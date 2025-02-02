@@ -56,7 +56,7 @@
 |-------------------|----------------------------------------------|------|
 |**Module Introduction: Extract Summary Sentences From Documents** ||
 |**Introduction to Document Summarization** ||
-|**Practice Extracting a Summary With NLTK** ||[![Open in Google Colab](https://colab.research.google.com/assets/colab-badge.svg)(https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/class_4/Practice_Extracting_a_Summary.ipynb) |
+|**Practice Extracting a Summary With NLTK** || [![Open in Google Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/class_4/Practice_Extracting_a_Summary.ipynb) |
 |**Approaches to Summary Extraction** ||
 |**Review Summary Extraction** ||
 |**Summary Extraction With LSA** ||
