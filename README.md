@@ -55,6 +55,10 @@ Module Wrap-up: Identify Topics From Documents
 ## Section 3: 
 | Lesson          |         Discription                                | Colab link    |
 |-------------------|----------------------------------------------|------|
+|** Module Introduction: Extract Summary Sentences From Documents** ||
+|** ** ||
+
+
 Module Introduction: Extract Summary Sentences From Documents
 Introduction to Document Summarization
 Practice Extracting a Summary With NLTK
