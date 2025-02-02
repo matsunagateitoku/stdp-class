@@ -30,27 +30,26 @@
 ## Section 2: 
 | Lesson          |         Discription                                | Colab link    |
 |-------------------|----------------------------------------------|------|
-
-Module Introduction: Identify Topics From Documents
-Introduction to Topic Modeling
-Basic Matrix Operations
-Practice With Basic Matrix Operations
-Matrix Decomposition
-Practice Matrix Decomposition
-Decompose a Matrix Using Singular Value Decomposition (SVD)
-Practice Decomposing a Matrix Using SVD
-Approximate a Matrix With Truncated SVD
-Dimensionality Reduction
-SVD and Truncated SVD
-Practice Approximating a Matrix With Truncated SVD
-Identify Topics Using Latent Semantic Analysis (LSA)
-Latent Semantic Analysis (LSA)
-Practice Identifying Topics Using LSA
-Identify Topics Using Latent Dirichlet Allocation (LDA)
-Latent Dirichlet Allocation (LDA)
-Practice Identifying Topics Using LDA
-Course Project, Part Two — Identifying Topics From Documents
-Module Wrap-up: Identify Topics From Documents
+|**Module Introduction: Identify Topics From Documents** ||
+|**Introduction to Topic Modeling** ||
+|**Basic Matrix Operations** ||
+|**Practice With Basic Matrix Operations** ||
+|**Matrix Decomposition** ||
+|**Practice Matrix Decomposition** ||
+|**Decompose a Matrix Using Singular Value Decomposition (SVD)** ||
+|**Practice Decomposing a Matrix Using SVD**||
+|**Approximate a Matrix With Truncated SVD**||
+|**Dimensionality Reduction**||
+|**SVD and Truncated SVD**||
+|**Practice Approximating a Matrix With Truncated SVD**||
+|**Identify Topics Using Latent Semantic Analysis (LSA)**||
+|**Latent Semantic Analysis (LSA)**||
+|**Practice Identifying Topics Using LSA**||
+|**Identify Topics Using Latent Dirichlet Allocation (LDA)**||
+|**Latent Dirichlet Allocation (LDA)**||
+|**Practice Identifying Topics Using LDA**||
+|**Course Project, Part Two — Identifying Topics From Documents**||
+|**Module Wrap-up: Identify Topics From Documents**||
 
 ## Section 3: 
 | Lesson          |         Discription                                | Colab link    |
