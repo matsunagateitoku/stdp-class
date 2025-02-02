@@ -55,26 +55,18 @@
 | Lesson          |         Discription                                | Colab link    |
 |-------------------|----------------------------------------------|------|
 |**Module Introduction: Extract Summary Sentences From Documents** ||
-|** ** ||
-
-
-Module Introduction: Extract Summary Sentences From Documents
-Introduction to Document Summarization
-Practice Extracting a Summary With NLTK
-Approaches to Summary Extraction
-Review Summary Extraction
-Summary Extraction With LSA
-Practice Extracting a Summary With LSA
-Summary Extraction With PageRank
-Practice Extracting a Summary With PageRank
-Course Project, Part Three — Extracting Summary Sentences From Documents
-Module Wrap-up: Extract Summary Sentences From Documents
-
-Glossary
-Project Forum
-Course Transcript
-
-
+|**Introduction to Document Summarization** ||
+|**Practice Extracting a Summary With NLTK** ||
+|**Approaches to Summary Extraction** ||
+|**Review Summary Extraction** ||
+|**Summary Extraction With LSA** ||
+|**Practice Extracting a Summary With LSA** ||
+|**Summary Extraction With PageRank** ||
+|**Practice Extracting a Summary With PageRank** ||
+|**Course Project, Part Three — Extracting Summary Sentences From Documents** ||
+|**Module Wrap-up: Extract Summary Sentences From Documents** ||
+|**Glossary** ||
+|**Course Transcript** ||
 
 # Class 5: Clustering Documents With Unsupervised Machine Learning
 
