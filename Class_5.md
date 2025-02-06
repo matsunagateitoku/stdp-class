@@ -12,8 +12,8 @@
 |**Similarity Measures**|Quiz|
 |**Comparing Sequences With Levenshtein Distance**|Levenshtein distance, counts the number of alterations needed to convert one string into another string using addition, deletion, or substitution| video
 |**Comparing Sequences With Levenshtein Distance**|Levenshtein distance, counts the number of alterations needed to convert one string into another string using addition, deletion, or substitution| video
-|**Compute Levenshtein Distance**| text explaintion of |
-|**Practice Comparing Sequences With Levenshtein Distance**||[![Open in Google Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/Practice_Comparing_Sequences.ipynb)|
+|**Compute Levenshtein Distance**| text explaintion of Levenshtein|
+|**Practice Comparing Sequences With Levenshtein Distance**|compute Levenshtein distance using dynamic programming and how to model the results in a 2D matrix|[![Open in Google Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/Practice_Comparing_Sequences.ipynb)|
 |**Use Levenshtein Distance To Autocorrect Text**||
 |**Practice Using Levenshtein Distance To Autocorrect Text**||
 |**Review: Similarity and Distances Metrics**||[PDF](class_5/cis575_tool-similarity-and-distance-metrics.pdf).
