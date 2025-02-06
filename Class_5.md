@@ -54,7 +54,7 @@
 |**Hierarchical and K-Means Clustering**||
 |**Course Project, Part Three — Perform K-Means Clustering on Sentence Embeddings To Group Similar Texts**||
 |**Module Wrap-up: Perform K-Means Clustering on Sentence Embeddings To Group Similar Texts**||
-|**Glossary**||
+|**Glossary**||  [text](https://duckduckgo.com)
 |**Course Transcript**||
 
 
