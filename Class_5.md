@@ -39,7 +39,9 @@
 |**Measure Clustering Performance**||
 |**Practice Measuring Clustering Performance**||
 |**Course Project, Part Two — Performing Hierarchical Clustering on Sentence Embeddings To Group Similar Texts**||
-|**Module Wrap-up: Perform Hierarchical Clustering on Sentence Embeddings To Group Similar Texts**||
+|**Module Wrap-up**|Perform Hierarchical Clustering on Sentence Embeddings To Group Similar Texts|In this module, you practiced converting documents to numeric vectors using SBERT, which is an important first step before categorizing documents into categories with clustering. You then applied hierarchical clustering to a dataset of movies, categorizing movies into two clusters according to genre. Finally, you evaluated the performance of your clustering using dendrograms and three quantitative metrics: the accuracy score, the Rand index or adjusted Rand index (ARI), and the silhouette score.
+
+At the beginning of this module, you were introduced to two main clustering approaches. Now that you’ve practiced using hierarchical clustering to categorize your documents, you will move on to another approach: k-means clustering. 
 
 ## Section 3: Perform K-Means Clustering on Sentence Embeddings To Group Similar Texts
 | Lesson          |         Discription                                | Colab link    |
