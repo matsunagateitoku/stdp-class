@@ -10,7 +10,7 @@
 |**Find Mismatches With Hamming Distance**|**Hamming distance** is another way to measure the distance between words, when working with two strings of equal length number of substitutions needed to make two strings equal|
 |**Practice Finding Mismatches With Hamming Distance**|Hamming Distance=opposite of similarity. sequences of equal length, counts positions that corresponding characters are differen | [![Open in Google Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/Practice_Finding_Mismatches.ipynb)|
 |**Similarity Measures**|Quiz|
-|**Comparing Sequences With Levenshtein Distance**||
+|**Comparing Sequences With Levenshtein Distance**|Levenshtein distance, counts the number of alterations needed to convert one string into another string using addition, deletion, or substitution|
 |**Compute Levenshtein Distance**||
 |**Practice Comparing Sequences With Levenshtein Distance**||[![Open in Google Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/Practice_Comparing_Sequences.ipynb)|
 |**Use Levenshtein Distance To Autocorrect Text**||
