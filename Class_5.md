@@ -16,7 +16,13 @@
 |**Use Levenshtein Distance To Autocorrect Text**||
 |**Practice Using Levenshtein Distance To Autocorrect Text**||
 |**Review: Similarity and Distances Metrics**||
-|**Course Project, Part One — Using Metrics To Determine Text Similarity**||
+|**Course Project, Part One — Using Metrics To Determine Text Similarity**|1. computes Jaccard similarity 2. ompute Jaccard similarity scores for SsQry set and each presidential speech in NLTK 3. Hamming distance;; Marker(), which takes two same-length strings, query sQry and target sTgt, and computes returns a "marked" string sTgt where the characters matching to corresponding characters in sQry are replaced with _. 4 ankHD(), which takes two strings: query sQry and target sTgt, of varying lengths. Then, for each substring in sTgt with length equal to len(sQry), compute the Hamming distance and the corresponding marked string.
+
+
+
+
+
+|
 |**Module Wrap-up: Use Metrics To Determine Text Similarity**||
 
 ## Section 2: Use Metrics To Determine Text Similarity
