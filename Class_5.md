@@ -24,7 +24,9 @@
 | Lesson          |         Discription                                | Colab link    |
 |-------------------|----------------------------------------------|------|
 |**Module Introduction**|Perform Hierarchical Clustering on Sentence Embeddings To Group Similar Texts|In this module, you will be introduced to **clustering**, an unsupervised method you will use to categorize documents based on their similarities. However, before you can practice clustering techniques in code, you will first examine how to **represent documents as numerical vectors**. Then, you will practice using **hierarchical clustering** to categorize movies in a dataset according to genre. Finally, you will use **dendrograms, or tree diagrams**, to visually evaluate the quality of your clustering. You will also evaluate your clustering quality using several quantitative
-|**Embed Sentences Into Vectors**||
+|**Embed Sentences Into Vectors**|When representing and evaluating many sentences in code, one helpful tool is Sentence Bidirectional Encoder Representations from Transformers (SBERT), which encodes entire sentences or documents as numerical vectors. SBERT can be used for a variety of NLP tasks including language translation and meaningful sentence embeddings.
+
+Follow along with Professor Melnikov in this video, as he uses the sentence-transformers implementation of SBERT to encode 15 famous quotes. He then evaluates the quotes’ correlation coefficients and cosine similarities using a pre-trained model.|
 |**Practice Embedding Sentences Into Vectors**||
 |**Compute Similarity of Sentence Embeddings To Find Similar Movies**||
 |**Practice Computing Similarity of Sentence Embeddings To Find Similar Movies**||
