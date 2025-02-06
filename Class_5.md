@@ -55,6 +55,5 @@
 |**Course Project, Part Three — Perform K-Means Clustering on Sentence Embeddings To Group Similar Texts**||
 |**Module Wrap-up: Perform K-Means Clustering on Sentence Embeddings To Group Similar Texts**||
 |**Glossary**||  [text](https://duckduckgo.com)
-|**Course Transcript**||
-
+|**Course Transcript**|| [text](./class_5/CIS575_course_transcript.pdf)
 
