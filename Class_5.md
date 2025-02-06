@@ -23,7 +23,7 @@
 ## Section 2: Use Metrics To Determine Text Similarity
 | Lesson          |         Discription                                | Colab link    |
 |-------------------|----------------------------------------------|------|
-|**Module Introduction: Perform Hierarchical Clustering on Sentence Embeddings To Group Similar Texts**||
+|**Module Introduction**|Perform Hierarchical Clustering on Sentence Embeddings To Group Similar Texts|In this module, you will be introduced to clustering, an unsupervised method you will use to categorize documents based on their similarities. However, before you can practice clustering techniques in code, you will first examine how to represent documents as numerical vectors. Then, you will practice using hierarchical clustering to categorize movies in a dataset according to genre. Finally, you will use dendrograms, or tree diagrams, to visually evaluate the quality of your clustering. You will also evaluate your clustering quality using several quantitative
 |**Embed Sentences Into Vectors**||
 |**Practice Embedding Sentences Into Vectors**||
 |**Compute Similarity of Sentence Embeddings To Find Similar Movies**||
