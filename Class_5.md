@@ -15,7 +15,9 @@
 |**Practice Comparing Sequences With Levenshtein Distance**||[![Open in Google Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/Practice_Comparing_Sequences.ipynb)|
 |**Use Levenshtein Distance To Autocorrect Text**||
 |**Practice Using Levenshtein Distance To Autocorrect Text**||
-|**Review: Similarity and Distances Metrics**||class_5/cis575_tool-similarity-and-distance-metrics.pdf
+|**Review: Similarity and Distances Metrics**||[PDF](class_5/cis575_tool-similarity-and-distance-metrics.pdf).
+
+
 |**Course Project, Part One — Using Metrics To Determine Text Similarity**|1. computes Jaccard similarity 2. ompute Jaccard similarity scores for SsQry set and each presidential speech in NLTK 3. Hamming distance;; Marker(), which takes two same-length strings, query sQry and target sTgt, and computes returns a "marked" string sTgt where the characters matching to corresponding characters in sQry are replaced with _. 4 ankHD(), which takes two strings: query sQry and target sTgt, of varying lengths. Then, for each substring in sTgt with length equal to len(sQry), compute the Hamming distance and the corresponding marked string.
 
 
