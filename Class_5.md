@@ -38,7 +38,7 @@
 |**Identify Linkages in Dendrograms**||
 |**Measure Clustering Performance**||
 |**Practice Measuring Clustering Performance**||
-|**Course Project, Part Two — Performing Hierarchical Clustering on Sentence Embeddings To Group Similar Texts**|In Part Two of the course project, you will be encoding movie descriptions into numeric vectors in order to cluster them with various sets of parameters and determining the best set of parameters for hierarchical clustering using the silhouette score. The tasks you will perform are based on videos and coding activities in the current module, but may also rely on your preparation in Python and basic math.|
+|**Course Project, Part Two — Performing Hierarchical Clustering on Sentence Embeddings To Group Similar Texts**|encoding movie descriptions into numeric vectors in order to cluster them with various sets of parameters and determining the best set of parameters for hierarchical clustering using the silhouette score. |
 |**Module Wrap-up**|Perform Hierarchical Clustering on Sentence Embeddings To Group Similar Texts|practiced converting documents to numeric vectors using SBERT,  applied hierarchical clustering to a dataset of movies, categorizing movies into two clusters according to genre. evaluated the performance of your clustering using dendrograms and three quantitative metrics: the accuracy score, the Rand index or adjusted Rand index (ARI), and the silhouette score. At the beginning of this module, you were introduced to two main clustering approaches. Now that you’ve practiced using hierarchical clustering to categorize your documents, you will move on to another approach: k-means clustering. 
 
 ## Section 3: Perform K-Means Clustering on Sentence Embeddings To Group Similar Texts
