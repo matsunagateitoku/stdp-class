@@ -22,7 +22,7 @@
 
 ## Section 2: Use Metrics To Determine Text Similarity
 
-# Key Concepts:
+### Key Concepts:
 - Dendrogram
 
 | Lesson          |         Discription                                | Colab link    |
