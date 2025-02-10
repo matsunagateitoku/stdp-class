@@ -23,6 +23,7 @@
 ## Section 2: Use Metrics To Determine Text Similarity
 
 ### Key Concepts:
+-  Sentence Bidirectional Encoder Representations from Transformers (SBERT)
 - Dendrogram
 
 | Lesson          |         Discription                                | Colab link    |
