@@ -51,11 +51,11 @@
 |-------------------|----------------------------------------------|------|
 |**Module Introduction: Perform K-Means Clustering on Sentence Embeddings To Group Similar Texts**||
 |**Calculate Centroids and Medoids To Find a Representative Data Point**||
-|**Practice Calculating Centroids and Medoids To Find a Representative Data Point**||
+|**Practice Calculating Centroids and Medoids To Find a Representative Data Point**|| code 1
 |**Compute the Medoid To Find a Representative Movie**||
-|**Practice Computing the Medoid To Find a Representative Movie**||
+|**Practice Computing the Medoid To Find a Representative Movie**|| code 2
 |**Clustering Movies With K-Means and Evaluating Performance**||
-|**Practice Clustering Movies With K-Means and Evaluating Performance**||
+|**Practice Clustering Movies With K-Means and Evaluating Performance**|| code 3
 |**Hierarchical and K-Means Clustering**||
 |**Course Project, Part Three — Perform K-Means Clustering on Sentence Embeddings To Group Similar Texts**||
 |**Module Wrap-up: Perform K-Means Clustering on Sentence Embeddings To Group Similar Texts**||
