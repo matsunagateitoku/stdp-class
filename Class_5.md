@@ -21,6 +21,10 @@
 |**Module Wrap-up: Use Metrics To Determine Text Similarity**|In this module, you gained a familiarity with several approaches and metrics used to measure the distance between words and documents. You began by comparing two words using Jaccard similarity, and then applied the Levenshtein and Hamming distance metrics to more complex problems. Finally, you built functions computing Jaccard similarity and Hamming distance, which can be used to evaluate the similarity between speeches and rank viral samples. |
 
 ## Section 2: Use Metrics To Determine Text Similarity
+
+#Key Concepts:
+- Dendrogram
+
 | Lesson          |         Discription                                | Colab link    |
 |-------------------|----------------------------------------------|------|
 |**Module Introduction**|Perform Hierarchical Clustering on Sentence Embeddings To Group Similar Texts|In this module, you will be introduced to **clustering**, an unsupervised method you will use to categorize documents based on their similarities. However, before you can practice clustering techniques in code, you will first examine how to **represent documents as numerical vectors**. Then, you will practice using **hierarchical clustering** to categorize movies in a dataset according to genre. Finally, you will use **dendrograms, or tree diagrams**, to visually evaluate the quality of your clustering. You will also evaluate your clustering quality using several quantitative
