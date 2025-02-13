@@ -50,7 +50,8 @@
 ## Section 3: Perform K-Means Clustering on Sentence Embeddings To Group Similar Texts
 | Lesson          |         Discription                                | Colab link    |
 |-------------------|----------------------------------------------|------|
-|**Module Introduction: Perform K-Means Clustering on Sentence Embeddings To Group Similar Texts**||
+|**Module Introduction: Perform K-Means Clustering on Sentence Embeddings To Group Similar Texts**||explored hierarchical clustering and practiced embedding sentences as vectors using SBERT. use SBERT to represent texts as vectors. introduced to k-means clustering, which you will practice throughout the module. After using k-means clustering to categorize movies, you will evaluate the quality of your clusters using silhouette scores. 
+You will also encounter another type of problem in this module: identifying an item within a set that is representative of the set as a whole.
 |**Calculate Centroids and Medoids To Find a Representative Data Point**||
 |**Practice Calculating Centroids and Medoids To Find a Representative Data Point**|| code 1
 |**Compute the Medoid To Find a Representative Movie**||
