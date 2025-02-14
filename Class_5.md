@@ -59,7 +59,7 @@
 |**Practice Clustering Movies With K-Means and Evaluating Performance**|| code 3
 |**Hierarchical and K-Means Clustering**||
 |**Course Project, Part Three — Perform K-Means Clustering on Sentence Embeddings To Group Similar Texts**||
-|**Module Wrap-up: Perform K-Means Clustering on Sentence Embeddings To Group Similar Texts**||
+|**Module Wrap-up: Perform K-Means Clustering on Sentence Embeddings To Group Similar Texts**|In this module, you continued exploring clustering approaches, but also examined a new problem: how to identify a document that is representative of an entire corpus. First, you gained a familiarity with centroids and medoids — two vectors used to identify the average item in a set. You then used these vectors on a data set of movies, to practice identifying a representative action movie. Finally, you examined another approach for clustering documents: k-means clustering. Using your familiarity with SBERT from the previous module, you created sentence embeddings to categorized with this new clustering technique, and then used silhouette scores to evaluate the quality of your clustering.|
 |**Glossary**||  [text](class_5/cis575_glossary.pdf)
 |**Course Transcript**|| [text](./class_5/CIS575_course_transcript.pdf)
 
