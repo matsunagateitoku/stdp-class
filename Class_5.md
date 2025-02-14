@@ -53,7 +53,15 @@
 |**Module Introduction: Perform K-Means Clustering on Sentence Embeddings To Group Similar Texts**||explored hierarchical clustering and practiced embedding sentences as vectors using SBERT. use SBERT to represent texts as vectors. introduced to k-means clustering, which you will practice throughout the module. After using k-means clustering to categorize movies, you will evaluate the quality of your clusters using silhouette scores. You will also encounter another type of problem in this module: identifying an item within a set that is representative of the set as a whole.
 |**Calculate Centroids and Medoids To Find a Representative Data Point**|centroid is the mean vector of a set of vectors and is used to represent a set of vectors.  When you apply this concept to a corpus and you want to find a representative document in the corpus, finding a centroid will not work as it is the mean and does not correspond to one of the documents. A medoid, the closest existing vector to the centroid, allows you to find a representative document, which can be used to help determine what labels should be applied to the cluster. Watch as Professor Melnikov defines these terms and plots examples that compare the centroid and medoid for different sets of vectors.| video
 |**Practice Calculating Centroids and Medoids To Find a Representative Data Point**|pretty straight forward | code 1 [![Open in Google Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/class_5/Calculating-Centroids.ipynb)
-|**Compute the Medoid To Find a Representative Movie**||
+|**Compute the Medoid To Find a Representative Movie**|You can use the medoid to find a representative movie from the movie database for a specific genre. In this video, Professor Melnikov demonstrates this technique for action movies in code. Follow along as Professor Melnikov loads the movie database, uses JSON to parse and clean up fields, and filters out only the action movies. He then selects a single representative movie by identifying the medoid for a matrix containing vector representations of all action movies in the database. To visualize the results, he uses Principal Component Analysis (PCA) to compress the vectors from 768 dimensions to two-dimensional vectors and then plots the results. |Libraries/Methods
+Standard Library
+SentenceTransformer()
+JSON, SBERT.encode()  
+pd.dataframe, np.mean()
+np.argmin(), PCA()
+Plotly Library
+scatter(), layout()
+figure()
 |**Practice Computing the Medoid To Find a Representative Movie**|| code 2
 |**Clustering Movies With K-Means and Evaluating Performance**||
 |**Practice Clustering Movies With K-Means and Evaluating Performance**|| code 3
