@@ -14,7 +14,7 @@
    - DT_smatrix = cv.fit_transform(LsQuote)     # create document-term matrix (DTM) in sparse format
    - DT_smatrix
      
-## Part 1: Operations on Vectors
+### Part 1: Operations on Vectors
 - Vectors are a point in Cartesian space
   - they all start from the origin
   - We can perform operations on them add, sub, etc. 
@@ -27,55 +27,55 @@
 - csr_matrix() object
 - csr_matrix().toarray() method
 - dense and sparse matrix
-The rows in a matrix are sometimes referred to as "observations" while the columns are sometimes referred to as "features," "variables," or "dimensions."
-For example, a matrix with three rows and five columns would be referred to as a 3x5 matrix. This matrix:  would also be referred to as being a data set with five dimensions
-from scipy.sparse import csr_matrix
-vectorization: print(Y[Y[:,0]==0])
-Dot Product
-Part 3: Operations on Pandas DataFrames
-pandas used numpy under the hood. slower but more user friendly 
-Part 4: Document-Term Matrix (DTM)
-Scikit-Learn Library
-CounterVectorizer object
-.fit_transform learns vocabulary, returns DTM
-.get_feature_names retrieves vocabulary
-SciPy Library
-csr_matrix().toarray() method  converts to dense matrix format
-Seaborn Library
-heatmap plots colored grid
-bag-of-words type of model
-DTMs store documents on the rows of a matrix and the frequency of specific words in each document on the columns. Since both rows and columns of a matrix can be manipulated as vectors, storing matrices in this manner opens up a wide range of analytic possibilities.
-This matrix is commonly constructed with CountVectorizer object of Scikit-Learn library.
-cv = CountVectorizer(stop_words='english', lowercase=True) # create object to count pre-processed words
-Now that the object is initialized, you can pass the list of sentence strings to the fit_transform() method. Nearly all modeling objects in scikit-learn have fit, transform, and fit_transform methods. Here, fit applies preprocessing, parses words, and learns the vocabulary. Once the vocabulary is learned on a set of documents, you can apply the same set of docs or another set of docs to be transformed to a DTM. Note that the CountVectorizer only "knows" the vocabulary it was fitted on. So, if the transformed set of documents has new words, they will be ignored. For this reason, you should try to have a reasonably comprehensive vocabulary when you apply CountVectorizer. Otherwise, you'll need to refit the CountVectorizer object as you add documents.
-The fit_transform applies both methods at once to the same set of documents (or quotes, in this case).
-A transformation returns a SciPy sparse matrix, which stores indices and values of non-zero elements in a matrix. If the matrix is highly sparse (as is often the case with DTMs), then such data structure is very effective in saving memory. It is interesting that a larger vocabulary will not use any more memory for storing counts in a sparse matrix but will use some memory to store a larger vocabulary list itself.
-DT_smatrix = cv.fit_transform(LsQuote)     # create document-term matrix (DTM) in sparse format
-dfDT = pd.DataFrame(DT_smatrix.toarray(), index=LsQuote, columns=LsVocab)
-make a pandas df from strings & list of vocab 
-Seaborn
-ax = sns.heatmap(dfDT, annot=True, cmap='coolwarm', cbar=False);
-tmp = ax.set_title('Counts Matrix');
-Part 5: Term Frequency-Inverse Document Frequency (TF-IDF)
-TF-IDF is also a document-term matrix, or DTM. In that sense, it's still is troubled by high sparsity or lots of zeros and large vocabulary. Now, the TF-IDF does not remove words from vocabulary, but we can detect stopwords by thresholding the weights in TF-IDF matrix.
-scikitlearn Library
-tfidfTransformer() object
-.fit_transform()
-get_feature_names()
-smTFIDF1 = TfidfTransformer(norm='l2', use_idf=True, smooth_idf=True).fit_transform(smDT)
-tv = TfidfVectorizer()
-smTFIDF2 = tv.fit_transform(LsQuotes[:-1]) # fit and transform only 14 quotes, return sparse matrix format
+- The rows in a matrix are sometimes referred to as "observations" while the columns are sometimes referred to as "features," "variables," or "dimensions."
+- For example, a matrix with three rows and five columns would be referred to as a 3x5 matrix. This matrix:  would also be referred to as being a data set with five dimensions
+- from scipy.sparse import csr_matrix
+- vectorization: print(Y[Y[:,0]==0])
+- Dot Product
+### Part 3: Operations on Pandas DataFrames
+- pandas used numpy under the hood. slower but more user friendly 
+### Part 4: Document-Term Matrix (DTM)
+- Scikit-Learn Library
+- CounterVectorizer object
+- .fit_transform learns vocabulary, returns DTM
+- .get_feature_names retrieves vocabulary
+- SciPy Library
+- csr_matrix().toarray() method  converts to dense matrix format
+- Seaborn Library
+- heatmap plots colored grid
+- bag-of-words type of model
+- DTMs store documents on the rows of a matrix and the frequency of specific words in each document on the columns. Since both rows and columns of a matrix can be manipulated as vectors, storing matrices in this manner opens up a wide range of analytic possibilities.
+- This matrix is commonly constructed with CountVectorizer object of Scikit-Learn library.
+- cv = CountVectorizer(stop_words='english', lowercase=True) # create object to count pre-processed words
+- Now that the object is initialized, you can pass the list of sentence strings to the fit_transform() method. Nearly all modeling objects in scikit-learn have fit, transform, and fit_transform methods. Here, fit applies preprocessing, parses words, and learns the vocabulary. Once the vocabulary is learned on a set of documents, you can apply the same set of docs or another set of docs to be transformed to a DTM. Note that the CountVectorizer only "knows" the vocabulary it was fitted on. So, if the transformed set of documents has new words, they will be ignored. For this reason, you should try to have a reasonably comprehensive vocabulary when you apply CountVectorizer. Otherwise, you'll need to refit the CountVectorizer object as you add documents.
+- The fit_transform applies both methods at once to the same set of documents (or quotes, in this case).
+- A transformation returns a SciPy sparse matrix, which stores indices and values of non-zero elements in a matrix. If the matrix is highly sparse (as is often the case with DTMs), then such data structure is very effective in saving memory. It is interesting that a larger vocabulary will not use any more memory for storing counts in a sparse matrix but will use some memory to store a larger vocabulary list itself.
+- DT_smatrix = cv.fit_transform(LsQuote)     # create document-term matrix (DTM) in sparse format
+- dfDT = pd.DataFrame(DT_smatrix.toarray(), index=LsQuote, columns=LsVocab)
+- make a pandas df from strings & list of vocab 
+- Seaborn
+  - ax = sns.heatmap(dfDT, annot=True, cmap='coolwarm', cbar=False);
+  - tmp = ax.set_title('Counts Matrix');
 
+### Part 5: Term Frequency-Inverse Document Frequency (TF-IDF)
+- TF-IDF is also a document-term matrix, or DTM. In that sense, it's still is troubled by high sparsity or lots of zeros and large vocabulary. Now, the TF-IDF does not remove words from vocabulary, but we can detect stopwords by thresholding the weights in TF-IDF matrix.
+- scikitlearn Library
+  - tfidfTransformer() object
+  - .fit_transform()
+  - get_feature_names()
+  - smTFIDF1 = TfidfTransformer(norm='l2', use_idf=True, smooth_idf=True).fit_transform(smDT)
+  - tv = TfidfVectorizer()
+  - smTFIDF2 = tv.fit_transform(LsQuotes[:-1]) # fit and transform only 14 quotes, return sparse matrix format
+  - dfTFIDF2 = pd.DataFrame(smTFIDF2.toarray(), columns=tv.get_feature_names())
 
-dfTFIDF2 = pd.DataFrame(smTFIDF2.toarray(), columns=tv.get_feature_names())
-Part 6: Thresholding a TF-IDF Matrix
-fit_transform()
-Use the object's fit_transform() method, which fits and transforms the documents:
-In fitting, the object learns the new vocabulary and inverse document frequency (IDF).
-In transforming, the object uses learned vocabulary and IDF to transform documents.
-The method returns a document–term matrix (DTM) with TF–IDF weights (not counts) in SciPy's sparse matrix format.
-Wrap up: You often want to compare documents by expressing their degree of similarity, and one relatively simple way of achieving this is to transform text into numeric vectors, then count (or somehow measure) the overlapping tokens. In this module, we constructed and evaluated two kinds of vectors: the document term matrix (DTM) and the term frequency-inverse document frequency (TF-IDF) matrix. We did this by working closely with the scikitlearn package.
-Next, we will extend this idea to represent words as dense vectors, which we can aggregate to represent sentences as dense vectors; this allows us to measure similarity between any two sentences, regardless of whether they have the same words or not. In fact, we can even measure similarity between words and sentences and in different languages. All that is possible when we convert our text to mathematical vector spaces.
+### Part 6: Thresholding a TF-IDF Matrix
+- fit_transform()
+- Use the object's fit_transform() method, which fits and transforms the documents:
+- In fitting, the object learns the new vocabulary and inverse document frequency (IDF).
+- In transforming, the object uses learned vocabulary and IDF to transform documents.
+- The method returns a document–term matrix (DTM) with TF–IDF weights (not counts) in SciPy's sparse matrix format.
+- Wrap up: You often want to compare documents by expressing their degree of similarity, and one relatively simple way of achieving this is to transform text into numeric vectors, then count (or somehow measure) the overlapping tokens. In this module, we constructed and evaluated two kinds of vectors: the document term matrix (DTM) and the term frequency-inverse document frequency (TF-IDF) matrix. We did this by working closely with the scikitlearn package.
+- Next, we will extend this idea to represent words as dense vectors, which we can aggregate to represent sentences as dense vectors; this allows us to measure similarity between any two sentences, regardless of whether they have the same words or not. In fact, we can even measure similarity between words and sentences and in different languages. All that is possible when we convert our text to mathematical vector spaces.
 
 
 ## Note: I think there are ways we could get a lot more value from TF-IDF than word clouds. 
