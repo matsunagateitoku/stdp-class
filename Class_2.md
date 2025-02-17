@@ -1,18 +1,12 @@
 
+# Class 2: Transforming Text Into Numeric Vectors
+## Section One: Create Sparse Document Vectors From Counters
 
-
-
-
-
-
-
-Class 2: Transforming Text Into Numeric Vectors
-Create Sparse Document Vectors From Counters
-In this module, you will construct and evaluate two kinds of vectors: 
-the document term matrix (DTM), 
-and the term frequency-inverse document frequency (TF-IDF) matrix, a special kind of DTM. 
-You will also work closely with the scikitlearn package, which contains the tools to quickly compute a basic DTM and a more sophisticated TF-IDF DTM.
-You can use scikit-learn's CountVectorizer() object to build a document term matrix (DTM). 
+- In this module, you will construct and evaluate two kinds of vectors:
+ - the document term matrix (DTM),
+ - and the term frequency-inverse document frequency (TF-IDF) matrix, a special kind of DTM. 
+- You will also work closely with the scikitlearn package, which contains the tools to quickly compute a basic DTM and a more sophisticated TF-IDF DTM.
+- You can use scikit-learn's CountVectorizer() object to build a document term matrix (DTM). 
 CountVectorizer takes a list of string sentences, parses them into word tokens, builds a vocabulary from the list of unique words in the corpus of sentences, and counts each word in each sentence. The vocabulary words become columns and sentences (or documents) become rows. In addition, this object has many useful arguments and methods for convenient preprocessing, such as stopword removal, lower casing, etc. It can also be customized with a more sophisticated preprocessing tool, such as a lemmatizer. The default word tokenizer pattern is the argument token_pattern='(?u)\b\w\w+\b', which assumes words are made up of multiple word characters, but can be modified for other word separators.
 cv = CountVectorizer(stop_words='english', lowercase=True) # create object to count pre-processed words
 Now that the object is initialized, you can pass the list of sentence strings to the fit_transform() method. Nearly all modeling objects in scikit-learn have fit, transform, and fit_transform methods. Here, fit applies preprocessing, parses words, and learns the vocabulary. Once the vocabulary is learned on a set of documents, you can apply the same set of docs or another set of docs to be transformed to a DTM. Note that the CountVectorizer only "knows" the vocabulary it was fitted on. So, if the transformed set of documents has new words, they will be ignored. For this reason, you should try to have a reasonably comprehensive vocabulary when you apply CountVectorizer. Otherwise, you'll need to refit the CountVectorizer object as you add documents.
