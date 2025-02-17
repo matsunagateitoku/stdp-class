@@ -3,28 +3,30 @@
 ## Section One: Create Sparse Document Vectors From Counters
 
 - In this module, you will construct and evaluate two kinds of vectors:
-  - the **document term matrix (DTM)**,\
- - and the **term frequency-inverse document frequency (TF-IDF) matrix**, a special kind of DTM. 
+  - the **document term matrix (DTM)**
+  - and the **term frequency-inverse document frequency (TF-IDF) matrix**, a special kind of DTM. 
 - You will also work closely with the scikitlearn package, which contains the tools to quickly compute a basic DTM and a more sophisticated TF-IDF DTM.
-- You can use scikit-learn's CountVectorizer() object to build a document term matrix (DTM).
-- CountVectorizer takes a list of string sentences, parses them into word tokens, builds a vocabulary from the list of unique words in the corpus of sentences, and counts each word in each sentence. The vocabulary words become columns and sentences (or documents) become rows. In addition, this object has many useful arguments and methods for convenient preprocessing, such as stopword removal, lower casing, etc. It can also be customized with a more sophisticated preprocessing tool, such as a lemmatizer. The default word tokenizer pattern is the argument token_pattern='(?u)\b\w\w+\b', which assumes words are made up of multiple word characters, but can be modified for other word separators.
- - cv = CountVectorizer(stop_words='english', lowercase=True) # create object to count pre-processed words
-Now that the object is initialized, you can pass the list of sentence strings to the fit_transform() method. Nearly all modeling objects in scikit-learn have fit, transform, and fit_transform methods. Here, fit applies preprocessing, parses words, and learns the vocabulary. Once the vocabulary is learned on a set of documents, you can apply the same set of docs or another set of docs to be transformed to a DTM. Note that the CountVectorizer only "knows" the vocabulary it was fitted on. So, if the transformed set of documents has new words, they will be ignored. For this reason, you should try to have a reasonably comprehensive vocabulary when you apply CountVectorizer. Otherwise, you'll need to refit the CountVectorizer object as you add documents.
-The fit_transform applies both methods at once to the same set of documents (or quotes, in this case). A transformation returns a SciPy sparse matrix, which stores indices and values of non-zero elements in a matrix. If the matrix is highly sparse (as is often the case with DTMs), then such data structure is very effective in saving memory. It is interesting that a larger vocabulary will not use any more memory for storing counts in a sparse matrix but will use some memory to store a larger vocabulary list itself.
-DT_smatrix = cv.fit_transform(LsQuote)     # create document-term matrix (DTM) in sparse format
-DT_smatrix
-Part 1: Operations on Vectors
-Vectors are a point in Cartesian space
-they all start from the origin 
-We can perform operations on them add, sub, etc. 
-Part 2: Operations on Matrices
-NumPy Library
-np.array() object
-.T attribute
-SciPy Library
-csr_matrix() object
-csr_matrix().toarray() method
-dense and sparse matrix
+- You can use scikit-learn's **CountVectorizer()** object to build a document term matrix (DTM).
+  - CountVectorizer takes a list of string sentences, parses them into word tokens, builds a vocabulary from the list of unique words in the corpus of sentences, and counts each word in each sentence. The vocabulary words become columns and sentences (or documents) become rows. In addition, this object has many useful arguments and methods for convenient preprocessing, such as stopword removal, lower casing, etc. It can also be customized with a more sophisticated preprocessing tool, such as a lemmatizer. The default word tokenizer pattern is the argument token_pattern='(?u)\b\w\w+\b', which assumes words are made up of multiple word characters, but can be modified for other word separators.
+ - cv = CountVectorizer(stop_words='english', lowercase=True) # create object to count pre-processed word
+   - Now that the object is initialized, you can pass the list of sentence strings to the fit_transform() method. Nearly all modeling objects in scikit-learn have fit, transform, and fit_transform methods. Here, fit applies preprocessing, parses words, and learns the vocabulary. Once the vocabulary is learned on a set of documents, you can apply the same set of docs or another set of docs to be transformed to a DTM. Note that the CountVectorizer only "knows" the vocabulary it was fitted on. So, if the transformed set of documents has new words, they will be ignored. For this reason, you should try to have a reasonably comprehensive vocabulary when you apply CountVectorizer. Otherwise, you'll need to refit the CountVectorizer object as you add documents.
+   - The fit_transform applies both methods at once to the same set of documents (or quotes, in this case). A transformation returns a SciPy sparse matrix, which stores indices and values of non-zero elements in a matrix. If the matrix is highly sparse (as is often the case with DTMs), then such data structure is very effective in saving memory. It is interesting that a larger vocabulary will not use any more memory for storing counts in a sparse matrix but will use some memory to store a larger vocabulary list itself.
+   - DT_smatrix = cv.fit_transform(LsQuote)     # create document-term matrix (DTM) in sparse format
+   - DT_smatrix
+     
+## Part 1: Operations on Vectors
+- Vectors are a point in Cartesian space
+  - they all start from the origin
+  - We can perform operations on them add, sub, etc. 
+
+## Part 2: Operations on Matrices
+- NumPy Library
+- np.array() object
+- .T attribute
+- SciPy Library
+- csr_matrix() object
+- csr_matrix().toarray() method
+- dense and sparse matrix
 The rows in a matrix are sometimes referred to as "observations" while the columns are sometimes referred to as "features," "variables," or "dimensions."
 For example, a matrix with three rows and five columns would be referred to as a 3x5 matrix. This matrix:  would also be referred to as being a data set with five dimensions
 from scipy.sparse import csr_matrix
