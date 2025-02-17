@@ -35,7 +35,7 @@ made a function that retrieves an alphabetically sorted list of unique tokens fr
      - contractions library
 - fix()
 - text correction
-- punkt
+- **punkt** Punkt tokenizer from the nltk (Natural Language Toolkit) library. The Punkt tokenizer is a pre-trained tokenizer that is used to split text into sentences and words. It is an unsupervised machine learning algorithm that works by identifying sentence boundaries and separating text based on punctuation.
 - spelling correction
 - textblob library
 - correct () and spellckeck()
