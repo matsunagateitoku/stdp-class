@@ -3,12 +3,12 @@
 ## Section One: Create Sparse Document Vectors From Counters
 
 - In this module, you will construct and evaluate two kinds of vectors:
- - the document term matrix (DTM),
+ - the **document term matrix (DTM)**,
  - and the term frequency-inverse document frequency (TF-IDF) matrix, a special kind of DTM. 
 - You will also work closely with the scikitlearn package, which contains the tools to quickly compute a basic DTM and a more sophisticated TF-IDF DTM.
-- You can use scikit-learn's CountVectorizer() object to build a document term matrix (DTM). 
-CountVectorizer takes a list of string sentences, parses them into word tokens, builds a vocabulary from the list of unique words in the corpus of sentences, and counts each word in each sentence. The vocabulary words become columns and sentences (or documents) become rows. In addition, this object has many useful arguments and methods for convenient preprocessing, such as stopword removal, lower casing, etc. It can also be customized with a more sophisticated preprocessing tool, such as a lemmatizer. The default word tokenizer pattern is the argument token_pattern='(?u)\b\w\w+\b', which assumes words are made up of multiple word characters, but can be modified for other word separators.
-cv = CountVectorizer(stop_words='english', lowercase=True) # create object to count pre-processed words
+- You can use scikit-learn's CountVectorizer() object to build a document term matrix (DTM).
+- CountVectorizer takes a list of string sentences, parses them into word tokens, builds a vocabulary from the list of unique words in the corpus of sentences, and counts each word in each sentence. The vocabulary words become columns and sentences (or documents) become rows. In addition, this object has many useful arguments and methods for convenient preprocessing, such as stopword removal, lower casing, etc. It can also be customized with a more sophisticated preprocessing tool, such as a lemmatizer. The default word tokenizer pattern is the argument token_pattern='(?u)\b\w\w+\b', which assumes words are made up of multiple word characters, but can be modified for other word separators.
+ - cv = CountVectorizer(stop_words='english', lowercase=True) # create object to count pre-processed words
 Now that the object is initialized, you can pass the list of sentence strings to the fit_transform() method. Nearly all modeling objects in scikit-learn have fit, transform, and fit_transform methods. Here, fit applies preprocessing, parses words, and learns the vocabulary. Once the vocabulary is learned on a set of documents, you can apply the same set of docs or another set of docs to be transformed to a DTM. Note that the CountVectorizer only "knows" the vocabulary it was fitted on. So, if the transformed set of documents has new words, they will be ignored. For this reason, you should try to have a reasonably comprehensive vocabulary when you apply CountVectorizer. Otherwise, you'll need to refit the CountVectorizer object as you add documents.
 The fit_transform applies both methods at once to the same set of documents (or quotes, in this case). A transformation returns a SciPy sparse matrix, which stores indices and values of non-zero elements in a matrix. If the matrix is highly sparse (as is often the case with DTMs), then such data structure is very effective in saving memory. It is interesting that a larger vocabulary will not use any more memory for storing counts in a sparse matrix but will use some memory to store a larger vocabulary list itself.
 DT_smatrix = cv.fit_transform(LsQuote)     # create document-term matrix (DTM) in sparse format
@@ -159,10 +159,10 @@ Long tail distributions are problematic in NLP. However, we might try to leverag
 
 
 ++++++++++++++++++++++
-Part Two of the Course Project
-Goals: complete a set of functions that retrieve word vectors from a Word2Vec model, process the model's vocabulary to work better with similarity analyses, and then use these functions to analyze similarity of pairs and groups of words. As you use these functions, you will work with the glove-wiki-gigaword-50 pre-trained Word2Vec model that you've worked with in this module.
-Begin by loading the required libraries and printing the versions of NLTK, Gensim, and NumPy using their __version__ attribute.
-Note: Since word-embedding models are a rapidly changing area of NLP, changes in library versions may break older code. Pay attention to library versions and, as always, carefully read error messages. We will note where the functionality diverges from that demonstrated in the videos and provide alternative methods you can use to complete the task.
+## Part Two of the Course Project
+- Goals: complete a set of functions that retrieve word vectors from a Word2Vec model, process the model's vocabulary to work better with similarity analyses, and then use these functions to analyze similarity of pairs and groups of words. As you use these functions, you will work with the glove-wiki-gigaword-50 pre-trained Word2Vec model that you've worked with in this module.
+- Begin by loading the required libraries and printing the versions of NLTK, Gensim, and NumPy using their __version__ attribute.
+- Note: Since word-embedding models are a rapidly changing area of NLP, changes in library versions may break older code. Pay attention to library versions and, as always, carefully read error messages. We will note where the functionality diverges from that demonstrated in the videos and provide alternative methods you can use to complete the task.
 
 
 Measure Similarity Between Document Vectors
