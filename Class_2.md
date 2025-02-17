@@ -4,7 +4,7 @@
 
 - In this module, you will construct and evaluate two kinds of vectors:
  - the **document term matrix (DTM)**,
- - and the term frequency-inverse document frequency (TF-IDF) matrix, a special kind of DTM. 
+ - and the **term frequency-inverse document frequency (TF-IDF) matrix**, a special kind of DTM. 
 - You will also work closely with the scikitlearn package, which contains the tools to quickly compute a basic DTM and a more sophisticated TF-IDF DTM.
 - You can use scikit-learn's CountVectorizer() object to build a document term matrix (DTM).
 - CountVectorizer takes a list of string sentences, parses them into word tokens, builds a vocabulary from the list of unique words in the corpus of sentences, and counts each word in each sentence. The vocabulary words become columns and sentences (or documents) become rows. In addition, this object has many useful arguments and methods for convenient preprocessing, such as stopword removal, lower casing, etc. It can also be customized with a more sophisticated preprocessing tool, such as a lemmatizer. The default word tokenizer pattern is the argument token_pattern='(?u)\b\w\w+\b', which assumes words are made up of multiple word characters, but can be modified for other word separators.
