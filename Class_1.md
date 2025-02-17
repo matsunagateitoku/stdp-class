@@ -41,7 +41,7 @@ made a function that retrieves an alphabetically sorted list of unique tokens fr
 - correct () and spellckeck()
 - removing HTML tags
 - stemming and lemmatization
-- nltk stem.PorterStemmer()
+- **nltk stem.PorterStemmer()** class in the nltk.stem module that implements the Porter stemming algorithm, which is a widely used algorithm for stemming words in the English language. Stemming is the process of reducing a word to its root or base form, which is typically done by removing suffixes. The PorterStemmer works by applying a series of rules to remove common English suffixes, making words easier to analyze in natural language processing (NLP) tasks.
 - nltk WordNetLemmatizer()
 - lemma = dictionary form of a word
 - removing stopwords
