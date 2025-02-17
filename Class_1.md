@@ -51,7 +51,7 @@ made a function that retrieves an alphabetically sorted list of unique tokens fr
    - The class methods containing preprocessing code are exposed as properties (with @property decorator). The properties can be called without parenthesis, which is convenient and visually attractive. Every preprocessing step logs the task name and some basic stats to the dictionary DStat, which is stored internally in the instantiated Pipe object. So, if needed, one can evaluate the compression of the original document's lexicon at each step of the pipeline.
    - In Python, the @property decorator is a built-in decorator that allows you to define a method as a property of a class. Properties enable you to define special behavior when accessing attributes of an object, such as performing calculations, validating inputs, or controlling access.
 
-
+## Course Project, Part Two
 - Task 1: Initialize attributes
    - Initialize the class attributes (self.LsWords, self.DStat, self.LsStep) in __init__().
 -    Task 2: Format Output String
