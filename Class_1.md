@@ -46,21 +46,19 @@ made a function that retrieves an alphabetically sorted list of unique tokens fr
 - lemma = dictionary form of a word
 - removing stopwords
 - **Pipe() class**, which is a Python class for building custom text preprocessing pipelines.
-call it like this:
-pp = Pipe(LsBookWords, SsStopWords='nltk', SsLex='nltk').Low.Norm.Exp.Words.Stem.Stop.NoNum
-The class methods containing preprocessing code are exposed as properties (with @property decorator). The properties can be called without parenthesis, which is convenient and visually attractive. Every preprocessing step logs the task name and some basic stats to the dictionary DStat, which is stored internally in the instantiated Pipe object. So, if needed, one can evaluate the compression of the original document's lexicon at each step of the pipeline.
+   - call it like this:
+   - pp = Pipe(LsBookWords, SsStopWords='nltk', SsLex='nltk').Low.Norm.Exp.Words.Stem.Stop.NoNum
+   - The class methods containing preprocessing code are exposed as properties (with @property decorator). The properties can be called without parenthesis, which is convenient and visually attractive. Every preprocessing step logs the task name and some basic stats to the dictionary DStat, which is stored internally in the instantiated Pipe object. So, if needed, one can evaluate the compression of the original document's lexicon at each step of the pipeline.
+   - In Python, the @property decorator is a built-in decorator that allows you to define a method as a property of a class. Properties enable you to define special behavior when accessing attributes of an object, such as performing calculations, validating inputs, or controlling access.
 
 
-In Python, the @property decorator is a built-in decorator that allows you to define a method as a property of a class. Properties enable you to define special behavior when accessing attributes of an object, such as performing calculations, validating inputs, or controlling access.
-
-
-Task 1: Initialize attributes
-Initialize the class attributes (self.LsWords, self.DStat, self.LsStep) in __init__().
-Task 2: Format Output String
-Complete the Out() method to format the output string.
-Tasks 3 - 10: String Preprocessing Methods
-Complete the Low(), NoNum(), Words(), Stop(), Norm(), Exp(), Stem(), Lem() properties.
-assert isinstance(LsWords, list)
+- Task 1: Initialize attributes
+   - Initialize the class attributes (self.LsWords, self.DStat, self.LsStep) in __init__().
+-    Task 2: Format Output String
+   - Complete the Out() method to format the output string.
+- Tasks 3 - 10: String Preprocessing Methods
+   - Complete the Low(), NoNum(), Words(), Stop(), Norm(), Exp(), Stem(), Lem() properties.
+   - assert isinstance(LsWords, list)
 
 
 
