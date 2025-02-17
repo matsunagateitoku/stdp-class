@@ -1,6 +1,6 @@
-# Class 1: ??
+# Class 1: Natural Language Processing Fundamentals 
 
-## Section 1: 
+## Mod 1: Finding Simple Patterns in a Body of Text
 
 | Lesson          |         Discription                                | Colab link    |
 |-------------------|----------------------------------------------|------|
@@ -10,11 +10,6 @@
 
 
 
-
-
-
-Class 1: Natural Language Processing Fundamentals 
-Course Project, Part One — Finding Simple Patterns in a Body of Text
 Lots of basic string manipulation (lower, split, etc). Then using regex to find patterns in the text. Finally, counting what is found (Counter, most_common)
 lower()
 split()
