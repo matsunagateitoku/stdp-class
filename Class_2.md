@@ -3,7 +3,7 @@
 ## Section One: Create Sparse Document Vectors From Counters
 
 - In this module, you will construct and evaluate two kinds of vectors:
- - the **document term matrix (DTM)**,
+ - the **document term matrix (DTM)**,\
  - and the **term frequency-inverse document frequency (TF-IDF) matrix**, a special kind of DTM. 
 - You will also work closely with the scikitlearn package, which contains the tools to quickly compute a basic DTM and a more sophisticated TF-IDF DTM.
 - You can use scikit-learn's CountVectorizer() object to build a document term matrix (DTM).
