@@ -13,22 +13,20 @@ made a function that retrieves an alphabetically sorted list of unique tokens fr
 ++++++++++++++++++++++++++++++++++++++++++++++++
 
 ## Part Two — Preprocess Text to Reduce Vocabulary
-This section is all about string parsing and document cleaning to preprocess. This is key to reduce the vocabulary
-introduces the nltk library 
-parse a document into token 
-breaking a document into sentences and counting them
-refining with regex to deal with newlines etc. 
-downloading text
-   _ = nltk.download(['brown'], quiet=True)
- Ss6 = {s.lower() for s in nltk.corpus.brown.words()}
-turn the document into a string of tokens with stop word removed with each separated by a space 
-The enumerate() function in Python is used to iterate over a sequence (such as a list, tuple, string, etc.) while keeping track of the index of each item. It returns an enumerate object which yields pairs of indexes and elements, where each pair is represented as a tuple.
-checking the length of the sentence to make sure it seems correct 
-working with characters
-ASCII
-unicode  -- UTF-8  u’string’
-encode()
-decode()
+- This section is all about string parsing and document cleaning to preprocess. This is key to reduce the vocabulary
+- introduces the nltk library
+- parse a document into tokens
+- breaking a document into sentences and counting them
+- refining with regex to deal with newlines etc.
+- downloading text    _ = nltk.download(['brown'], quiet=True)      Ss6 = {s.lower() for s in nltk.corpus.brown.words()}
+- turn the document into a string of tokens with stop word removed with each separated by a space
+- The **enumerate() function** in Python is used to iterate over a sequence (such as a list, tuple, string, etc.) while keeping track of the index of each item. It returns an enumerate object which yields pairs of indexes and elements, where each pair is represented as a tuple.
+- checking the length of the sentence to make sure it seems correct
+- working with characters
+   - ASCII
+   - unicode  -- UTF-8  u’string’
+   - encode()
+   - decode()
     def Norm(self) -> object:
         self.LsWords = [unicodedata.normalize('NFKD', word).encode('ascii', 'ignore').decode('utf-8') for word in self.LsWords]
 
