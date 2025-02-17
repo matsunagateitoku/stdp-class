@@ -1,15 +1,6 @@
 # Class 1: Natural Language Processing Fundamentals 
 
 ## Mod 1: Finding Simple Patterns in a Body of Text
-
-| Lesson          |         Discription                                | Colab link    |
-|-------------------|----------------------------------------------|------|
-| **??**   | ??    |                                 
-| **??**   | ??    |    
-
-
-
-
 - Lots of basic string manipulation (lower, split, etc). Then using regex to find patterns in the text.
    - lower()
    - split()
@@ -19,11 +10,9 @@
    - regex re()    Parsing Strings with Regular Expressions
 made a function that retrieves an alphabetically sorted list of unique tokens from string documents.  function that returns a list of counts in decreasing-order, from the most frequent words to the least frequent words in a string document. Thei 
 
-
-
-
 ++++++++++++++++++++++++++++++++++++++++++++++++
-Part Two — Preprocess Text to Reduce Vocabulary
+
+## Part Two — Preprocess Text to Reduce Vocabulary
 This section is all about string parsing and document cleaning to preprocess. This is key to reduce the vocabulary
 introduces the nltk library 
 parse a document into token 
@@ -139,3 +128,9 @@ nltk.word_tokenize()
 nltk.pos_tag()
 WordNetLemmatizer()
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+| Lesson          |         Discription                                | Colab link    |
+|-------------------|----------------------------------------------|------|
+| **??**   | ??    |                                 
+| **??**   | ??    |    
+
