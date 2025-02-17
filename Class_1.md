@@ -40,9 +40,9 @@ made a function that retrieves an alphabetically sorted list of unique tokens fr
 - textblob library
 - correct () and spellckeck()
 - removing HTML tags
-- stemming and lemmatization
+### stemming and lemmatization
 - **nltk stem.PorterStemmer()** class in the nltk.stem module that implements the Porter stemming algorithm, which is a widely used algorithm for stemming words in the English language. Stemming is the process of reducing a word to its root or base form, which is typically done by removing suffixes. The PorterStemmer works by applying a series of rules to remove common English suffixes, making words easier to analyze in natural language processing (NLP) tasks.
-- nltk WordNetLemmatizer()
+- **nltk WordNetLemmatizer()**part of the nltk.stem module and provides a way to lemmatize words using the WordNet lexical database. Lemmatization is the process of reducing a word to its base or dictionary form (called a "lemma"), which is different from stemming because it takes the word's meaning into account and ensures that the resulting word is a valid word in the language. While stemming can produce non-dictionary words (such as reducing "better" to "bet"), lemmatization ensures that the root word is a valid, recognizable word (e.g., reducing "better" to "good"). The WordNetLemmatizer uses WordNet, a large lexical database of English, to perform lemmatization. The lemmatizer considers the word’s part of speech (POS), which allows it to accurately reduce the word. For example, "running" as a verb will be reduced to "run", but if you provide it as a noun, it might be lemmatized differently.
 - lemma = dictionary form of a word
 - removing stopwords
 - **Pipe() class**, which is a Python class for building custom text preprocessing pipelines.
