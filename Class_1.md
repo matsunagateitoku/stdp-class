@@ -10,9 +10,11 @@
 
 
 
-Lots of basic string manipulation (lower, split, etc). Then using regex to find patterns in the text. Finally, counting what is found (Counter, most_common)
-lower()
-split()
+- Lots of basic string manipulation (lower, split, etc). Then using regex to find patterns in the text.
+-    lower()
+-    split()
+- Finally, counting what is found (Counter, most_common)
+
 most_common()
 Counter()   a class from the Python collections module that is used to count the frequency of elements in an iterable (such as a list or a string). It provides a convenient way to keep track of counts of hashable objects.
 regex re()    Parsing Strings with Regular Expressions
