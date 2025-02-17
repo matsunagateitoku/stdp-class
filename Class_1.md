@@ -59,60 +59,44 @@ made a function that retrieves an alphabetically sorted list of unique tokens fr
 - Tasks 3 - 10: String Preprocessing Methods
    - Complete the Low(), NoNum(), Words(), Stop(), Norm(), Exp(), Stem(), Lem() properties.
    - assert isinstance(LsWords, list)
+- 12 functions that make up a preprocessing pipeline that you can use to tag, lemmatize, and parse a document, as well as uncover its hierarchical dependencies. 
+- use each function individually to investigate a mix of large and small documents 
+- note: **%time**: This is a special IPython (Jupyter) magic command used to time the execution of a single statement. It measures and prints the elapsed wall-clock time taken to execute the statement.
 
 
-
-
-12 functions that make up a preprocessing pipeline that you can use to tag, lemmatize, and parse a document, as well as uncover its hierarchical dependencies. 
-use each function individually to investigate a mix of large and small documents 
-note: %time: This is a special IPython (Jupyter) magic command used to time the execution of a single statement. It measures and prints the elapsed wall-clock time taken to execute the statement.
-
-
-sDoc is a string document with at least one sentence
-Ex: a string with 2 sentences, 'I do. We go.'
-LsSents is a list of string sentences
-Ex: ['I do.', 'We go.']
-LLsWords is a list of lists of words of sentences
-Ex: [['I','do','.'],['We','go','.']]
-LLTsWordPOST is a list of lists of tuples of word & Penn POS tag pairs
-Ex: [[('I','PRP'),('do','VBP'),('.','.')],  [('We','PRP'),('go', 'VBP'),('.', '.')]]
-Wordnet lemmatizer uses WordNet POS tags: 'a':adjective, 'n':noun (and is the default), 'r':adverb, 'v':verb
-Ex: [[('I','n'),('do','v'),('.','n')],  [('We','n'),('go', 'v'),('.', 'n')]]
 ++++++++++++++++++++++++++++++++++++
-Class 1, Task 3: Tagging and Parsing a Document 
-The task is to tag and parse a document 
-you need tags to lemmatize and it help to reduce the size of the vocab
-mainly using nltk library 
-stem.wordLemmatizer() definition
-pos_tag() method
-word.tokenize() method
-Freq.Dist() method
-Standard Library
-Counter object
-most.common() method
-use nltk.sent_tokenize() to break text into sentences 
-use nltk.word_tokenize() to break text into words
-use nltk.pos_tag() to tag
-covert Penn tags to Wordnet tags 
-Note things get funky with this tags because nltk.pos_tag outputs Penn Treebank POS tag set and 
-NLTK (Natural Language Toolkit) does not have a direct lemmatize function in its core library like nltk.lemmatize. so, lemmatization in NLTK is typically performed using the WordNetLemmatizer class from the nltk.stem module. The WordNetLemmatizer in NLTK accepts Part-of-Speech (POS) tags as inputs to specify the context in which a word should be lemmatized.
-note the nltk does not use the UPenn tags, it uses wordnet_tag
-use WordNetLemmatizer()  limmatize() to lemmtize words with tag
-use nltk.RegexParser
-use this to chuck text    
-ChunkTree = nltk.RegexpParser(sGrammar).parse(LTsPOST)sGrammar="VP: {<V.*>+}")
-ChunkTree = nltk.RegexpParser(sGrammar).parse(LTsPOST)
-Chunk() to find chunk 
-sGrammar = r'''NP1: {<DT>? <JJ>? <NN.*>+}'''
-note: The collection Module in Python provides different types of containers. A Container is an object that is used to store different objects and provide a way to access the contained objects and iterate over them. Some of the built-in containers are Tuple, List, Dictionary, etc.
-Punkt Sentence Tokenizer. This tokenizer divides a text into a list of sentences by using an unsupervised algorithm to build a model for abbreviation words, collocations, and words that start sentences. It must be trained on a large collection of plaintext in the target language before it can be used.
-chunking (shallow parsing )= finding phrases. 
-This can be done manually with regex on tags
-better to use spacy
-Tree graphs 
-syntactic parse 
-dependency parse 
-constituency parse 
+## Class 1, Task 3: Tagging and Parsing a Document 
+- The task is to tag and parse a document 
+- you need tags to lemmatize and it help to reduce the size of the vocab
+- mainly using nltk library 
+- stem.wordLemmatizer() definition
+- pos_tag() method
+- word.tokenize() method
+- Freq.Dist() method
+- Standard Library
+- Counter object
+- most.common() method
+- use nltk.sent_tokenize() to break text into sentences
+- use nltk.word_tokenize() to break text into words
+- use nltk.pos_tag() to tag
+- covert Penn tags to Wordnet tags
+   - Note things get funky with this tags because nltk.pos_tag outputs Penn Treebank POS tag set and NLTK (Natural Language Toolkit) does not have a direct lemmatize function in its core library like nltk.lemmatize. so, lemmatization in NLTK is typically performed using the WordNetLemmatizer class from the nltk.stem module. The WordNetLemmatizer in NLTK accepts Part-of-Speech (POS) tags as inputs to specify the context in which a word should be lemmatized.
+- note the nltk does not use the UPenn tags, it uses wordnet_tag
+- use WordNetLemmatizer()  limmatize() to lemmtize words with tag
+- use nltk.RegexParser
+- use this to chuck text
+   - ChunkTree = nltk.RegexpParser(sGrammar).parse(LTsPOST)sGrammar="VP: {<V.*>+}")
+   - ChunkTree = nltk.RegexpParser(sGrammar).parse(LTsPOST)
+   - Chunk() to find chunk 
+- sGrammar = r'''NP1: {<DT>? <JJ>? <NN.*>+}'''
+- note: The collection Module in Python provides different types of containers. A Container is an object that is used to store different objects and provide a way to access the contained objects and iterate over them. Some of the built-in containers are Tuple, List, Dictionary, etc.
+- Punkt Sentence Tokenizer. This tokenizer divides a text into a list of sentences by using an unsupervised algorithm to build a model for abbreviation words, collocations, and words that start sentences. It must be trained on a large collection of plaintext in the target language before it can be used. chunking (shallow parsing )= finding phrases.
+   - This can be done manually with regex on tags
+   - better to use spac
+- Tree graphs
+   - syntactic parse
+   - dependency parse
+   - constituency parse 
 
 
 nltk.word_tokenize() 
@@ -125,4 +109,15 @@ WordNetLemmatizer()
 |-------------------|----------------------------------------------|------|
 | **??**   | ??    |                                 
 | **??**   | ??    |    
+
+sDoc is a string document with at least one sentence
+Ex: a string with 2 sentences, 'I do. We go.'
+LsSents is a list of string sentences
+Ex: ['I do.', 'We go.']
+LLsWords is a list of lists of words of sentences
+Ex: [['I','do','.'],['We','go','.']]
+LLTsWordPOST is a list of lists of tuples of word & Penn POS tag pairs
+Ex: [[('I','PRP'),('do','VBP'),('.','.')],  [('We','PRP'),('go', 'VBP'),('.', '.')]]
+Wordnet lemmatizer uses WordNet POS tags: 'a':adjective, 'n':noun (and is the default), 'r':adverb, 'v':verb
+Ex: [[('I','n'),('do','v'),('.','n')],  [('We','n'),('go', 'v'),('.', 'n')]]
 
