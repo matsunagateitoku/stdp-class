@@ -10,8 +10,7 @@
 
 
 
-NATURAL LANGUAGE PROCESSING WITH PYTHON 
-Cornell Certificate Program
+
 
 
 Class 1: Natural Language Processing Fundamentals 
