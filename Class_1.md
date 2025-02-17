@@ -11,8 +11,8 @@
 
 
 - Lots of basic string manipulation (lower, split, etc). Then using regex to find patterns in the text.
--    lower()
--    split()
+   - lower()
+   - split()
 - Finally, counting what is found (Counter, most_common)
 
 most_common()
