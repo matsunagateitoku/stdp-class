@@ -48,6 +48,9 @@
 |**Module Wrap-up**|Perform Hierarchical Clustering on Sentence Embeddings To Group Similar Texts|practiced converting documents to numeric vectors using SBERT,  applied hierarchical clustering to a dataset of movies, categorizing movies into two clusters according to genre. evaluated the performance of your clustering using dendrograms and three quantitative metrics: the accuracy score, the Rand index or adjusted Rand index (ARI), and the silhouette score. At the beginning of this module, you were introduced to two main clustering approaches. Now that you’ve practiced using hierarchical clustering to categorize your documents, you will move on to another approach: k-means clustering. 
 
 ## Section 3: Perform K-Means Clustering on Sentence Embeddings To Group Similar Texts
+
+What is SIL
+
 | Lesson          |         Discription                                | Colab link    |
 |-------------------|----------------------------------------------|------|
 |**Module Introduction: Perform K-Means Clustering on Sentence Embeddings To Group Similar Texts**||explored hierarchical clustering and practiced embedding sentences as vectors using SBERT. use SBERT to represent texts as vectors. introduced to k-means clustering, which you will practice throughout the module. After using k-means clustering to categorize movies, you will evaluate the quality of your clusters using silhouette scores. You will also encounter another type of problem in this module: identifying an item within a set that is representative of the set as a whole.
