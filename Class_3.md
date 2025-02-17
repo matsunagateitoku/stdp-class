@@ -1,8 +1,8 @@
 
 
 
-Class 3: Classifying Documents With Supervised ML
-Part 1: Process Data Sets for Supervised Machine Learning Classification Models
+# Class 3: Classifying Documents With Supervised ML
+## Part 1: Process Data Sets for Supervised Machine Learning Classification Models
 Module Introduction: Process Data Sets for Supervised Machine Learning Classification Models
 Supervised and Unsupervised Machine Learning Techniques
 A Simple Supervised Machine Learning Example
@@ -31,7 +31,7 @@ There are two main machine learning techniques: supervised and unsupervised lear
  
 This section is all about splitting dataset into train, test, and validate sets. 
 
-Part 2: Train a Classification Model To Categorize Text
+## Part 2: Train a Classification Model To Categorize Text
 
 Module Introduction: Train a Classification Model To Categorize Text
 What Is a Model?
