@@ -29,27 +29,23 @@ made a function that retrieves an alphabetically sorted list of unique tokens fr
    - decode()
     def Norm(self) -> object:
         self.LsWords = [unicodedata.normalize('NFKD', word).encode('ascii', 'ignore').decode('utf-8') for word in self.LsWords]
-
-
-dealing with contractions
-simple version can be done via regex or a map
-re library unContract_generic()
-contractions library 
-fix()
-text correction
-punkt
-spelling correction
-textblob library 
-correct () and spellckeck() 
-removing HTML tags  
-stemming and lemmatization 
-nltk stem.PorterStemmer()
-nltk WordNetLemmatizer()
-lemma = dictionary form of a word 
-removing stopwords 
-
-
-Pipe() class, which is a Python class for building custom text preprocessing pipelines.
+  - dealing with contractions
+     - simple version can be done via regex or a map
+     - re library unContract_generic()
+     - contractions library
+- fix()
+- text correction
+- punkt
+- spelling correction
+- textblob library
+- correct () and spellckeck()
+- removing HTML tags
+- stemming and lemmatization
+- nltk stem.PorterStemmer()
+- nltk WordNetLemmatizer()
+- lemma = dictionary form of a word
+- removing stopwords
+- **Pipe() class**, which is a Python class for building custom text preprocessing pipelines.
 call it like this:
 pp = Pipe(LsBookWords, SsStopWords='nltk', SsLex='nltk').Low.Norm.Exp.Words.Stem.Stop.NoNum
 The class methods containing preprocessing code are exposed as properties (with @property decorator). The properties can be called without parenthesis, which is convenient and visually attractive. Every preprocessing step logs the task name and some basic stats to the dictionary DStat, which is stored internally in the instantiated Pipe object. So, if needed, one can evaluate the compression of the original document's lexicon at each step of the pipeline.
