@@ -1,6 +1,13 @@
 # Conducting Semantic and Sentiment Analysis
 
 
+## Section 1: 
+### key concepts
+| Lesson          |         Discription                                | Colab link    |
+|-------------------|----------------------------------------------|------|
+| **Module Intro**   | -  
+
+
 Course Description
 We have all been misunderstood when sending a text message or email, as tone often does not translate well in written communication. Similarly, computers can have a hard time discerning the meaning of words if they are being used sarcastically, such as when we say “Great weather” when it’s raining. If you are automatically processing reviews of your product, a negative review will have many of the same key words as a positive one, so you will need to be able to train a model to distinguish between a good review and a bad review. This is where semantic and sentiment analysis come in.
 
