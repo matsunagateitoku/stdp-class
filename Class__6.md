@@ -20,12 +20,14 @@ In this course, you will examine many kinds of semantic relationships that words
 | Practice Retrieving Synsets and Lemmas Using WordNet     |      |
 | Retrieve Lexical Semantic Relationships Using WordNet      |      |
 | Practice Retrieving Lexical Semantic Relationships Using WordNet    |      |
-|      |      |
-|      |      |
-|      |      |
-|      |      |
-|      |      |
-|      |      |
+| Use Cases for Lexical Semantic Relationships     |      |
+| Semantic Analysis Terminology     |      |
+| Compute the Similarity of Lexical Semantic Relationships Using WordNet     |      |
+| Practice Computing Similarity of Lexical Semantic Relationships Using WordNet     |      |
+| Compute Document Similarity Using WordNet     |      |
+| Practice Computing Document Similarity Using WordNet     |      |
+| Course Project, Part One — Conducting Semantic Analysis Using WordNet   |    |
+| Module Wrap-up: Conduct Semantic Analysis Using WordNet   |   |
 
 
 
