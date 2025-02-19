@@ -1,8 +1,9 @@
 # Conducting Semantic and Sentiment Analysis
 
 
-## Section 1: 
+## Module 1: Conduct Semantic Analysis Using WordNet
 ### key concepts
+- wordnet
 | Lesson          |         Discription                                | Colab link    |
 |-------------------|----------------------------------------------|------|
 | **Module Intro**   | -  
