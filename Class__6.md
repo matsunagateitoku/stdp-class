@@ -8,14 +8,14 @@ In this course, you will examine many kinds of semantic relationships that words
 ## Module 1: Conduct Semantic Analysis Using WordNet
  
 ### key concepts
-- wordnet
+- wordnet: WordNet is a large lexical database of the English language, created by linguist George A. Miller and his colleagues at Princeton University in the mid-1980s. The project aimed to reflect the way humans organize and understand words, grouping them into sets of synonyms called "synsets," each representing a distinct concept. These synsets are interlinked through various semantic relationships, such as hypernyms (generalizations), hyponyms (specific instances), meronyms (part-whole relationships), and antonyms (opposites). The first version of WordNet was released in 1990, and it has since become a key resource in natural language processing (NLP), machine learning, and AI, helping computers better understand and process human language.
 
 ### questions 
 
 | Lesson          |         Discription                                | Colab link    |
 |-------------------|----------------------------------------------|------|
 | **Module Intro**   | One way to compare the contents of many texts is by examining their vocabularies. However, even texts relating to the same topic may not include the exact same set of words — synonyms, part of speech variations, and the use of broad versus specific terms can make it challenging to compare textual vocabulary alone. The process of semantic analysis can help provide insight into the meaning, or sense, behind terms, as well as the relationship between different terms. A computer can then use these relationships to compare document content and categorize documents at scale. | In this module, you will be introduced to many types of lexical semantic relationships, which you will practice retrieving in Python using the lexical database WordNet. Then, you will use these relationships to compare various texts and evaluate their similarity.
-| Introduction to Semantic Analysis | |
+| Introduction to Semantic Analysis **Video** | You can perform a semantic analysis using techniques to extract, represent, and store the meaning of texts. To allow for automated methods that give more discrete semantic classifications than simply extracting meaning from collocated words, experts created WordNet, which is a lexical database containing semantic relationships and meanings for words and phrases.  Here, Professor Melnikov introduces the WordNet database, describes its architecture, and discusses how it’s used in semantic analysis.|- gives background on wordnet
 | Retrieve Synsets and Lemmas Using WordNet     |      |
 | Practice Retrieving Synsets and Lemmas Using WordNet     |      |
 | Retrieve Lexical Semantic Relationships Using WordNet      |      |
