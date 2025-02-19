@@ -15,7 +15,7 @@ In this course, you will examine many kinds of semantic relationships that words
 
 | Lesson          |         Discription                                | Colab link    |
 |-------------------|----------------------------------------------|------|
-| **Module Intro**   | -  
+| **Module Intro**   | One way to compare the contents of many texts is by examining their vocabularies. However, even texts relating to the same topic may not include the exact same set of words — synonyms, part of speech variations, and the use of broad versus specific terms can make it challenging to compare textual vocabulary alone. The process of semantic analysis can help provide insight into the meaning, or sense, behind terms, as well as the relationship between different terms. A computer can then use these relationships to compare document content and categorize documents at scale. | In this module, you will be introduced to many types of lexical semantic relationships, which you will practice retrieving in Python using the lexical database WordNet. Then, you will use these relationships to compare various texts and evaluate their similarity.
 
 
 
