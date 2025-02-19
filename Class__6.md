@@ -10,7 +10,7 @@ In this course, you will examine many kinds of semantic relationships that words
 ### key concepts
 - wordnet
 
-
+### questions 
 
 | Lesson          |         Discription                                | Colab link    |
 |-------------------|----------------------------------------------|------|
@@ -30,6 +30,17 @@ In this course, you will examine many kinds of semantic relationships that words
 | Module Wrap-up: Conduct Semantic Analysis Using WordNet   |   |
 
 
+## Module 2: Conduct Semantic Analysis Using WordNet
+### key concepts
+### questions 
+| Lesson          |         Discription                                | Colab link    |
+|-------------------|----------------------------------------------|------|
 
+## Module 3: Conduct Semantic Analysis Using WordNet
+
+### key concepts
+### questions 
+| Lesson          |         Discription                                | Colab link    |
+|-------------------|----------------------------------------------|------|
 
 
