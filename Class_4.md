@@ -1,8 +1,16 @@
 
 # Class 4: Topic Modeling With Unsupervised Machine Learning
+## Module 1: Identify Keywords and Keyphrases From Text
 
-## Section 1: 
-
+Key Concept: Colocation 
+CODE: Practice Identifying Collocations
+Find coalitions in text (n-grams) and rank their importance with pointwise mutual information (PMI), which is a degree of increased information from the additional word in the phrase, regardless of word order
+do optional practice
+keyword extraction algorithms (KEAs), 
+the nltk implementation of RAKE and the pke implementation of TextRank
+Collocation is the identification of tokens — words, phrases, or other n-grams — that tend to occur together more often than yo
+u might expect by chance.
+Rapid Automatic Keyword Extraction (RAKE) is a simple algorithm used to determine the relative importance of keywords and keyphrases in a document. It works by identifying content words in a corpus and assigning them a score based on their frequency, as well as a less intuitive score known as degree. Words and phrases that appear frequently and as part of long phrases receive higher scores and are thus identified as more valuable keywords and keyphrases.
 | Lesson          |         Discription                                | Colab link    |
 |-------------------|----------------------------------------------|------|
 | **Module Introduction: Identify Keywords and Keyphrases From Text**   | Identify Keywords and Keyphrases From Text    |                                 
@@ -71,21 +79,6 @@
 
 
 
-CLASS 4 Topic Modeling With Unsupervised Machine Learning
-
-
-Module 1: Identify Keywords and Keyphrases From Text
-
-
-Key Concept: Colocation 
-CODE: Practice Identifying Collocations
-Find coalitions in text (n-grams) and rank their importance with pointwise mutual information (PMI), which is a degree of increased information from the additional word in the phrase, regardless of word order
-do optional practice
-keyword extraction algorithms (KEAs), 
-the nltk implementation of RAKE and the pke implementation of TextRank
-Collocation is the identification of tokens — words, phrases, or other n-grams — that tend to occur together more often than yo
-u might expect by chance.
-Rapid Automatic Keyword Extraction (RAKE) is a simple algorithm used to determine the relative importance of keywords and keyphrases in a document. It works by identifying content words in a corpus and assigning them a score based on their frequency, as well as a less intuitive score known as degree. Words and phrases that appear frequently and as part of long phrases receive higher scores and are thus identified as more valuable keywords and keyphrases.
 CODE: Practice Extracting Keywords With RAKE
 from rake_nltk import Rake
 r = Rake(language="english", ranking_metric=Metric.DEGREE_TO_FREQUENCY_RATIO, max_length=3, min_length=1)
