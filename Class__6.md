@@ -22,7 +22,7 @@ In this course, you will examine many kinds of semantic relationships that words
 | Use Cases for Lexical Semantic Relationships     |      |  [text](./class_6/relationships.pdf)  
 | Semantic Analysis Terminology     |      |
 | Compute the Similarity of Lexical Semantic Relationships Using WordNet     |      |
-| Practice Computing Similarity of Lexical Semantic Relationships Using WordNet     |      |
+| Practice Computing Similarity of Lexical Semantic Relationships Using WordNet     |  demonstrated how to compute the similarity score and find the closest hypernym between a pair of synsets. In the "Review" section of this ungraded coding exercise, you will use these techniques as Professor Melnikov presented them in the video. In the "Optional Practice" section of this exercise, you will practice evaluating the similarity between different senses of the same word.    |
 | Compute Document Similarity Using WordNet     |      |
 | Practice Computing Document Similarity Using WordNet     |      |
 | Course Project, Part One — Conducting Semantic Analysis Using WordNet   |    |
