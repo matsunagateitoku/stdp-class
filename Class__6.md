@@ -17,7 +17,10 @@ In this course, you will examine many kinds of semantic relationships that words
 | Introduction to Semantic Analysis **Video** | You can perform a semantic analysis using techniques to extract, represent, and store the meaning of texts. To allow for automated methods that give more discrete semantic classifications than simply extracting meaning from collocated words, experts created WordNet, which is a lexical database containing semantic relationships and meanings for words and phrases.  Here, Professor Melnikov introduces the WordNet database, describes its architecture, and discusses how it’s used in semantic analysis.| - gives background on wordnet
 | Retrieve Synsets and Lemmas Using WordNet **Video**     |  Synsets, which are sets of synonymous lemmas*, are an important part of semantic analysis in WordNet. In this video, Professor Melnikov demonstrates how to access, interpret, and list attributes for synsets and lemmas in WordNet both in English and using the multilingual feature in Python.     | 1. load wordnet from NLTK 
 | Practice Retrieving Synsets and Lemmas Using WordNet     | attributes and methods for synsets and lemmas in wordnet   |[![Open in Google Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/class_6/Synsets_Lemmas.ipynb)|
-| Retrieve Lexical Semantic Relationships Using WordNet      |      |
+| Retrieve Lexical Semantic Relationships Using WordNet      | 
+
+analyze semantic relationships in synsets. evaluate **entailments**, which are verbs causally evolved from some other verb.  **homographs**  many different meanings even though it's written the same. 
+|
 | Practice Retrieving Lexical Semantic Relationships Using WordNet    |      |
 | Use Cases for Lexical Semantic Relationships     |      |
 | Semantic Analysis Terminology     |      |
