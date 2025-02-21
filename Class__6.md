@@ -7,7 +7,7 @@ In this course, you will examine many kinds of semantic relationships that words
 ## Module 1: Conduct Semantic Analysis Using WordNet
  
 ### key concepts
-- wordnet: WordNet is a large lexical database of the English language, created by linguist George A. Miller and his colleagues at Princeton University in the mid-1980s. The project aimed to reflect the way humans organize and understand words, grouping them into sets of synonyms called "synsets," each representing a distinct concept. These synsets are interlinked through various semantic relationships, such as hypernyms (generalizations), hyponyms (specific instances), meronyms (part-whole relationships), and antonyms (opposites). The first version of WordNet was released in 1990, and it has since become a key resource in natural language processing (NLP), machine learning, and AI, helping computers better understand and process human language.
+- **wordnet**: WordNet is a large lexical database of the English language, created by linguist George A. Miller and his colleagues at Princeton University in the mid-1980s. The project aimed to reflect the way humans organize and understand words, grouping them into sets of synonyms called "synsets," each representing a distinct concept. These synsets are interlinked through various semantic relationships, such as hypernyms (generalizations), hyponyms (specific instances), meronyms (part-whole relationships), and antonyms (opposites). The first version of WordNet was released in 1990, and it has since become a key resource in natural language processing (NLP), machine learning, and AI, helping computers better understand and process human language.
 
 ### questions 
 
