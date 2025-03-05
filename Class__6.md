@@ -35,12 +35,12 @@ Task 1 Complete UDF Lemmas(), which takes sLemma lemma word, finds all related s
 |[![Open in Google Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/class_6/Conduct.ipynb)| 
 | Module Wrap-up: Conduct Semantic Analysis Using WordNet   |   |
 
-## Module 2: Conduct Semantic Analysis Using WordNet
+## Module 2: Train a Model To Predict Named Entity Tags Within a Text
 ### key concepts:
 ### questions 
 | Lesson          |         Discription                                | Colab link    |
 |-------------------|----------------------------------------------|------|
-|   |    |
+|Intro   |  Another way to compare documents is by noting whether they reference the same person, location, or date. Named entity recognition (NER) is a technique for extracting and categorizing these key entities, which are often proper nouns. This module will introduce you to a variety of named entities before you practice identifying them within a document. After training a model to predict NER tags, you will then test its performance on an unfamiliar document.  |
 |   |    |
 |   |    |
 |   |    |
