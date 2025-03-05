@@ -41,6 +41,8 @@ Task 1 Complete UDF Lemmas(), which takes sLemma lemma word, finds all related s
 | Lesson          |         Discription                                | Colab link    |
 |-------------------|----------------------------------------------|------|
 
+
+
 ## Module 3: Conduct Semantic Analysis Using WordNet
 
 ### key concepts
