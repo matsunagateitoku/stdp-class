@@ -40,7 +40,13 @@ Task 1 Complete UDF Lemmas(), which takes sLemma lemma word, finds all related s
 ### questions 
 | Lesson          |         Discription                                | Colab link    |
 |-------------------|----------------------------------------------|------|
-
+|   |    |
+|   |    |
+|   |    |
+|   |    |
+|   |    |
+|Wrap up   | Now you have evaluated the content of texts using both lexical semantic analysis and NER. In this module, you were first introduced to several named entity tags available through the SpaCy library. With the help of the GMB Corpus, you were able to practice implementing NER and IOB tagging before building your own NER tagger. Finally, you trained, tested, and applied your tagger to predict named entity tags in an unfamiliar corpus, then evaluated its performance. 
+   |　Train a Model To Predict Named Entity Tags Within a Text
 
 
 ## Module 3: Conduct Semantic Analysis Using WordNet
