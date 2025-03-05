@@ -41,7 +41,7 @@ Task 1 Complete UDF Lemmas(), which takes sLemma lemma word, finds all related s
 | Lesson          |         Discription                                | Colab link    |
 |-------------------|----------------------------------------------|------|
 |Intro   |  Another way to compare documents is by noting whether they reference the same person, location, or date. Named entity recognition (NER) is a technique for extracting and categorizing these key entities, which are often proper nouns. This module will introduce you to a variety of named entities before you practice identifying them within a document. After training a model to predict NER tags, you will then test its performance on an unfamiliar document.  |
-|   |    |
+|   |    | A related task is named entity linking or disambiguation, NEL or NAD. relates to coreference resolution.   state-of-the-art systems can achieve 93% or higher F-measure performance on some standard annotated datasets compared to human performance of about 97%
 |   |    |
 |   |    |
 | Course Project, Part Two — Training a Model to Predict Named Entity Tags Within a Text  | train a CRF model to predict NE tags to recognize movie related named entities and then measure the models performance. The tasks you will perform are based on videos and coding activities in the current module, but they may also rely on your preparation in Python and basic math.   | [![Open in Google Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/class_6/Train.ipynb)|
