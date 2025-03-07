@@ -62,5 +62,13 @@ Task 1 Complete UDF Lemmas(), which takes sLemma lemma word, finds all related s
 ### questions 
 | Lesson          |         Discription                                | Colab link    |
 |-------------------|----------------------------------------------|------|
+|||
+|||
+|||
+|||
+|||
+|||
+|Course Project, Part Three — Conducting Sentiment Analysis Using Various Techniques|In Part Three of the course project, you will write functions to expand VADER’S lexicon using TextBlob’s sentiment analyzer on words that are missing from VADER’s vocabulary.  You will then measure the f1 score for both the initial and expanded VADER lexicon and compare the results. The tasks you will perform are based on videos and coding activities in the current module, but may also rely on your preparation in Python and basic math.|
+|||
 
 
