@@ -7,6 +7,7 @@ Module Introduction: Process Data Sets for Supervised Machine Learning Classific
 Supervised and Unsupervised Machine Learning Techniques
 A Simple Supervised Machine Learning Example
 Examples of Machine Learning Problems in NLP
+
 Training and Validating Data
 Splitting Data Sets
 Split a Simulated Data Set Into Training and Validation Sets
