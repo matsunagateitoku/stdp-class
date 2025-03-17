@@ -4,7 +4,6 @@
 
 Key Concept: Colocation 
 
-
 - CODE: Practice Identifying Collocations
 - Find coalitions in text (n-grams) and rank their importance with pointwise mutual information (PMI), which is a degree of increased information from the additional word in the phrase, regardless of word order
 do optional practice
