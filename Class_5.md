@@ -1,5 +1,6 @@
 # Class 5: Clustering Documents With Unsupervised Machine Learning
 
+
 ## Section 1: Use Metrics To Determine Text Similarity
 ### key concepts
 | Lesson          |         Discription                                | Colab link    |
