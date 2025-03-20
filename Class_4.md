@@ -12,6 +12,7 @@ do optional practice
 - Collocation is the identification of tokens — words, phrases, or other n-grams — that tend to occur together more often than yo
 u might expect by chance.
 Rapid Automatic Keyword Extraction (RAKE) is a simple algorithm used to determine the relative importance of keywords and keyphrases in a document. It works by identifying content words in a corpus and assigning them a score based on their frequency, as well as a less intuitive score known as degree. Words and phrases that appear frequently and as part of long phrases receive higher scores and are thus identified as more valuable keywords and keyphrases.
+
 | Lesson          |         Discription                                | Colab link    |
 |-------------------|----------------------------------------------|------|
 | **Module Introduction: Identify Keywords and Keyphrases From Text**   | Identify Keywords and Keyphrases From Text    |                                 
