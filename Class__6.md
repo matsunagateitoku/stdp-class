@@ -1,6 +1,6 @@
 # Conducting Semantic and Sentiment Analysis
 Course Description:
-In this course, you will examine many kinds of semantic relationships that words can have (such as hypernyms, hyponyms, or meronyms), which go a long way toward extracting the meaning of documents at scale. You will also implement named entity recognition to identify proper nouns within a document and use several techniques to determine the sentiment of text: Is the tone positive or negative? These invaluable skills can easily turn the tide in a difficult project for your team at work or on the path toward achieving your personal goals.
+examine many kinds of semantic relationships that words can have (such as hypernyms, hyponyms, or meronyms), which go a long way toward extracting the meaning of documents at scale. You will also implement named entity recognition to identify proper nouns within a document and use several techniques to determine the sentiment of text: Is the tone positive or negative? These invaluable skills can easily turn the tide in a difficult project for your team at work or on the path toward achieving your personal goals.
 
 [glossary](./class_6/cis576_glossary.pdf) 
 [transcript](./class_6/CIS576_course_transcript.pdf) 
