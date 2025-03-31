@@ -1,5 +1,6 @@
 
 # Class 2: Transforming Text Into Numeric Vectors
+
 ## Section One: Create Sparse Document Vectors From Counters 
 - In this module, you will construct and evaluate two kinds of vectors:
   - the **document term matrix (DTM)**
