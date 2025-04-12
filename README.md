@@ -6,7 +6,8 @@
 
 | Lesson          |         Discription                                | Colab link    |
 |-------------------|----------------------------------------------|------|
-| **Module Introduction: Identify Keywords and Keyphrases From Text**   | Identify Keywords and Keyphrases From Text    |                                 
+| **Module Introduction: Identify Keywords and Keyphrases From Text**   | Identi
+fy Keywords and Keyphrases From Text    |                                 
 | **Introduction to Text Summarization**   | Identify Keywords and Keyphrases From Text    |                                  |
 | **Overview of Unsupervised Learning**   | Identify Keywords and Keyphrases From Text    |                                  |
 | **Module Introduction: Identify Keywords and Keyphrases From Text**   | Identify Keywords and Keyphrases From Text    |                                 
