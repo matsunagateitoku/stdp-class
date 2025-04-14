@@ -36,6 +36,7 @@ Rapid Automatic Keyword Extraction (RAKE) is a simple algorithm used to determin
 |**Module Wrap-up: Identify Keywords and Keyphrases From Text**||
 
 
+
 ## Section 2: 
 | Lesson          |         Discription                                | Colab link    |
 |-------------------|----------------------------------------------|------|
