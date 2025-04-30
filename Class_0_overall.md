@@ -1,4 +1,5 @@
 # Learning Outcomes
+
 Apply classic NLP techniques to text in order to identify patterns and make processing tasks more computationally efficient  
 Transform words into numeric vectors that carry similar semantic information to perform calculations on textual information 
 Apply supervised machine learning classification models in order to assign categories to text 
