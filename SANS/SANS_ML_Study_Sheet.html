@@ -1,0 +1,1378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SANS ML for Cybersecurity — Study Sheet</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #ffffff;
+  --bg-secondary: #f6f5f2;
+  --bg-tertiary: #ececea;
+  --text-primary: #1a1a18;
+  --text-secondary: #5a5a56;
+  --text-muted: #8a8a84;
+  --border: rgba(0,0,0,0.11);
+  --border-strong: rgba(0,0,0,0.2);
+  --blue-bg: #E6F1FB; --blue-text: #0C447C; --blue-acc: #185FA5;
+  --green-bg: #EAF3DE; --green-text: #3B6D11; --green-acc: #639922;
+  --amber-bg: #FAEEDA; --amber-text: #854F0B; --amber-acc: #BA7517;
+  --red-bg: #FCEBEB; --red-text: #A32D2D; --red-acc: #E24B4A;
+  --purple-bg: #EEEDFE; --purple-text: #534AB7; --purple-acc: #7F77DD;
+  --coral-bg: #FAECE7; --coral-text: #993C1D; --coral-acc: #D85A30;
+  --teal-bg: #E1F5EE; --teal-text: #0F6E56; --teal-acc: #1D9E75;
+  --radius-md: 8px; --radius-lg: 12px;
+  --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+  --font-mono: 'SF Mono', 'Fira Code', 'Cascadia Code', Consolas, monospace;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #1c1c1a; --bg-secondary: #252522; --bg-tertiary: #2e2e2b;
+    --text-primary: #e8e8e2; --text-secondary: #a0a09a; --text-muted: #6a6a64;
+    --border: rgba(255,255,255,0.09); --border-strong: rgba(255,255,255,0.18);
+    --blue-bg: #042C53; --blue-text: #B5D4F4; --blue-acc: #378ADD;
+    --green-bg: #173404; --green-text: #C0DD97; --green-acc: #639922;
+    --amber-bg: #412402; --amber-text: #FAC775; --amber-acc: #BA7517;
+    --red-bg: #501313; --red-text: #F7C1C1; --red-acc: #E24B4A;
+    --purple-bg: #26215C; --purple-text: #CECBF6; --purple-acc: #7F77DD;
+    --coral-bg: #4A1B0C; --coral-text: #F5C4B3; --coral-acc: #D85A30;
+    --teal-bg: #04342C; --teal-text: #9FE1CB; --teal-acc: #1D9E75;
+  }
+}
+
+body { font-family: var(--font-sans); background: var(--bg-tertiary); color: var(--text-primary); line-height: 1.65; padding: 2rem 1rem 5rem; }
+
+.page { max-width: 980px; margin: 0 auto; background: var(--bg); border-radius: var(--radius-lg); border: 0.5px solid var(--border); padding: 2.5rem 2.75rem 4rem; }
+
+.page-header { margin-bottom: 2rem; border-bottom: 1.5px solid var(--border); padding-bottom: 1.25rem; }
+.page-header h1 { font-size: 22px; font-weight: 500; }
+.page-header p { font-size: 13px; color: var(--text-muted); margin-top: 5px; }
+
+nav.toc { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 2.75rem; }
+nav.toc a { font-size: 12px; padding: 4px 11px; border: 0.5px solid var(--border-strong); border-radius: 100px; color: var(--text-secondary); text-decoration: none; transition: background .15s, color .15s; }
+nav.toc a:hover { background: var(--bg-secondary); color: var(--text-primary); }
+
+.section { margin-bottom: 3.5rem; }
+.section-header { display: flex; align-items: center; gap: 10px; margin-bottom: 1.25rem; padding-bottom: 8px; border-bottom: 1.5px solid var(--border); }
+.section-num { font-size: 11px; font-weight: 500; padding: 2px 10px; border-radius: 100px; border: 0.5px solid var(--border); color: var(--text-secondary); background: var(--bg-secondary); white-space: nowrap; }
+.section-title { font-size: 18px; font-weight: 500; }
+
+/* cards */
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin-bottom: 1.25rem; }
+.card { background: var(--bg); border: 0.5px solid var(--border); border-radius: var(--radius-lg); padding: 14px 16px; }
+.card.info    { border-left: 3px solid var(--blue-acc); }
+.card.success { border-left: 3px solid var(--green-acc); }
+.card.warning { border-left: 3px solid var(--amber-acc); }
+.card.danger  { border-left: 3px solid var(--red-acc); }
+.card.purple  { border-left: 3px solid var(--purple-acc); }
+.card.coral   { border-left: 3px solid var(--coral-acc); }
+.card.teal    { border-left: 3px solid var(--teal-acc); }
+.card-label { font-size: 11px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 7px; }
+.card-body { font-size: 13.5px; color: var(--text-primary); line-height: 1.6; }
+.card-body p { margin-bottom: 6px; }
+.card-body p:last-child { margin-bottom: 0; }
+.card-body ul { padding-left: 1.1rem; margin-top: 4px; }
+.card-body li { margin: 3px 0; }
+
+/* two-col */
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 1.25rem; }
+@media (max-width: 650px) { .two-col { grid-template-columns: 1fr; } }
+
+/* code */
+.code-label { font-size: 11px; color: var(--text-muted); margin-top: 12px; margin-bottom: 3px; font-weight: 500; }
+.codeblock { font-family: var(--font-mono); font-size: 12px; background: var(--bg-secondary); border: 0.5px solid var(--border); border-radius: var(--radius-md); padding: 11px 14px; overflow-x: auto; white-space: pre; line-height: 1.7; color: var(--text-primary); margin-bottom: 4px; }
+
+/* alerts */
+.alert { border: 0.5px solid var(--border); border-radius: var(--radius-md); padding: 11px 15px; margin: 12px 0; font-size: 13.5px; line-height: 1.6; }
+.alert.tip  { border-left: 3px solid var(--teal-acc);   background: var(--teal-bg);   color: var(--teal-text); }
+.alert.note { border-left: 3px solid var(--blue-acc);   background: var(--blue-bg);   color: var(--blue-text); }
+.alert.warn { border-left: 3px solid var(--amber-acc);  background: var(--amber-bg);  color: var(--amber-text); }
+.alert.exam { border-left: 3px solid var(--purple-acc); background: var(--purple-bg); color: var(--purple-text); }
+.alert strong { font-weight: 600; }
+
+/* formula */
+.formula { font-family: var(--font-mono); font-size: 13px; padding: 10px 14px; background: var(--bg-secondary); border-radius: var(--radius-md); border: 0.5px solid var(--border); margin: 8px 0; color: var(--text-primary); }
+
+/* key-value table */
+.kvtable { width: 100%; border-collapse: collapse; margin-bottom: 1rem; }
+.kvtable tr { border-bottom: 0.5px solid var(--border); }
+.kvtable tr:last-child { border-bottom: none; }
+.kvtable td { padding: 8px 6px; vertical-align: top; font-size: 13.5px; line-height: 1.55; }
+.kvtable td:first-child { font-weight: 600; color: var(--text-secondary); width: 185px; white-space: nowrap; padding-right: 14px; }
+
+/* pills */
+.pills { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 1rem; }
+.pill { display: inline-block; font-size: 12px; padding: 3px 10px; border-radius: 100px; border: 0.5px solid var(--border-strong); background: var(--bg-secondary); color: var(--text-secondary); }
+.pill.blue   { background: var(--blue-bg);   color: var(--blue-text);   border-color: var(--blue-acc); }
+.pill.green  { background: var(--green-bg);  color: var(--green-text);  border-color: var(--green-acc); }
+.pill.amber  { background: var(--amber-bg);  color: var(--amber-text);  border-color: var(--amber-acc); }
+.pill.red    { background: var(--red-bg);    color: var(--red-text);    border-color: var(--red-acc); }
+.pill.purple { background: var(--purple-bg); color: var(--purple-text); border-color: var(--purple-acc); }
+.pill.coral  { background: var(--coral-bg);  color: var(--coral-text);  border-color: var(--coral-acc); }
+.pill.teal   { background: var(--teal-bg);   color: var(--teal-text);   border-color: var(--teal-acc); }
+
+code { font-family: var(--font-mono); font-size: 12px; background: var(--bg-secondary); padding: 1px 6px; border-radius: 4px; border: 0.5px solid var(--border); color: var(--text-primary); }
+h3 { font-size: 15px; font-weight: 600; color: var(--text-primary); margin: 16px 0 7px; }
+p { font-size: 14px; line-height: 1.65; margin-bottom: 10px; color: var(--text-primary); }
+ul.expl { padding-left: 1.2rem; margin: 6px 0 10px; }
+ul.expl li { font-size: 14px; line-height: 1.65; margin: 4px 0; }
+.subsection { margin-bottom: 1.75rem; }
+
+@media print {
+  body { background: white; padding: 0; }
+  .page { border: none; border-radius: 0; padding: 1.5rem; max-width: 100%; }
+  .codeblock { white-space: pre-wrap; }
+  .section { break-inside: avoid; }
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+<div class="page-header">
+  <h1>SANS ML for Cybersecurity — Study Sheet</h1>
+  <p>Compiled from class notes, code examples, and practice exam corrections &mdash; expanded with full explanations</p>
+</div>
+
+<nav class="toc" aria-label="Jump to section">
+  <a href="#py">1 &middot; Python Fundamentals</a>
+  <a href="#data">2 &middot; SQL &amp; MongoDB</a>
+  <a href="#stats">3 &middot; Statistics &amp; Scaling</a>
+  <a href="#bayes">4 &middot; Bayes &amp; Probability</a>
+  <a href="#signal">5 &middot; Signals &amp; Fourier</a>
+  <a href="#cluster">6 &middot; Clustering &amp; PCA</a>
+  <a href="#svm">7 &middot; SVM &amp; Kernels</a>
+  <a href="#trees">8 &middot; Trees &amp; Forests</a>
+  <a href="#nn">9 &middot; Neural Networks</a>
+  <a href="#cnn">10 &middot; CNNs</a>
+  <a href="#loss">11 &middot; Loss &amp; Activation</a>
+  <a href="#key">12 &middot; Quick Reference</a>
+</nav>
+
+
+<!-- ══════════════════════════════════════════════════════════ -->
+<section class="section" id="py">
+<div class="section-header">
+  <span class="section-num">Lab 1.01</span>
+  <span class="section-title">Python Fundamentals</span>
+</div>
+
+<div class="subsection">
+<h3>Core Data Structures</h3>
+<p>Python has five core built-in container types. Understanding which to use matters because they have different performance characteristics and rules about mutability (whether contents can change after creation).</p>
+
+<div class="cards">
+  <div class="card info">
+    <div class="card-label">List</div>
+    <div class="card-body">
+      <p>Ordered, <strong>mutable</strong>, can hold mixed types. The most flexible container. Use when you need to add, remove, or reorder items.</p>
+      <code>a = [1, "hello", 3.14]</code>
+      <p style="margin-top:6px">Access by index: <code>a[0]</code> → 1. Append: <code>a.append(x)</code>. Remove: <code>a.pop()</code>.</p>
+    </div>
+  </div>
+  <div class="card info">
+    <div class="card-label">Tuple</div>
+    <div class="card-body">
+      <p>Ordered, <strong>immutable</strong> — cannot be changed after creation. Faster than lists. Used for fixed collections like coordinates or database rows returned by <code>.items()</code>.</p>
+      <code>t = (1, 2, 3)</code>
+      <p style="margin-top:6px">Unpacking: <code>x, y, z = t</code> assigns each element to a variable.</p>
+    </div>
+  </div>
+  <div class="card info">
+    <div class="card-label">Set</div>
+    <div class="card-body">
+      <p>Unordered collection of <strong>unique</strong> elements. Automatically removes duplicates. Useful for membership testing and deduplication.</p>
+      <code>s = {1, 2, 3, 2}</code> → <code>{1, 2, 3}</code>
+      <p style="margin-top:6px">Fast <code>in</code> lookups: <code>2 in s</code> → True.</p>
+    </div>
+  </div>
+  <div class="card info">
+    <div class="card-label">Dictionary</div>
+    <div class="card-body">
+      <p>Unordered collection of <strong>key-value pairs</strong>. Each key must be unique. This is the go-to structure for structured/labeled data.</p>
+      <code>d = {"name": "Alice", "age": 30}</code>
+      <p style="margin-top:6px">Access: <code>d["name"]</code> → "Alice". Update: <code>d["age"] = 31</code>.</p>
+    </div>
+  </div>
+  <div class="card info">
+    <div class="card-label">Array (NumPy)</div>
+    <div class="card-body">
+      <p>Fixed-size sequence of <strong>same-type</strong> elements. Much faster than Python lists for math. The foundation of all ML work in this course.</p>
+      <code>import numpy as np</code><br>
+      <code>a = np.array([1, 2, 3])</code>
+    </div>
+  </div>
+</div>
+
+<h3>Dictionary Methods — Important for Exam</h3>
+<p>These three methods are the main ways to iterate over a dictionary. The <code>.items()</code> method is especially important — it returns tuples of (key, value) pairs, making it easy to loop over both at once. This pattern appears throughout the course labs and practice tests.</p>
+<div class="codeblock">d = {"name": "Alice", "age": 30, "city": "NY"}
+
+d.keys()    # dict_keys(['name', 'age', 'city'])
+d.values()  # dict_values(['Alice', 30, 'NY'])
+d.items()   # dict_items([('name','Alice'), ('age',30), ('city','NY')])
+
+# The classic iteration pattern:
+for key, value in d.items():
+    print(f"{key}: {value}")</div>
+</div>
+
+<div class="subsection">
+<h3>List Comprehensions</h3>
+<p>A list comprehension is a compact way to build a new list by transforming or filtering an existing one. It is faster than a traditional for loop for the same task and is considered idiomatic Python. The general form is: <code>[expression for item in iterable if condition]</code>.</p>
+<div class="codeblock"># Basic: square each number
+squares = [x**2 for x in range(10)]
+
+# With filter: only even numbers
+evens = [x for x in range(20) if x % 2 == 0]
+
+# Flatten a nested list (appears in exam quiz-average problem)
+nested = [[1,2], [3,4], [5,6]]
+flat = [item for sublist in nested for item in sublist]
+# Result: [1, 2, 3, 4, 5, 6]</div>
+</div>
+
+<div class="subsection">
+<h3>Enumerate — Iterating with an Index</h3>
+<p><code>enumerate()</code> wraps any iterable and yields (index, value) tuples. This is the correct way to loop when you need both the position and the value — avoids the clunky <code>range(len(...))</code> pattern.</p>
+<div class="codeblock">colors = ["red", "green", "blue"]
+
+for i, color in enumerate(colors):
+    print(f"{i}: {color}")
+# 0: red
+# 1: green
+# 2: blue</div>
+</div>
+
+<div class="subsection">
+<h3>Exception Handling (try / except)</h3>
+<p>When code might fail — file not found, bad type conversion, network error — wrap it in a try/except block. Without this, a single error crashes the whole program. In the course labs, this pattern appears in the MongoDB exam question where the loop iterates over objects and gracefully handles index-out-of-range errors.</p>
+<div class="codeblock">try:
+    result = int("not_a_number")   # This will raise ValueError
+except ValueError as e:
+    print(f"Conversion failed: {e}")
+except Exception as e:
+    print(f"Unexpected error: {e}")  # Catches anything else
+finally:
+    print("This always runs")        # Cleanup goes here</div>
+</div>
+
+<div class="subsection">
+<h3>NumPy Core Operations</h3>
+<p>NumPy is the numerical computing backbone of all ML in Python. It stores data in C-optimized arrays and performs operations orders of magnitude faster than Python lists. Every sklearn and TensorFlow function ultimately works with NumPy arrays.</p>
+<div class="codeblock">import numpy as np
+
+a = np.array([1, 2, 3, 5, 7, 11, 13, 17])
+
+a.shape    # (8,)  — tuple of dimension sizes
+a.ndim     # 1     — number of dimensions
+a.reshape(2, 4)    # reshape into 2 rows, 4 cols
+
+# 2D array slicing — critical for data work
+data = np.genfromtxt("data/counts.tsv")
+data[:, 1]    # all rows, column index 1 (second column)
+data[:-12, 1] # all rows except last 12, column 1
+
+np.nan_to_num(data)   # replace NaN with 0
+np.median(data[:, 1]) # median of a column
+np.mean(data[:, 1])   # mean
+np.std(data[:, 1], ddof=1)   # sample standard deviation</div>
+
+<div class="alert note"><strong>ddof=1 explained:</strong> When calculating standard deviation from a sample (not the whole population), use ddof=1. This applies Bessel's correction — dividing by n–1 instead of n — which gives a less biased estimate. In almost all real-world ML work, you have a sample, so ddof=1 is the right choice.</div>
+</div>
+
+<div class="subsection">
+<h3>Exam Pattern: Nested Dictionary Iteration</h3>
+<p>The practice exam included a problem where you had a nested dictionary of students and quiz scores, and needed to calculate the average. This tests several Python skills at once: nested iteration, conditional filtering, and rounding.</p>
+<div class="codeblock"># students = {"Alice": {"Quiz1": [95], "Quiz2": [80], "Final": [88]}, ...}
+
+tab = 0
+i = 0
+for key, subdict in students.items():       # outer loop: each student
+    for k, v in subdict.items():            # inner loop: each score type
+        if k in ('Quiz1', 'Quiz2', 'Quiz3'):
+            tab += int(students[key][k][0]) # [0] because score is a list
+            i += 1
+
+avg = round(tab / i, 2)
+print(tab, i, avg)</div>
+
+<div class="code-label">Recursive file listing — used throughout lab data loading</div>
+<div class="codeblock">import os
+def get_file_list(starting_directory):
+    final_list = []
+    for file in os.listdir(starting_directory):
+        file_name = os.path.join(starting_directory, file)
+        if os.path.isdir(file_name):
+            final_list += get_file_list(file_name)  # recurse into subdirs
+        else:
+            final_list.append(file_name)
+    return final_list</div>
+</div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════════ -->
+<section class="section" id="data">
+<div class="section-header">
+  <span class="section-num">Labs 1.03 – 1.04</span>
+  <span class="section-title">Data Access: SQL, MongoDB &amp; SSH</span>
+</div>
+
+<div class="subsection">
+<h3>Why Databases Matter for Cybersecurity ML</h3>
+<p>Before you can build any ML model, you need data. In security contexts, that data often lives in relational databases (logs, events, alert records) or document stores (unstructured threat intelligence, scraped data). This section covers the mechanics of pulling that data into Python so you can feed it into your models.</p>
+</div>
+
+<div class="subsection">
+<h3>PostgreSQL with psycopg2</h3>
+<p><code>psycopg2</code> is the standard Python adapter for PostgreSQL. The workflow always follows the same three steps: (1) create a connection, (2) create a cursor from that connection, (3) execute SQL and fetch results. The cursor is the object that actually executes queries — you never query directly on the connection object.</p>
+
+<div class="two-col">
+<div>
+<div class="code-label">Connect and query</div>
+<div class="codeblock">import psycopg2
+
+db = psycopg2.connect(
+    host="595data.enclaveforensics.com",
+    database="news",
+    user="sans",
+    password="training"
+)
+
+# Step 1: create cursor
+cursor = db.cursor()
+
+# Step 2: execute query
+cursor.execute("""
+    SELECT * FROM headlines LIMIT 10
+""")
+
+# Step 3: fetch results
+results = cursor.fetchall()  # returns list of tuples
+_ = [print(i) for i in results]</div>
+</div>
+<div>
+<div class="code-label">Inspect database metadata (exam pattern)</div>
+<div class="codeblock"># What columns exist in a table?
+cursor.execute("""
+SELECT column_name, data_type
+FROM information_schema.columns
+WHERE table_name = 'pg_database'
+""")
+result2 = cursor.fetchall()
+_ = [print(i) for i in result2]
+
+# Query specific fields
+cursor.execute("""
+SELECT datacl, datname FROM pg_database
+""")
+result3 = cursor.fetchall()
+# datacl for 'news' row = None (exam answer)</div>
+</div>
+</div>
+
+<div class="alert exam"><strong>Exam note:</strong> An SQL inner join returns rows where data matches in BOTH tables, and includes columns from both. A database is defined as "a collection of tables" — not a file, not an API, not a single table. Think of it like an Excel workbook: each sheet is a table, and the workbook is the database.</div>
+</div>
+
+<div class="subsection">
+<h3>MongoDB with pymongo and mongoengine</h3>
+<p>MongoDB is a document store — instead of rows in tables, it stores JSON-like documents in collections. This is useful for unstructured data like scraped web content or threat intelligence feeds where the schema isn't fixed. <code>pymongo</code> is the low-level driver; <code>mongoengine</code> adds an object-document mapper (ODM) layer so you can define Python classes that map to MongoDB documents.</p>
+
+<p>The key difference from SQL: MongoDB has no strict schema by default. Documents in the same collection can have different fields. This is why the exam emphasized using <code>find_one()</code> to inspect the structure before writing your class definition.</p>
+
+<div class="two-col">
+<div>
+<div class="code-label">Connect and explore</div>
+<div class="codeblock">from pymongo import MongoClient
+from mongoengine import *
+import re
+
+db_address = "192.168.1.5"
+db_port = 27017
+
+connection = MongoClient(
+    f"mongodb://{db_address}:{db_port}"
+)
+connect('scoreserver', host=db_address, port=db_port)
+
+# List all databases
+connection.list_database_names()
+
+# Connect to specific database
+db = connection.scoreserver
+
+# Inspect a document's structure first!
+db['sectionmodels'].find_one()</div>
+</div>
+<div>
+<div class="code-label">Define a Document class (MongoEngine ODM)</div>
+<div class="codeblock"># After inspecting find_one(), define a class
+# that matches the actual document fields:
+class Sectionmodels(Document):
+    index       = IntField()
+    value       = IntField()
+    description = StringField()
+    name        = StringField()
+    questions   = ListField(StringField())
+    question    = StringField()
+    v           = IntField(db_field='__v')
+    # db_field maps Python name to MongoDB field name
+
+# Query all objects
+for obj in Sectionmodels.objects():
+    print(obj.name, obj.description)</div>
+</div>
+</div>
+
+<div class="code-label">MongoDB projection — select only specific fields</div>
+<div class="codeblock"># Projection: include only 'name' and '__v', exclude everything else
+# Value of 1 = include this field; value of 0 = exclude
+db.giacmodels.find({}, {"name": 1, "__v": 1})
+
+# The {} as first arg means "match all documents" (no filter)</div>
+
+<div class="alert exam"><strong>Exam note — Field types:</strong> Use <code>StringField()</code> as the safe default when you're unsure of a field's type — it stores any arbitrary-length string. <code>IntField()</code> and <code>LongField()</code> store specific integer types and will reject non-integer data. <code>MultiLineStringField</code> is a GeoJSON type for storing geographic coordinate lists — not for general text. ID fields are a standard NoSQL feature. MongoDB console command to list databases: <code>show dbs</code>.</div>
+</div>
+
+<div class="subsection">
+<h3>SSH with Paramiko</h3>
+<p>The <code>paramiko</code> library lets you execute shell commands on remote machines from Python. This is used in the course for pulling data from remote servers to analyze. The workflow: create an SSH client, set a policy for unknown hosts, connect, execute a command, read the output.</p>
+<div class="codeblock">import paramiko
+
+ssh = paramiko.SSHClient()
+# AutoAddPolicy automatically accepts new host keys (use carefully in prod)
+ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+ssh.connect("hostname", username="user", password="pass")
+
+stdin, stdout, stderr = ssh.exec_command("ls -la /var/log")
+output = stdout.read().decode()
+print(output)
+ssh.close()</div>
+</div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════════ -->
+<section class="section" id="stats">
+<div class="section-header">
+  <span class="section-num">Labs 2.01 – 2.03</span>
+  <span class="section-title">Descriptive Statistics &amp; Data Scaling</span>
+</div>
+
+<div class="subsection">
+<h3>Why Statistics for Cybersecurity?</h3>
+<p>Descriptive statistics let you characterize data without having to look at every individual point. In security contexts, this is powerful: you can detect anomalies (a host sending unusual amounts of data), identify encrypted files (by their statistical uniformity), and determine which features are most useful for classification models. These techniques work on any numerical data — network flows, file sizes, request rates, byte values.</p>
+</div>
+
+<div class="subsection">
+<h3>Measures of Central Tendency</h3>
+<div class="cards">
+  <div class="card info">
+    <div class="card-label">Mean (Average)</div>
+    <div class="card-body">
+      <p>Sum of all values divided by count. Sensitive to outliers — a single extremely large value pulls the mean upward significantly. Good for symmetric, well-behaved distributions.</p>
+      <p><code>np.mean(data)</code></p>
+      <p>Example: [1, 2, 3, 4, 100] → mean = 22. The 100 drags it up even though most values are near 2–3.</p>
+    </div>
+  </div>
+  <div class="card info">
+    <div class="card-label">Median</div>
+    <div class="card-body">
+      <p>The middle value when sorted. Not affected by outliers. Better than mean for skewed data like network packet sizes or financial data.</p>
+      <p><code>np.median(data)</code></p>
+      <p>Example: [1, 2, 3, 4, 100] → median = 3. The 100 has no effect. <strong>Exam answer: 24543.5</strong></p>
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="subsection">
+<h3>Measures of Spread / Deviation</h3>
+<p>Knowing the center of your data isn't enough — you also need to know how spread out it is. Three measures of spread, each with different properties:</p>
+
+<div class="cards">
+  <div class="card warning">
+    <div class="card-label">Variance</div>
+    <div class="card-body">
+      <p>The average of the <em>squared</em> differences from the mean. Squaring ensures that negative and positive deviations don't cancel out, and gives extra weight to large deviations.</p>
+      <p><strong>Formula:</strong> Σ(xi − mean)² / (n−1)</p>
+      <p>Problem: the result is in squared units (e.g., "square meters" if measuring meters), which is hard to interpret intuitively. That's why we take the square root → standard deviation.</p>
+    </div>
+  </div>
+  <div class="card warning">
+    <div class="card-label">Standard Deviation</div>
+    <div class="card-body">
+      <p>The square root of variance. This puts the spread measure back in the <strong>same units as the original data</strong>, making it interpretable. If your data is in bytes, std dev is also in bytes.</p>
+      <p><code>np.std(data, ddof=1)</code> — ddof=1 for sample data</p>
+      <p>High std dev = data is widely spread. Low std dev = data is clustered tightly around the mean. Encrypted data has very high, consistent std dev because all byte values are equally likely.</p>
+    </div>
+  </div>
+  <div class="card warning">
+    <div class="card-label">Median Absolute Deviation (MAD)</div>
+    <div class="card-body">
+      <p>The most <em>robust</em> measure of spread — not influenced by outliers at all. The calculation:</p>
+      <ul>
+        <li>Find the median of the dataset</li>
+        <li>Subtract the median from each value and take the absolute value</li>
+        <li>Find the median of those absolute differences</li>
+      </ul>
+      <p>Because it uses medians throughout (not means), a single extreme value cannot distort the result. Preferred for heavy-tailed distributions.</p>
+    </div>
+  </div>
+</div>
+
+<div class="code-label">Computing all three deviation measures</div>
+<div class="codeblock">import numpy as np
+
+data = np.array([10, 20, 30, 40, 50, 1000])  # note the outlier
+
+# Variance
+variance = np.var(data, ddof=1)
+print(f"Variance: {variance:.2f}")  # heavily inflated by 1000
+
+# Standard deviation
+std_dev = np.std(data, ddof=1)
+print(f"Std Dev: {std_dev:.2f}")    # square root of variance, same scale as data
+
+# Median Absolute Deviation (manual — scipy also has it)
+median = np.median(data)
+abs_deviations = np.abs(data - median)
+mad = np.median(abs_deviations)
+print(f"MAD: {mad:.2f}")            # unaffected by the 1000</div>
+
+<div class="alert exam"><strong>Exam: which measure is most robust to outliers?</strong> Always MAD (Median Absolute Deviation). Standard deviation translates variance to the same scale as the data — this is its key advantage over raw variance. Robust Scaling uses median + IQR for the same robustness reason.</div>
+</div>
+
+<div class="subsection">
+<h3>Data Scaling — Why It Matters</h3>
+<p>Many ML algorithms measure distance between data points (K-Means uses Euclidean distance; SVM uses dot products). If one feature ranges from 0–1 and another from 0–1,000,000, the large-scale feature will dominate all distance calculations and the small-scale feature will have essentially zero influence. Scaling normalizes all features to a comparable range so every feature contributes fairly.</p>
+
+<div class="cards">
+  <div class="card success">
+    <div class="card-label">MinMax Scaler</div>
+    <div class="card-body">
+      <p>Scales every feature to exactly the [0, 1] range. Formula: (x − min) / (max − min). Simple and intuitive, but <strong>sensitive to outliers</strong> — one extreme value will compress all other values into a tiny range.</p>
+      <p>Use when you know your data has no extreme outliers and you need values in a specific bounded range.</p>
+    </div>
+  </div>
+  <div class="card success">
+    <div class="card-label">StandardScaler</div>
+    <div class="card-body">
+      <p>Transforms data to have <strong>zero mean and unit variance</strong>. Each feature: subtract the mean, divide by std dev. Result: values are centered at 0, most fall between -3 and +3.</p>
+      <p>The go-to scaler before PCA, KMeans, DBSCAN, and SVM. Works well when data is approximately normally distributed.</p>
+      <p><code>from sklearn.preprocessing import StandardScaler</code></p>
+    </div>
+  </div>
+  <div class="card success">
+    <div class="card-label">Robust Scaler</div>
+    <div class="card-body">
+      <p>Uses the <strong>median and interquartile range (IQR)</strong> instead of mean and std dev. Because these statistics ignore the extremes, outliers have no effect on the scaling. Best choice for data with significant outliers or heavy-tailed distributions.</p>
+      <p><code>from sklearn.preprocessing import RobustScaler</code></p>
+    </div>
+  </div>
+</div>
+
+<div class="code-label">StandardScaler in practice</div>
+<div class="codeblock">from sklearn.preprocessing import StandardScaler
+
+scaler = StandardScaler()
+scaler.fit(X_train)          # compute mean and std from training data only
+X_train_scaled = scaler.transform(X_train)
+X_test_scaled  = scaler.transform(X_test)  # use SAME scaler on test data!
+# Never fit on test data — that would leak information</div>
+</div>
+
+<div class="subsection">
+<h3>Detecting Encrypted Data with Statistics</h3>
+<p>This lab showed a practical security application of descriptive statistics. Normal files (text, images, executables) have non-uniform byte distributions — certain byte values appear much more frequently than others. Encrypted data, by design, looks like random noise — all 256 byte values appear with roughly equal frequency. You can detect this by looking at the histogram (should be flat for encrypted data) or the standard deviation of byte-value counts (should be very low — no byte value stands out).</p>
+
+<div class="codeblock">from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
+import os
+
+# How AES-GCM encryption works (for reference)
+key = os.urandom(32)    # 256-bit key — truly random
+iv  = os.urandom(16)    # initialization vector — unique per encryption
+aes_cipher = Cipher(algorithms.AES(key), modes.GCM(iv))
+encryptor = aes_cipher.encryptor()
+ciphertext = encryptor.update(file_bytes) + encryptor.finalize()
+
+# To detect encryption: read file bytes and plot histogram
+# Encrypted: flat histogram (all values ~= 256/256 = 0.39% each)
+# Normal:    spiky histogram (some bytes much more common)</div>
+</div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════════ -->
+<section class="section" id="bayes">
+<div class="section-header">
+  <span class="section-num">Lab 2.04</span>
+  <span class="section-title">Probability &amp; Bayes' Theorem</span>
+</div>
+
+<div class="subsection">
+<h3>The Core Problem: Classification Under Uncertainty</h3>
+<p>We rarely know for certain whether an event is malicious or benign. We have evidence (features of a network packet, words in an email, process behavior) and we want to compute the <em>probability</em> of a given outcome. Bayes' Theorem gives us a principled mathematical way to do this by combining prior knowledge (how common is malware in general?) with the likelihood of observed evidence.</p>
+</div>
+
+<div class="subsection">
+<h3>Bayes' Theorem</h3>
+<p>The formula: <strong>P(Y|X) = P(X|Y) × P(Y) / P(X)</strong></p>
+<p>Reading it in plain English: "The probability of Y being true given that we observed X, equals: the probability of observing X if Y were true, times the base rate of Y, divided by the overall probability of observing X."</p>
+
+<div class="formula">P(Y|X)  =  P(X|Y) × P(Y) / P(X)
+"probability of Y given X  =  likelihood × prior / evidence"</div>
+
+<table class="kvtable">
+  <tr><td>P(Y|X)</td><td><strong>Posterior</strong> — what we want to know. "What is the probability of Y being true now that I've seen X?" This is the updated belief after observing evidence.</td></tr>
+  <tr><td>P(X|Y)</td><td><strong>Likelihood</strong> — "How likely is it to observe this evidence X, if Y is actually true?" E.g., "How likely is this email to contain these words, if it actually is spam?"</td></tr>
+  <tr><td>P(Y)</td><td><strong>Prior</strong> — the base rate. "How common is Y in general, before I've seen any evidence?" E.g., "What fraction of all emails are spam?"</td></tr>
+  <tr><td>P(X)</td><td><strong>Evidence</strong> — "How common is this evidence overall, regardless of Y?" Often used as a normalizing constant.</td></tr>
+</table>
+
+<div class="alert exam"><strong>Exam calculation:</strong> P(X|Y)=0.08, P(Y)=0.15, P(X)=0.06<br>
+P(Y|X) = 0.08 × 0.15 / 0.06 = 0.012 / 0.06 = <strong>0.20 (20%)</strong></div>
+</div>
+
+<div class="subsection">
+<h3>Naive Bayes Classifier</h3>
+<p>The Naive Bayes classifier applies Bayes' Theorem to classification problems like spam detection. It is "naive" because it makes the simplifying assumption that all features (e.g., all words in an email) are <strong>probabilistically independent</strong> of each other — seeing the word "free" doesn't change the probability of seeing "money" in the same email. This assumption is almost never literally true, but in practice the classifier still works remarkably well.</p>
+
+<p>The algorithm works by computing, for each class (spam/not-spam), the probability that a document with these features belongs to that class. It picks the class with the highest probability.</p>
+
+<div class="cards">
+  <div class="card amber">
+    <div class="card-label">Frequentist Approach</div>
+    <div class="card-body"><p>Counts raw occurrences of events. "Out of 1000 emails, 150 were spam. Therefore spam probability = 15%." No prior probability is used. Results depend entirely on what was observed in the training data.</p></div>
+  </div>
+  <div class="card amber">
+    <div class="card-label">Bayesian Approach</div>
+    <div class="card-body"><p>Starts with a prior belief and updates it as new evidence arrives. This is more principled when you have prior knowledge and allows the model to handle new data gracefully. Email spam filters are the canonical real-world example.</p></div>
+  </div>
+</div>
+</div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════════ -->
+<section class="section" id="signal">
+<div class="section-header">
+  <span class="section-num">Lab 2.05</span>
+  <span class="section-title">Signals &amp; the Fourier Transform</span>
+</div>
+
+<div class="subsection">
+<h3>Why Signal Analysis in Cybersecurity?</h3>
+<p>Network traffic, system call counts, log event rates — these are all time series: sequences of values measured at regular intervals. Hidden within these sequences can be periodic patterns (a process phoning home every 60 seconds, a clock signal in firmware, a periodic scan) that are invisible when you look at raw values but become obvious when you decompose the signal into its frequency components. That's what the Fourier Transform does.</p>
+</div>
+
+<div class="subsection">
+<h3>Fourier's Core Insight</h3>
+<p>Jean-Baptiste Joseph Fourier showed that <strong>any periodic function can be represented as a sum of sine waves</strong> of different frequencies and amplitudes. This is profound: no matter how complex or irregular a repeating signal looks, it can be expressed as a combination of simple, pure sine waves.</p>
+
+<p>The practical implication: take any time series (network packet counts per second, CPU usage over time), apply the Fourier Transform, and you get a list of frequencies and their strengths. Prominent frequencies correspond to repeating patterns in your data. A spike at frequency F means something repeating with period 1/F seconds.</p>
+
+<p>Example: a square wave (like a digital clock signal, or binary network traffic) looks very different from a sine wave, but it can be built up from a sine wave plus harmonics with two, three, and four terms — each term making the waveform more "square-like."</p>
+</div>
+
+<div class="subsection">
+<h3>The Nyquist Frequency (Shannon Limit)</h3>
+<p>There is a fundamental limit to what frequencies you can detect given your sampling rate. The <strong>Nyquist-Shannon sampling theorem</strong> states that to accurately detect a frequency F, you must sample at least 2F times per second. Equivalently, the highest frequency you can detect is <strong>exactly half your sampling rate</strong>.</p>
+
+<div class="formula">Nyquist Frequency  =  Sampling Rate / 2
+Detectable range: 0 Hz  to  Sf / 2</div>
+
+<table class="kvtable">
+  <tr><td>Sampling rate 300 kHz</td><td>Nyquist = 150 kHz &mdash; you can detect frequencies from 0 to 150,000 Hz</td></tr>
+  <tr><td>Sampling rate 86,400/day</td><td>Nyquist = 43,200 &mdash; you can detect cycles as fast as 2 per day</td></tr>
+  <tr><td>Sampling rate 600 kHz</td><td>Nyquist = 300 kHz</td></tr>
+</table>
+
+<div class="alert exam"><strong>Exam: sampling rate 300 kHz → Nyquist = 150 kHz.</strong> If you sample too slowly (below twice the signal frequency), you get aliasing — the signal appears at a false, lower frequency. The Shannon Limit is a hard physical/mathematical constraint.</div>
+</div>
+
+<div class="subsection">
+<h3>Sine Wave Properties</h3>
+<p>Important for the exam — know these four attributes of sine functions:</p>
+<ul class="expl">
+  <li><strong>Periodic:</strong> the pattern repeats at regular intervals (the "period")</li>
+  <li><strong>Continuous:</strong> no jumps or breaks in the function</li>
+  <li><strong>Trigonometric:</strong> defined by a ratio in a right triangle — NOT a polynomial function</li>
+  <li><strong>Cycles infinitely:</strong> the oscillation between +1 and −1 never stops</li>
+</ul>
+
+<div class="code-label">Using NumPy's rfft for real-valued signals</div>
+<div class="codeblock">from numpy.fft import rfft
+import numpy as np
+
+# rfft = "real Fast Fourier Transform"
+# Use for real-valued signals (not complex)
+# Returns only the positive frequency components (half the spectrum)
+
+signal = np.array([...])  # your time-series data
+frequencies = rfft(signal)
+
+# The magnitude tells you how strong each frequency component is
+magnitudes = np.abs(frequencies)
+
+# Nyquist: valid frequencies are 0 to sampling_rate/2
+# Any component beyond Nyquist is aliasing, not real signal</div>
+</div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════════ -->
+<section class="section" id="cluster">
+<div class="section-header">
+  <span class="section-num">Labs 3.01 – 3.03</span>
+  <span class="section-title">Clustering: K-Means, Elbow Method, DBSCAN &amp; PCA</span>
+</div>
+
+<div class="subsection">
+<h3>What is Clustering?</h3>
+<p>Clustering is <strong>unsupervised learning</strong> — you don't have labels telling you which class each data point belongs to. Instead, the algorithm discovers natural groupings in the data on its own. In cybersecurity, clustering is useful for: grouping similar network connections, identifying families of malware, finding unusual clusters of user behavior (anomalies), and exploring large unlabeled datasets.</p>
+</div>
+
+<div class="subsection">
+<h3>K-Means Clustering</h3>
+<p>K-Means divides data into exactly <em>k</em> clusters. The algorithm:</p>
+<ul class="expl">
+  <li>Randomly initializes k centroids (one per cluster)</li>
+  <li>Assigns each data point to its nearest centroid (measured by Euclidean distance)</li>
+  <li>Recomputes each centroid as the mean of all points assigned to it</li>
+  <li>Repeats until centroids stop moving (convergence)</li>
+</ul>
+
+<p>A <strong>centroid</strong> is the geometric center of a cluster — the mean (average) position of all points in that cluster. K-Means uses Euclidean distance, which means all features must be on comparable scales — <strong>always scale your data before K-Means</strong>.</p>
+
+<div class="alert warn"><strong>Critical:</strong> K-Means assumes clusters are roughly spherical and equally sized. It performs poorly on irregular shapes. For arbitrary-shape clusters, use DBSCAN instead.</div>
+
+<div class="code-label">K-Means full workflow</div>
+<div class="codeblock">from sklearn.cluster import KMeans
+from sklearn.preprocessing import StandardScaler
+import pandas as pd
+
+# 1. Prepare data — K-Means needs all-numeric input
+df = pd.get_dummies(df, columns=['protocol'])  # one-hot encode text fields
+df['port'] = pd.to_numeric(df['port'], errors='coerce')
+df.drop('timestamp', axis=1, inplace=True)     # drop irrelevant columns
+df = df.dropna()                               # drop rows with NaN
+
+# 2. Scale — required before K-Means
+scaler = StandardScaler()
+X_scaled = scaler.fit_transform(df.to_numpy())
+
+# 3. Cluster
+km = KMeans(n_clusters=4, random_state=42)
+km.fit(X_scaled)
+labels = km.labels_     # cluster assignment for each row (0, 1, 2, 3)
+
+# 4. Examine results
+df['cluster'] = labels
+print(df.groupby('cluster').mean())   # profile each cluster</div>
+</div>
+
+<div class="subsection">
+<h3>The Elbow Method — Choosing k</h3>
+<p>K-Means requires you to specify k (number of clusters) in advance, but you often don't know the right k. The elbow method helps you find it algorithmically.</p>
+
+<p>The metric used is <strong>WCSS (Within-Cluster Sum of Squares)</strong> — the total squared distance from each point to its assigned centroid. When k is too small, clusters contain dissimilar points, so WCSS is large. As k increases, clusters get tighter and WCSS decreases. At some point, adding more clusters gives diminishing returns — the improvement in WCSS per additional cluster drops sharply. This inflection point (the "elbow") is the optimal k.</p>
+
+<div class="codeblock">wcss = []
+k_range = range(1, 11)
+for k in k_range:
+    km = KMeans(n_clusters=k, random_state=42)
+    km.fit(X_scaled)
+    wcss.append(km.inertia_)   # inertia_ = WCSS
+
+import matplotlib.pyplot as plt
+plt.plot(k_range, wcss, 'bo-')
+plt.xlabel('Number of clusters (k)')
+plt.ylabel('WCSS')
+plt.title('Elbow Method — find the bend')
+# Look for where the slope flattens — that k is your answer</div>
+</div>
+
+<div class="subsection">
+<h3>DBSCAN — Density-Based Clustering</h3>
+<p>DBSCAN (Density-Based Spatial Clustering of Applications with Noise) takes a completely different approach from K-Means. Instead of assigning every point to a cluster, it identifies regions of high density and calls everything else <strong>noise</strong>. This makes it especially good for anomaly detection.</p>
+
+<p>DBSCAN defines clusters based on two parameters: <code>eps</code> (the maximum distance between two points to be considered neighbors) and <code>min_samples</code> (minimum number of neighbors required to form a dense region). Points with enough neighbors form clusters; isolated points get label <code>-1</code> (noise/anomaly).</p>
+
+<p>Key advantages over K-Means: doesn't require specifying k, handles arbitrarily shaped clusters, and naturally identifies outliers as noise. In security work, those noise points (label = -1) are your anomalies.</p>
+
+<div class="codeblock">from sklearn.cluster import DBSCAN
+from sklearn.preprocessing import StandardScaler
+
+# Scale first (DBSCAN is distance-based)
+scaler = StandardScaler()
+scaled = scaler.fit_transform(data)
+
+db = DBSCAN(eps=0.5, min_samples=5)
+labels = db.fit_predict(scaled)
+
+# Anomalies = points with label -1
+anomalies = data[labels == -1]
+print(f"Found {len(anomalies)} anomalous records")</div>
+</div>
+
+<div class="subsection">
+<h3>PCA — Principal Component Analysis</h3>
+<p>PCA is a dimensionality reduction technique. When you have many features (say, 50 columns in your dataframe), it's hard to visualize the data or understand its structure. PCA finds new axes — called <strong>principal components</strong> — that capture the most variance in the data, and projects your data onto those axes. You can then keep just 2 or 3 components for visualization while retaining most of the information.</p>
+
+<p><strong>Eigenvectors and eigenvalues</strong> are the mathematical backbone of PCA. An eigenvector of a matrix is a special vector that, when multiplied by the matrix, only scales (doesn't rotate). The scaling factor is the eigenvalue. In PCA, eigenvectors are the principal component directions, and eigenvalues tell you how much variance each component captures. The eigenvector with the largest eigenvalue is the first (most important) principal component.</p>
+
+<div class="alert exam"><strong>Exam: eigenvectors = principal components.</strong> The largest eigenvalue corresponds to the component that explains the most variance. Exam answer: 4.50000000 (largest eigenvalue). Eigenvectors can act as "axes within a data sample" to measure loss/variance.</div>
+
+<div class="codeblock">from sklearn.decomposition import PCA
+from sklearn.preprocessing import StandardScaler
+
+# Always scale before PCA
+scaler = StandardScaler()
+scaled = scaler.fit_transform(data)
+
+# Reduce to 3 dimensions for visualization
+pca = PCA(n_components=3)
+reduced = pca.fit_transform(scaled)
+
+# How much variance does each component explain?
+print(pca.explained_variance_ratio_)
+# e.g., [0.42, 0.28, 0.15] means first 3 components explain 85% of variance
+
+# 3D scatter plot (Matplotlib)
+from mpl_toolkits.mplot3d import Axes3D
+import matplotlib.pyplot as plt
+fig = plt.figure()
+ax = fig.add_subplot(111, projection='3d')
+ax.scatter(reduced[:,0], reduced[:,1], reduced[:,2])</div>
+
+<div class="code-label">Key pandas operations for data prep</div>
+<div class="codeblock">df.get_dummies(df, columns=['col'])  # one-hot encode categorical columns
+pd.to_numeric(df['col'], errors='coerce')  # convert to number, NaN on failure
+df.apply(func, axis=1)              # apply a function to every row (axis=1) or column (axis=0)
+df.drop('col', axis=1, inplace=True) # remove a column
+df.to_numpy()                       # convert DataFrame to NumPy array for sklearn</div>
+</div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════════ -->
+<section class="section" id="svm">
+<div class="section-header">
+  <span class="section-num">Labs 3.04 – 3.05</span>
+  <span class="section-title">Support Vector Machines &amp; Kernel Functions</span>
+</div>
+
+<div class="subsection">
+<h3>What is a Support Vector Machine?</h3>
+<p>An SVM is a supervised classification algorithm. Given labeled training data (examples tagged as "malicious" or "benign"), it learns a decision boundary that separates the two classes. What makes SVMs special is <em>how</em> they choose that boundary: they maximize the margin — the gap between the boundary and the nearest training examples from each class. A wider margin generally means better generalization to new data.</p>
+
+<p>By convention: <strong>X = training data (features), Y = training labels (expected outputs)</strong>. This notation is universal across sklearn and TensorFlow.</p>
+</div>
+
+<div class="subsection">
+<h3>Key Concepts</h3>
+<div class="cards">
+  <div class="card purple">
+    <div class="card-label">Hyperplane</div>
+    <div class="card-body">
+      <p>The decision boundary. In 2D data, it's a line. In 3D, it's a plane. In higher dimensions, it's a hyperplane — a flat subspace one dimension lower than the data space. The SVM finds the hyperplane that best separates the classes.</p>
+    </div>
+  </div>
+  <div class="card purple">
+    <div class="card-label">Margin</div>
+    <div class="card-body">
+      <p>The distance between the hyperplane and the closest data points from each class. The SVM's goal is to maximize this margin. A larger margin means more breathing room — the classifier is less likely to misclassify new points that are slightly different from training data.</p>
+    </div>
+  </div>
+  <div class="card purple">
+    <div class="card-label">Support Vectors</div>
+    <div class="card-body">
+      <p>The data points from each class that lie closest to the hyperplane. These are the only points that matter for defining the boundary — moving any other point wouldn't change the result. The "support" in the name refers to how these points literally support (define) the hyperplane.</p>
+    </div>
+  </div>
+  <div class="card purple">
+    <div class="card-label">Soft Boundary (Soft Margin)</div>
+    <div class="card-body">
+      <p>A hard boundary requires perfect separation — every training point must be on the correct side. A soft boundary allows some points to be on the wrong side of the margin, trading perfect training accuracy for better generalization. In security: not every repeat failed login is malicious — soft boundaries accommodate these edge cases instead of forcing a hard threshold.</p>
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="subsection">
+<h3>The Kernel Trick</h3>
+<p>Many real-world datasets are not linearly separable — you can't draw a straight line (or flat hyperplane) to separate the classes. One solution: project the data into a higher-dimensional space where it becomes linearly separable, then find the hyperplane there.</p>
+
+<p>The kernel trick makes this computationally feasible. Instead of actually computing the high-dimensional coordinates (which would be expensive), a kernel function computes the <em>dot product</em> of two points in that high-dimensional space directly from the original coordinates. This gives us the power of high-dimensional separation without the cost. Think of it as "adding dimensions" to the problem so the boundary can flex and curve.</p>
+
+<div class="cards">
+  <div class="card">
+    <div class="card-label">Linear ('linear')</div>
+    <div class="card-body"><p>No transformation — uses the original feature space. The boundary is a flat hyperplane. Fast and interpretable. Use when your data is already linearly separable (or close to it).</p></div>
+  </div>
+  <div class="card">
+    <div class="card-label">Polynomial ('poly')</div>
+    <div class="card-body"><p>Maps data into a polynomial feature space. Can capture interactions between features (e.g., x₁ × x₂). <code>degree</code> controls the polynomial degree (default 3); higher degree = more complex boundary. <code>coef0</code> is the constant term.</p></div>
+  </div>
+  <div class="card">
+    <div class="card-label">RBF / Gaussian ('rbf')</div>
+    <div class="card-body"><p>The Radial Basis Function kernel. Measures similarity between points using Gaussian (bell-curve) distance. The most commonly used kernel — works well in practice for most problems. <code>gamma</code> controls how far influence of each training point reaches.</p></div>
+  </div>
+  <div class="card">
+    <div class="card-label">Sigmoid ('sigmoid')</div>
+    <div class="card-body"><p>Based on the hyperbolic tangent function — similar to the activation function in neural networks. Less commonly used. Parameters: <code>gamma</code> and <code>coef0</code>.</p></div>
+  </div>
+</div>
+
+<div class="formula">RBF kernel: k(xi, xj) = e^(−γ ‖xi − xj‖²)
+
+γ (gamma) controls the "reach" of each training point.
+High γ: points only influence nearby area → complex, tight boundary.
+Low γ: influence spreads far → smoother, simpler boundary.
+
+The Gaussian kernel is a specific instance of the more general Radial Basis Function.
+Unlike the Gaussian, γ in the general RBF can be replaced by functions of any order,
+which is why it is said that RBF can create boundaries in infinite dimensions.</div>
+
+<div class="code-label">Training and evaluating an SVC</div>
+<div class="codeblock">from sklearn.svm import SVC
+
+# Train — kernel='linear' is simplest and most interpretable
+svc = SVC(kernel='linear', verbose=True)
+svc.fit(X_train, y_train)
+
+# Try other kernels:
+# SVC(kernel='rbf', gamma='scale')  — most flexible, often best
+# SVC(kernel='poly', degree=3)       — captures feature interactions
+
+# Predict
+predictions = svc.predict(X_test)
+
+# Measure accuracy manually (as done in the lab)
+accuracy = 0
+for i in range(len(y_test)):
+    if y_test[i] == predictions[i]:
+        accuracy += 1
+accuracy = accuracy / len(y_test)
+print(f"Accuracy: {accuracy:.2%}")</div>
+
+<div class="alert exam"><strong>AUCROC</strong> = Area Under the Receiver Operating Characteristic Curve. It measures classification performance across all possible decision thresholds, not just one threshold. A value of 1.0 = perfect; 0.5 = random guessing. <strong>Confusion matrix</strong> tells you which categories are being confused for which other categories, and is used to calculate precision (TP / (TP+FP)), recall, and accuracy. Exam calculation: TP=20, FN=5, FP=10, TN=15 → accuracy = (20+15)/50 = 0.70.</div>
+</div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════════ -->
+<section class="section" id="trees">
+<div class="section-header">
+  <span class="section-num">Labs 3.06 – 3.07</span>
+  <span class="section-title">Decision Trees &amp; Random Forests</span>
+</div>
+
+<div class="subsection">
+<h3>Decision Trees</h3>
+<p>A decision tree is a flowchart-like structure where each internal node tests a feature, each branch represents a test outcome, and each leaf node gives a final prediction. They are among the most interpretable ML models — you can actually trace exactly why a given prediction was made, step by step. This is valuable in security for explainability: "This process was flagged because it had >100 MB network traffic AND it connected to a non-standard port AND it was run by a service account."</p>
+
+<div class="cards">
+  <div class="card warning">
+    <div class="card-label">Tree Components</div>
+    <div class="card-body">
+      <ul>
+        <li><strong>Root Node:</strong> The top — represents the entire dataset. The first split happens here.</li>
+        <li><strong>Internal Nodes:</strong> Feature tests ("Is port > 1024?", "Does filename contain .exe?"). Each splits the data further.</li>
+        <li><strong>Branches:</strong> The paths connecting nodes — represent the yes/no or range outcome of a test.</li>
+        <li><strong>Leaf Nodes:</strong> The bottom — final predictions. In classification: a class label. In regression: a numerical value. Leaf nodes have <strong>Gini = 0</strong> (pure — all same class).</li>
+      </ul>
+    </div>
+  </div>
+  <div class="card warning">
+    <div class="card-label">How Splitting Works</div>
+    <div class="card-body">
+      <p>At each node, the tree tries every possible feature and threshold, and picks the split that best separates the classes. "Best" is measured by the <strong>Gini impurity</strong> (or entropy): a split is good if the resulting child nodes are more "pure" (dominated by one class) than the parent.</p>
+      <p>Gini = 0: pure node, one class only. Gini = 0.5: maximum impurity, equal mix of classes. The algorithm greedily minimizes Gini at each step.</p>
+    </div>
+  </div>
+  <div class="card warning">
+    <div class="card-label">Critical Limitations</div>
+    <div class="card-body">
+      <ul>
+        <li><strong>Always classifies:</strong> A decision tree cannot say "I don't know." It always produces an output. This is a key weakness for security applications — you can't get a "no match" response.</li>
+        <li><strong>Overfitting:</strong> Deep trees memorize training data perfectly but perform poorly on new data. Mitigate with max_depth, min_samples_split, or switch to Random Forest.</li>
+        <li><strong>High variance:</strong> Small changes in training data can produce very different trees.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="alert exam"><strong>Key exam facts about decision trees:</strong> (1) A Decision Tree cannot tell a user if it cannot classify something — it always produces output. (2) Classification always takes a finite number of steps. (3) The bottom (leaf) nodes always have Gini = 0. (4) Gini coefficient of 0.5 = maximum impurity, appears as a threshold on the exam. (5) Decision trees can process large datasets while keeping computation costs low. (6) Many features → risk of overfitting.</div>
+</div>
+
+<div class="subsection">
+<h3>Random Forests — Ensembles Fix the Problems</h3>
+<p>A Random Forest is an <strong>ensemble</strong> of many decision trees, built using a technique called <strong>Bagging (Bootstrap Aggregating)</strong>. Instead of training one deep tree that overfits, you train many trees on random subsets of the data, and combine their predictions. The intuition: each tree has different errors, but those errors are random and uncorrelated. When you average many imperfect-but-different predictions, the errors cancel out and the signal remains.</p>
+
+<p>The key mechanism: each tree is trained on a <strong>bootstrap sample</strong> (random sample with replacement — some rows may appear multiple times, others not at all) and considers only a random <strong>subset of features</strong> at each split. The output of the Bagging process is a set of trees generated from randomly selected features.</p>
+
+<div class="cards">
+  <div class="card success">
+    <div class="card-label">For Classification</div>
+    <div class="card-body"><p>Each tree votes for a class. The final prediction is the <strong>majority vote</strong> — the class that most trees voted for.</p></div>
+  </div>
+  <div class="card success">
+    <div class="card-label">For Regression</div>
+    <div class="card-body"><p>Each tree predicts a number. The final prediction is the <strong>average</strong> of all trees' predictions.</p></div>
+  </div>
+  <div class="card success">
+    <div class="card-label">Gradient Boosting (Different Approach)</div>
+    <div class="card-body"><p>Trees built sequentially, each correcting the previous tree's errors. Generally more accurate than Random Forest but slower and more prone to overfitting. Use <code>GradientBoostingClassifier</code>.</p></div>
+  </div>
+</div>
+
+<div class="alert note"><strong>Bias vs. Variance:</strong> High bias = consistent but wrong (the model is too simple to capture the pattern). High variance = inconsistent — works great on training data but poorly on new data (overfitting). Random Forests reduce variance while keeping bias low. A single deep decision tree has low bias but high variance.</div>
+
+<div class="codeblock">from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
+
+rf = RandomForestClassifier(
+    n_estimators=100,    # number of trees — more is usually better up to a point
+    max_features='sqrt', # each split considers sqrt(n_features) — reduces correlation between trees
+    random_state=42
+)
+rf.fit(X_train, y_train)
+predictions = rf.predict(X_test)
+
+# Feature importance — which features does the forest rely on most?
+importances = rf.feature_importances_
+print(sorted(zip(importances, feature_names), reverse=True)[:10])</div>
+</div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════════ -->
+<section class="section" id="nn">
+<div class="section-header">
+  <span class="section-num">Labs 4.01 – 4.02</span>
+  <span class="section-title">Linear Regression &amp; Neural Networks</span>
+</div>
+
+<div class="subsection">
+<h3>Linear Regression</h3>
+<p>Linear regression models the relationship between a continuous input variable (x) and a continuous output (y) as a straight line: <strong>y = mx + b</strong>. The slope m tells you how much y changes for a unit increase in x. The intercept b is the y-value when x = 0. This is used in the course for fitting trend lines to time-series security data (e.g., tracking how byte counts change over time to detect anomalous growth).</p>
+
+<div class="formula">y = mx + b
+m = slope (rate of change)
+b = y-intercept (value when x = 0)
+Derivative of y with respect to x = m (constant rate of change)</div>
+
+<div class="code-label">np.polyfit — fitting a trend line (exam pattern)</div>
+<div class="codeblock">import numpy as np
+
+# Fit a line to all rows except the last 12, using column 1
+# stats is a 2D array: rows = time points, columns = metrics
+bytes_fit = np.polyfit(
+    range(0, stats.shape[0] - 12),  # x values: indices 0 to (n-12)
+    stats[:-12, 1],                  # y values: column 1, all but last 12 rows
+    deg=1                            # degree 1 = linear (straight line)
+)
+print(bytes_fit)
+# Returns [slope, intercept]
+# Exam answer: [9.02751976e+07  2.12457644e+10]
+# slope ≈ 9e7 means bytes increase by ~90 million per time step
+
+# Predict future values:
+predicted = np.polyval(bytes_fit, future_x_values)</div>
+
+<div class="alert note"><strong>Bollinger Bands</strong> (introduced in Lab 4.01): a financial/signal analysis tool. Three components: (1) a moving average (center line), (2) an upper band at +2 standard deviations, (3) a lower band at −2 standard deviations. Values outside the bands signal unusual activity — applicable to network traffic monitoring just as in financial markets.</div>
+</div>
+
+<div class="subsection">
+<h3>What is Machine Learning, Really?</h3>
+<p>Machine learning is the process where a computer uses an optimization algorithm (like gradient descent) to repeatedly adjust the coefficients in a function, minimizing a loss value, until the function's predictions are as accurate as possible. The model doesn't "understand" — it adjusts numbers until the outputs match the training labels. This is why the course distinguishes between "Machine Learning" and "Understanding."</p>
+
+<p>A <strong>derivative</strong> is central to this process: it measures how the value of one term in a function changes relative to another. Gradient descent uses the derivative of the loss function with respect to each weight to know which direction to adjust that weight to reduce the loss.</p>
+</div>
+
+<div class="subsection">
+<h3>Neural Networks — Architecture</h3>
+<p>A neural network is a stack of layers, each consisting of neurons. Each neuron takes inputs, multiplies them by weights, sums them, and passes the result through an <strong>activation function</strong>. The output of one layer becomes the input of the next. By stacking many layers with non-linear activation functions, the network can learn arbitrarily complex patterns.</p>
+
+<div class="cards">
+  <div class="card coral">
+    <div class="card-label">Hyperparameters</div>
+    <div class="card-body"><p>Everything that isn't a learned weight: number of layers, neurons per layer, activation functions, optimizer, learning rate, batch size, epochs, dropout rate. These are chosen by the human, not learned by the model. Tuning them is called hyperparameter optimization.</p></div>
+  </div>
+  <div class="card coral">
+    <div class="card-label">Bag of Words (BoW)</div>
+    <div class="card-body"><p>A text representation method. Build a vocabulary of all unique words in your corpus. Represent each document as a vector: 1 if that word appears, 0 if not (multi-hot encoding). Does not capture word order or meaning — just presence. Despite this limitation, it works well for spam classification because spam emails tend to share distinctive vocabulary.</p></div>
+  </div>
+  <div class="card coral">
+    <div class="card-label">Autoencoder</div>
+    <div class="card-body"><p>A neural network trained to reproduce its own input as output. The network is forced to compress the input through a narrow middle layer (the <strong>bottleneck / latent space</strong>) and then reconstruct it. What the network learns in the bottleneck is a compact representation of the input's essential structure. When a new input produces high reconstruction error, it's anomalous.</p></div>
+  </div>
+</div>
+
+<div class="code-label">Building a dense neural network with Keras (for text classification)</div>
+<div class="codeblock">from tensorflow.keras import models, layers
+
+# The first layer must know how many input features (vocab size for BoW)
+model = models.Sequential([
+    layers.Dense(16, activation='relu', input_shape=(vocab_size,)),
+    layers.Dense(16, activation='relu'),
+    layers.Dropout(0.5),        # randomly zero 50% of neurons to prevent overfitting
+    layers.Dense(1, activation='sigmoid')   # sigmoid for binary output (0 to 1)
+])
+
+model.compile(
+    optimizer='adam',           # Adam = adaptive gradient descent variant
+    loss='binary_crossentropy', # correct loss for binary classification
+    metrics=['accuracy']
+)
+
+model.fit(
+    X_train, y_train,
+    epochs=10,
+    batch_size=32,
+    validation_data=(X_val, y_val)  # monitor for overfitting
+)</div>
+</div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════════ -->
+<section class="section" id="cnn">
+<div class="section-header">
+  <span class="section-num">Labs 5.01 – 5.03</span>
+  <span class="section-title">Convolutional Neural Networks (CNNs)</span>
+</div>
+
+<div class="subsection">
+<h3>What CNNs Do Differently</h3>
+<p>Standard dense (fully connected) networks treat each input feature independently. CNNs exploit <strong>local structure</strong> — the idea that nearby values are related. In an image, adjacent pixels form edges and shapes. In a byte sequence (malware binary), adjacent bytes form instructions. In network traffic, adjacent time points form patterns. CNNs use filters (kernels) that slide across the input, detecting local patterns wherever they appear.</p>
+</div>
+
+<div class="subsection">
+<h3>The Kernel / Filter in a CNN</h3>
+<p>A CNN kernel is a small matrix (typically 3×3 or 5×5) of learned weights. The kernel slides across the input (this operation is called convolution), computing a dot product at each position. The result is a feature map — a representation of where and how strongly a particular pattern (edge, motif, byte sequence) appears in the input.</p>
+
+<p>Each layer of a CNN can have many kernels, each learning to detect a different feature. Early layers detect simple features (edges, short byte patterns); deeper layers combine these into complex features (shapes, instruction sequences, protocol structures).</p>
+
+<div class="alert warn"><strong>Know BOTH kernel definitions for the exam:</strong>
+<br>• <strong>CNN kernel</strong> = a filter (3×3 or 5×5 matrix) applied to input data via convolution. Detects features.
+<br>• <strong>SVM kernel</strong> = a mathematical function that adds dimensions to enable non-linear decision boundaries.
+<br>These are completely different concepts that share the same word. The exam tests this distinction directly.</div>
+</div>
+
+<div class="subsection">
+<h3>Convolution Padding</h3>
+<p>When a kernel slides over the input, what happens at the edges? Two common strategies:</p>
+<ul class="expl">
+  <li><strong>Valid convolution (no padding):</strong> The kernel never goes outside the input. Output is smaller than the input — specifically, it shrinks by (kernel_size − 1) in each dimension. A 3×3 kernel on a 10×10 input gives an 8×8 output. This is the exam-relevant case: <em>valid convolution results in a reduction in the overall size of the matrix</em>.</li>
+  <li><strong>Same convolution (zero-padding):</strong> The input is padded with zeros around the border so the kernel can cover the edges. Output size matches input size. Used when you want to preserve spatial dimensions.</li>
+</ul>
+</div>
+
+<div class="subsection">
+<h3>Autoencoders in CNNs</h3>
+<p>A convolutional autoencoder uses CNN layers for both compression and reconstruction. The encoder path uses convolutions to progressively compress the input. The bottleneck (latent space) is the most compressed representation — it has learned to encode the essential structure of the input. The decoder path uses deconvolutions (transposed convolutions) to reconstruct the original. High reconstruction error = anomaly.</p>
+
+<div class="alert exam"><strong>Exam definition:</strong> An autoencoder is "a network trained to match its output to the input data." The intent is to learn the essence of the input. The bottleneck layer = latent space. A kernel in CNNs is a filter applied to input data. A confusion matrix tells which categories are confused for which other categories. A logistic regression performs categorization problems.</div>
+</div>
+
+<div class="subsection">
+<h3>Security Applications of CNNs</h3>
+<ul class="expl">
+  <li><strong>Malware detection:</strong> Treat a binary file's bytes as a 1D or 2D sequence; a CNN learns byte patterns that distinguish malware families from benign files.</li>
+  <li><strong>Ham vs. Spam (CNN style):</strong> Treat text as sequences of character or word embeddings; CNN kernels detect n-gram patterns that signal spam.</li>
+  <li><strong>Protocol anomaly detection:</strong> Model network packets as byte sequences; the CNN learns what valid protocol structure looks like and flags deviations.</li>
+  <li><strong>Log anomaly detection:</strong> Encode log entries as sequences; train an autoencoder on normal logs, then flag high-reconstruction-error entries as anomalies.</li>
+  <li><strong>CAPTCHA solving:</strong> Classic image recognition task — CNNs learn visual character patterns to identify characters in CAPTCHAs.</li>
+</ul>
+</div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════════ -->
+<section class="section" id="loss">
+<div class="section-header">
+  <span class="section-num">All Labs</span>
+  <span class="section-title">Loss Functions &amp; Activation Functions</span>
+</div>
+
+<div class="subsection">
+<h3>What is a Loss Function?</h3>
+<p>A loss function quantifies how wrong the model's predictions are. It produces a single number — the loss — that summarizes the discrepancy between predicted and actual values across the training set. During training, the optimizer (typically gradient descent) adjusts the model's weights to minimize this loss. Choosing the right loss function for your task matters enormously: the wrong choice can cause the model to fail to converge or optimize for the wrong objective.</p>
+</div>
+
+<div class="subsection">
+<h3>Loss Functions</h3>
+<div class="cards">
+  <div class="card danger">
+    <div class="card-label">Mean Squared Error (MSE)</div>
+    <div class="card-body">
+      <p>Average of squared differences between predicted and actual values. Because errors are squared, large errors are penalized much more than small ones — the slope of the loss increases as error grows. This can be a problem: a single large outlier can dominate the loss and cause the optimizer to chase it at the expense of everything else.</p>
+      <p>Problem: <strong>vanishing loss</strong> — if your predictions are very close to the targets, MSE can become so small that gradient descent can no longer make meaningful updates.</p>
+    </div>
+  </div>
+  <div class="card danger">
+    <div class="card-label">Root Mean Squared Error (RMSE)</div>
+    <div class="card-body">
+      <p>Square root of MSE. This returns the error to the same units as the original data (interpretable). More importantly, it is the fix when <strong>the loss vanishes</strong> — RMSE keeps gradients meaningful even when errors are small. If your model stops improving because MSE is near zero but accuracy is still poor, switch to RMSE.</p>
+    </div>
+  </div>
+  <div class="card danger">
+    <div class="card-label">Mean Absolute Error (MAE)</div>
+    <div class="card-body">
+      <p>Average of absolute (not squared) differences. Treats all error magnitudes equally — a large error is not penalized disproportionately. More robust to outliers than MSE, but its gradient is constant (doesn't change near zero), which can slow convergence.</p>
+    </div>
+  </div>
+  <div class="card danger">
+    <div class="card-label">Huber Loss</div>
+    <div class="card-body">
+      <p>Combines the best of MSE and MAE. For small errors (below a threshold δ), it behaves like MSE (smooth gradients). For large errors (above δ), it behaves like MAE (doesn't explode). <strong>Use when a network fails to converge because the difference between output and input becomes very large</strong> — it prevents the loss from growing out of control.</p>
+    </div>
+  </div>
+  <div class="card danger">
+    <div class="card-label">Binary Cross-Entropy</div>
+    <div class="card-body">
+      <p>The standard loss for <strong>binary classification</strong> (spam/not-spam, malware/benign). Works with a sigmoid activation on the output layer. Penalizes confident wrong predictions very heavily — if you say "99% probability of spam" but it's not spam, the loss is very large. This is the loss function for ham vs. spam classifiers.</p>
+    </div>
+  </div>
+  <div class="card danger">
+    <div class="card-label">Categorical Cross-Entropy</div>
+    <div class="card-body">
+      <p>For <strong>multi-class classification</strong>. Calculated as the sum of logarithms of all softmax activations for the correct class predictions. Works with a softmax output layer that produces a probability distribution across all classes. Use when you have more than two possible output classes.</p>
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="subsection">
+<h3>Gradient Descent — The Optimizer</h3>
+<p>Gradient descent is the algorithm that actually trains the network. After each batch of training examples, it computes the gradient of the loss function with respect to every weight — this is the direction in weight-space that would increase the loss the most. Gradient descent then moves the weights in the <em>opposite</em> direction (downhill), reducing the loss. The step size is the learning rate.</p>
+
+<p>Most named optimizers (Adam, RMSProp, Adagrad, SGD with momentum) are all variations of gradient descent that add techniques like adaptive learning rates or momentum to converge faster and more reliably. If asked what approach minimizes the loss function in deep learning: gradient descent.</p>
+</div>
+
+<div class="subsection">
+<h3>Activation Functions</h3>
+<p>An activation function determines whether and how strongly a neuron "fires" — it's applied to the weighted sum of inputs before passing the result to the next layer. Without non-linear activation functions, stacking layers would have no benefit (the whole network would collapse to a single linear transformation). Non-linear activations are what give neural networks their expressive power.</p>
+
+<div class="cards">
+  <div class="card success">
+    <div class="card-label">ReLU (Rectified Linear Unit)</div>
+    <div class="card-body">
+      <p>f(x) = max(0, x). If input is positive, pass it through unchanged. If negative, output zero. Simple, fast, and works well in practice. The most commonly used hidden-layer activation.</p>
+      <p>Risk: <strong>dying ReLU</strong> — if a neuron's inputs are always negative, it outputs zero forever and never updates. Leaky ReLU fixes this.</p>
+    </div>
+  </div>
+  <div class="card success">
+    <div class="card-label">Leaky ReLU</div>
+    <div class="card-body">
+      <p>Like ReLU, but for negative inputs, instead of outputting zero, it outputs a small fraction (e.g., 0.01 × input). This prevents neurons from dying. Useful when you have sparse gradients (many zero-gradient situations).</p>
+      <p><code>model.add(layers.LeakyReLU(alpha=0.01))</code></p>
+    </div>
+  </div>
+  <div class="card success">
+    <div class="card-label">Sigmoid</div>
+    <div class="card-body">
+      <p>Squashes input to (0, 1). Used on the output layer for binary classification — the output can be interpreted as a probability. Not good for hidden layers because it saturates (gradients vanish) for very large or very small inputs.</p>
+    </div>
+  </div>
+  <div class="card success">
+    <div class="card-label">Softmax</div>
+    <div class="card-body">
+      <p>Converts a vector of raw scores into a probability distribution that sums to 1. Used on the output layer for multi-class classification. Pairs with categorical cross-entropy loss.</p>
+    </div>
+  </div>
+</div>
+
+<div class="alert exam"><strong>Exam — Dropout:</strong> Dropout is a regularization technique, not an activation function. During training, it randomly sets a fraction of neurons' outputs to zero at each step. This forces the network to learn redundant representations and prevents over-reliance on any single neuron. The result: reduced overfitting. <code>model.add(Dropout(0.5))</code> drops 50% of neurons during training (all neurons active at inference time).</div>
+</div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════════ -->
+<section class="section" id="key">
+<div class="section-header">
+  <span class="section-num">All Topics</span>
+  <span class="section-title">Quick Reference &amp; Exam Crib Sheet</span>
+</div>
+
+<table class="kvtable">
+  <tr><td>Autoencoder</td><td>Neural network trained to match output to input. Learns the "essence" of data. Bottleneck = latent space. Used for anomaly detection. High reconstruction error = anomaly.</td></tr>
+  <tr><td>AUCROC</td><td>Area Under ROC Curve. Measures classification performance across all possible decision thresholds. 1.0 = perfect; 0.5 = random. Based on thresholds, not a single cutoff.</td></tr>
+  <tr><td>Bagging</td><td>Bootstrap Aggregating. Train many models on random subsets of data. Combine predictions. Output = trees from randomly selected features. Reduces variance.</td></tr>
+  <tr><td>Bayes' Theorem</td><td>P(Y|X) = P(X|Y) × P(Y) / P(X). Exam calculation: .08 × .15 / .06 = 0.20 (20%). Basis for spam filters.</td></tr>
+  <tr><td>Binary cross-entropy</td><td>Loss function for binary classification (0/1). Pairs with sigmoid output.</td></tr>
+  <tr><td>Categorical cross-entropy</td><td>Loss for multi-class classification. Sum of log of softmax activations. Pairs with softmax output.</td></tr>
+  <tr><td>Centroid</td><td>Geometric mean/center of a cluster. The mean position of all points in that cluster. K-Means updates centroids iteratively.</td></tr>
+  <tr><td>Confusion matrix</td><td>Table of TP/FN/FP/TN. Tells which classes are confused for which others. Used to calculate precision, recall, accuracy. Accuracy = (TP+TN) / total.</td></tr>
+  <tr><td>Database</td><td>A collection of tables. Not a file, not an API, not a single row. Think: Excel workbook. Each sheet = table.</td></tr>
+  <tr><td>Decision tree — no abstain</td><td>A decision tree CANNOT say "I don't know." It always classifies. Classification takes finite steps. Leaf nodes have Gini = 0.</td></tr>
+  <tr><td>Derivative</td><td>How the value of one term in a function changes relative to another. Gradient descent uses derivatives to update weights.</td></tr>
+  <tr><td>Dropout</td><td>Regularization layer. Randomly zeros neurons during training. Prevents overfitting. Neurons are all active at inference time.</td></tr>
+  <tr><td>Eigenvectors (PCA)</td><td>= Principal components. New axes that maximize variance. Largest eigenvalue = most important component. Exam: 4.50000000.</td></tr>
+  <tr><td>Elbow method</td><td>Plot WCSS vs k for K-Means. The "elbow" (where slope flattens) = optimal k. WCSS = Within-Cluster Sum of Squares.</td></tr>
+  <tr><td>Flat iterator</td><td><code>.flat</code> — iterable reference that allows viewing an array as a 1D structure.</td></tr>
+  <tr><td>Fourier series</td><td>Any periodic function can be expressed as a sum of sine waves. Used to find hidden frequencies in time-series data.</td></tr>
+  <tr><td>Gini coefficient</td><td>Measures node impurity. 0 = pure (one class). 0.5 = maximum impurity (equal mix). Exam value: 0.5.</td></tr>
+  <tr><td>Gradient descent</td><td>The optimizer. Moves weights downhill on the loss surface. All named optimizers (Adam, RMSProp) are variants. Minimizes the loss function.</td></tr>
+  <tr><td>High bias</td><td>Consistent but wrong — model too simple to learn the pattern. Underfitting.</td></tr>
+  <tr><td>High variance</td><td>Inconsistent — works on training data, fails on new data. Overfitting.</td></tr>
+  <tr><td>Huber loss</td><td>MSE + MAE hybrid. Use when large errors prevent convergence. Prevents loss from exploding.</td></tr>
+  <tr><td>Hyperparameters</td><td>Everything NOT learned by the network: layers, neurons, activation functions, optimizer, learning rate, epochs, batch size, dropout rate.</td></tr>
+  <tr><td>Kernel (CNN)</td><td>A filter (3×3 matrix) that slides across input to detect features. Applied to the input data via convolution.</td></tr>
+  <tr><td>Kernel (SVM)</td><td>A function that adds dimensions to create non-linear decision boundaries. Types: linear, poly, rbf, sigmoid.</td></tr>
+  <tr><td>Latent space</td><td>The bottleneck layer of an autoencoder. The most compressed internal representation of the input.</td></tr>
+  <tr><td>Leaky ReLU</td><td>Activation function. Like ReLU but allows small gradient for negative values. Prevents dying neurons.</td></tr>
+  <tr><td>MAD</td><td>Median Absolute Deviation. Most robust spread measure. Immune to outliers. = median of |xi − median(X)|.</td></tr>
+  <tr><td>Margin (SVM)</td><td>Gap between the hyperplane and nearest points from each class. SVM maximizes this margin.</td></tr>
+  <tr><td>Multi-hot encoding</td><td>Vector with 1 for each vocabulary word present in the document. Basis of Bag of Words representation.</td></tr>
+  <tr><td>Naive Bayes</td><td>Classifier assuming all features are probabilistically independent. Effective for spam classification despite this oversimplification.</td></tr>
+  <tr><td>Nyquist Frequency</td><td>= Sampling rate / 2. Maximum detectable frequency. Exam: 300 kHz sampling → 150 kHz Nyquist.</td></tr>
+  <tr><td>PCA</td><td>Dimensionality reduction. Finds principal components (eigenvectors) that explain maximum variance. Always scale before PCA.</td></tr>
+  <tr><td>Polynomial order</td><td>Determined by the highest exponent in the expression.</td></tr>
+  <tr><td>Prior (Bayes)</td><td>Base rate — probability of Y before seeing any evidence. P(Y).</td></tr>
+  <tr><td>Posterior (Bayes)</td><td>Updated probability after observing evidence. P(Y|X). What we want to compute.</td></tr>
+  <tr><td>Projection (MongoDB)</td><td><code>db.col.find({}, {"field": 1})</code> — specifies which fields to include in results. Value of 1 = include.</td></tr>
+  <tr><td>RBF kernel</td><td>Radial Basis Function. Related to Gaussian kernel. γ controls spread. Can create boundaries in infinite dimensions.</td></tr>
+  <tr><td>ReLU</td><td>Rectified Linear Unit. f(x) = max(0, x). Most common hidden-layer activation. Risk: dying ReLU.</td></tr>
+  <tr><td>RMSE</td><td>Root Mean Squared Error. Use when the loss vanishes. Keeps gradients meaningful.</td></tr>
+  <tr><td>Robust scaling</td><td>Uses median + IQR. Resistant to outliers. Better than StandardScaler for skewed data.</td></tr>
+  <tr><td>Sine wave</td><td>Periodic, continuous, trigonometric (not polynomial), cycles infinitely between −1 and +1.</td></tr>
+  <tr><td>Soft boundary (SVM)</td><td>Allows acceptable misclassification within a margin. More realistic for real-world data with noise.</td></tr>
+  <tr><td>Standard deviation</td><td>Square root of variance. Same units as original data. Key: translates variance back to an interpretable scale.</td></tr>
+  <tr><td>StringField() (MongoDB)</td><td>Safe default for unknown fields. Stores any length string. IntField/LongField = integers only. MultiLineStringField = GeoJSON coords.</td></tr>
+  <tr><td>Support vectors</td><td>Training points closest to the hyperplane. Defining points of the SVM decision boundary.</td></tr>
+  <tr><td>Valid convolution</td><td>No padding. Output is smaller than input. Size reduction = kernel_size − 1 per dimension.</td></tr>
+  <tr><td>Variance</td><td>Sum of squared differences from mean, divided by n−1. In squared units — hard to interpret directly.</td></tr>
+  <tr><td>WCSS</td><td>Within-Cluster Sum of Squares. Metric used in elbow method. Minimized by K-Means at convergence.</td></tr>
+</table>
+
+<div class="pills">
+  <span class="pill purple">Kernel (CNN) = filter ≠ Kernel (SVM) = dimension adder</span>
+  <span class="pill green">Always scale before KMeans / DBSCAN / SVM / PCA</span>
+  <span class="pill amber">Bayes: P(Y|X) = P(X|Y)×P(Y) / P(X) → exam: 20%</span>
+  <span class="pill coral">Nyquist = sample_rate ÷ 2 → 300kHz → 150kHz</span>
+  <span class="pill red">Gini = 0 → pure leaf &nbsp;|&nbsp; Gini = 0.5 → max impurity</span>
+  <span class="pill blue">MAD = median of |xi − median(X)| → most robust</span>
+  <span class="pill green">Dropout zeros neurons → prevents overfitting</span>
+  <span class="pill purple">Autoencoder output = input &nbsp;|&nbsp; bottleneck = latent space</span>
+  <span class="pill amber">Valid convolution → no padding → output size reduces</span>
+  <span class="pill teal">std dev = √variance = same scale as data</span>
+  <span class="pill red">RMSE → use when loss vanishes</span>
+  <span class="pill coral">Decision tree always classifies — never abstains</span>
+  <span class="pill blue">Eigenvectors = principal components → largest = 4.50000000</span>
+  <span class="pill purple">Fourier: any periodic function = sum of sine waves</span>
+  <span class="pill green">Gradient descent minimizes loss — all optimizers are variants</span>
+  <span class="pill amber">StringField() = safe MongoDB default for unknown types</span>
+</div>
+
+</section>
+
+</div>
+</body>
+</html>
