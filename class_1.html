@@ -16,19 +16,21 @@
 </head>
 <body>
   <h1>Class 1 — Natural Language Processing Fundamentals</h1>
-  <p>This class introduces core natural language processing ideas: keyword extraction, similarity, topic awareness, and extraction of summary text.</p>
-  <p class="note">Use these notebooks to explore NLP fundamentals before moving into numeric vector representations and machine learning.</p>
+  <p>This class introduces natural language processing fundamentals through practical text cleaning, tokenization, and preprocessing workflows.</p>
+  <p class="note">Class 1 is focused on turning raw text into useful tokens and reducing vocabulary size while preserving meaning.</p>
   <h2>Course Description</h2>
-  <p>This class introduces core Natural Language Processing (NLP) techniques and practical preprocessing steps used to prepare text for analysis and modeling. Topics include string operations, regular expressions, tokenization, frequency analysis, document cleaning, normalization (unicode/ASCII), spelling correction, stemming and lemmatization, POS tagging, chunking, and building reusable preprocessing pipelines. Tools used: Python standard library, <em>nltk</em>, <em>textblob</em>, and others.</p>
+  <p>This class teaches the fundamentals of NLP preprocessing and early-stage analysis. Topics include basic string manipulation (<code>lower()</code>, <code>split()</code>), regex pattern matching, frequency counting with <code>collections.Counter</code>, tokenization, unicode normalization, contraction handling, stopword removal, spelling correction, stemming, lemmatization, and building reusable preprocessing pipelines.</p>
   <h2>Modules & Key Concepts</h2>
   <ul>
-    <li><strong>Mod 1: Finding Simple Patterns</strong> — string methods, regex, counting with <code>collections.Counter</code>, token lists and frequency analysis.</li>
-    <li><strong>Preprocessing to Reduce Vocabulary</strong> — tokenization, sentence splitting, unicode normalization, stopword removal, contraction handling, removing HTML, spelling correction, and building a preprocessing <em>Pipe</em> to compose steps.</li>
-    <li><strong>Stemming & Lemmatization</strong> — Porter stemmer, WordNet lemmatizer, POS-aware lemmatization to reduce vocabulary size.</li>
-    <li><strong>Tagging & Parsing</strong> — sentence/word tokenizers, <code>nltk.pos_tag()</code>, POS-to-WordNet tag conversion, <code>nltk.RegexpParser</code> chunking, building chunk trees and shallow parsing.</li>
+    <li><strong>Finding simple patterns in text</strong> — lowercase, split, regex, <code>Counter()</code>, and <code>most_common()</code> to count tokens and discover frequent words.</li>
+    <li><strong>Preprocessing to reduce vocabulary</strong> — parsing raw documents, sentence splitting, normalizing unicode to ASCII, removing punctuation and numbers, and cleaning with NLTK.</li>
+    <li><strong>Pipeline design</strong> — a custom <code>Pipe</code> class with chained preprocessing operations exposed as properties like <code>Low</code>, <code>Norm</code>, <code>Exp</code>, <code>Words</code>, <code>Stem</code>, <code>Stop</code>, and <code>NoNum</code>.</li>
+    <li><strong>Stemming and lemmatization</strong> — <code>nltk.stem.PorterStemmer</code>, <code>WordNetLemmatizer</code>, and POS-aware lemma conversion to reduce vocabulary variance.</li>
+    <li><strong>Parsing and tagging</strong> — <code>nltk.sent_tokenize()</code>, <code>nltk.word_tokenize()</code>, <code>nltk.pos_tag()</code>, Penn Treebank to WordNet POS conversion, and <code>nltk.RegexpParser</code> chunking for phrase extraction.</li>
   </ul>
   <h2>Course Project / Tasks</h2>
-  <p>Hands-on project tasks include implementing a preprocessing pipeline class with methods/properties like <code>Low(), NoNum(), Words(), Stop(), Norm(), Exp(), Stem(), Lem()</code>, writing assertion checks, and timing pipeline steps with IPython magics (e.g., <code>%time</code>).</p>
+  <p>Hands-on tasks include initializing pipeline attributes in <code>__init__()</code>, formatting output with <code>Out()</code>, implementing preprocessing steps as @property methods, and validating inputs with assertions such as <code>assert isinstance(LsWords, list)</code>.</p>
+  <p>Practical examples cover NLTK downloads, Brown corpus processing, stopword removal, contraction expansion, HTML tag removal, and spell correction with <em>textblob</em> or custom regex-based fixes.</p>
   <h2>Lessons & Notebooks</h2>
   <ul>
     <li>Practice comparing texts and similarity metrics: <a href="4.1.1.Practice_Comparing_Texts.ipynb">4.1.1.Practice_Comparing_Texts.ipynb</a></li>

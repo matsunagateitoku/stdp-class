@@ -22,10 +22,11 @@
   <p>This class focuses on unsupervised methods to discover latent structure in text: identifying keywords and collocations, extracting keyphrases, dimensionality reduction (SVD/TruncatedSVD), and topic modeling (LSA and LDA). It also covers extractive summarization techniques using LSA and PageRank-style algorithms (TextRank) and practical keyword extraction methods (RAKE, PKE/TextRank).</p>
   <h2>Modules & Key Concepts</h2>
   <ul>
-    <li><strong>Identify Keywords & Keyphrases</strong> — collocations, PMI scoring, RAKE, TextRank, and keyword quality evaluation (Jaccard comparisons).</li>
-    <li><strong>Matrix decomposition & LSA</strong> — SVD decomposition, truncated SVD, and approximating matrices for topic extraction and dimensionality reduction.</li>
-    <li><strong>Topic modeling</strong> — Latent Semantic Analysis (LSA) and Latent Dirichlet Allocation (LDA), interpretation challenges, and visualization with pyLDAVis.</li>
-    <li><strong>Summary extraction</strong> — extractive summarization using frequency-based scoring, LSA, and PageRank-based sentence ranking.</li>
+    <li><strong>Identify Keywords & Keyphrases</strong> — collocations, pointwise mutual information (PMI), RAKE, TextRank, and keyword quality evaluation using Jaccard similarity.</li>
+    <li><strong>Matrix decomposition & LSA</strong> — SVD, truncated SVD, and approximating matrices for topic discovery and dimensionality reduction.</li>
+    <li><strong>Topic modeling</strong> — Latent Semantic Analysis (LSA), Latent Dirichlet Allocation (LDA), and interpreting topic-word distributions, with optional visualization through pyLDAVis.</li>
+    <li><strong>Summary extraction</strong> — extractive summarization using sentence scoring, Gramian similarity matrices, PageRank-style ranking, and graph-based sentence selection.</li>
+    <li><strong>Modeling vocabulary</strong> — n-gram/phrase extraction, keyword scoring, and comparing RAKE vs TextRank keyword lists.</li>
   </ul>
   <h2>Practical Exercises & Notebooks</h2>
   <ul>

@@ -16,19 +16,21 @@
 </head>
 <body>
   <h1>Class 2 — Transforming Text Into Numeric Vectors</h1>
-  <p>This class focuses on converting text into numeric form through matrix operations, decomposition, and data preparation for modeling.</p>
-  <p class="note">These notebooks cover vectorization foundations and the linear algebra needed for text modeling.</p>
+  <p>This class focuses on transforming text into numeric vectors and evaluating semantic similarity between words and documents.</p>
+  <p class="note">Class 2 covers both sparse vector space models and dense pretrained embeddings for text representation.</p>
   <h2>Course Description</h2>
-  <p>This class teaches how to convert textual documents into numeric vectors suitable for search, clustering, and classification. You will build sparse representations (document-term matrices and TF–IDF) and work with dense word and sentence embeddings (Word2Vec/GloVe/FastText/SBERT). The class also covers linear algebra operations on vectors and matrices, dimensionality reduction (SVD/PCA), and practical metrics for measuring similarity.</p>
+  <p>This class teaches how to convert raw text into numeric representations for information retrieval and machine learning. You will build document-term matrices (DTM) and TF–IDF matrices with <code>CountVectorizer</code> and <code>TfidfVectorizer</code>, work with SciPy sparse matrices, and compare dense embeddings from pretrained Gensim models like Word2Vec/GloVe and FastText.</p>
   <h2>Modules & Key Concepts</h2>
   <ul>
-    <li><strong>DTM & TF–IDF</strong> — build document-term matrices with <code>CountVectorizer</code>, transform with <code>TfidfVectorizer</code> or <code>TfidfTransformer</code>, and operate on SciPy sparse matrices.</li>
-    <li><strong>Vector/Matrix Operations</strong> — dot products, norms, pairwise cosine similarities, dense vs sparse storage, and converting between formats for visualization with pandas and seaborn.</li>
-    <li><strong>Dense Embeddings</strong> — loading pretrained Gensim embeddings (GloVe/Word2Vec), extracting vectors, using similarity and most_similar methods, and arithmetic analogies (king - man + woman ≈ queen).</li>
-    <li><strong>FastText & Subwords</strong> — subword n-grams to address out-of-vocabulary (OOV) issues and transfer learning for domain-specific post-training.</li>
+    <li><strong>Sparse vectorization</strong> — use <code>CountVectorizer</code> to build DTMs, inspect vocabulary with <code>.get_feature_names()</code>, and convert sparse matrices to dense pandas DataFrames for visualization.</li>
+    <li><strong>TF–IDF</strong> — compute term frequency-inverse document frequency matrices, understand fitting vs transforming, and use thresholding to identify important words.</li>
+    <li><strong>Dense word embeddings</strong> — load pretrained models with Gensim, inspect <code>KeyedVectors</code>, extract vectors, use <code>.most_similar()</code>, <code>.similarity()</code>, and perform analogy arithmetic.</li>
+    <li><strong>FastText and subwords</strong> — generate character n-grams for rare words, build sentence vectors from subword vectors, and handle out-of-vocabulary terms robustly.</li>
+    <li><strong>Similarity measurement</strong> — dot product, cosine similarity, Euclidean distance, pairwise cosine similarity matrices, and document similarity using TF–IDF or dense embeddings.</li>
+    <li><strong>Long-tail vocabulary analysis</strong> — study word frequency distributions, head/tail thresholds, and how preprocessing and lemmatization improve model quality by collapsing rare forms.</li>
   </ul>
   <h2>Projects & Practical Notes</h2>
-  <p>Practical tasks include loading pretrained vectors, computing word and document centroids, comparing documents with cosine similarity, and using embeddings for semantic search. Discusses limitations of averaged document vectors and strategies to weight or improve them (e.g., TF–IDF weighting).</p>
+  <p>Practical tasks include building DTMs, creating TF–IDF matrices, measuring document similarity, exploring pretrained embeddings, and comparing dense vector models with sparse representations. It also covers practical issues such as vocabulary growth, OOV words, and the limits of averaged document vectors.</p>
   <h2>Lessons & Notebooks</h2>
   <ul>
     <li>Basic matrix and vector operations: <a href="Practice With Basic Matrix Operations.ipynb">Practice With Basic Matrix Operations.ipynb</a></li>
