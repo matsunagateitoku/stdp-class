@@ -1,0 +1,9 @@
+format: jb-book
+root: intro
+chapters:
+- file: concepts/tokenization
+- file: concepts/representations
+- file: concepts/modeling
+- file: concepts/evaluation
+- file: concepts/applications
+- file: concepts/glossary

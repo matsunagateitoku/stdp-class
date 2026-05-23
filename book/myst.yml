@@ -1,0 +1,17 @@
+version: 1
+project:
+  title: NLP Notes
+  authors:
+    - name: matsunagateitoku
+  toc:
+    - file: intro.md
+    - file: concepts/tokenization.md
+    - file: concepts/representations.md
+    - file: concepts/modeling.md
+    - file: concepts/evaluation.md
+    - file: concepts/applications.md
+    - file: concepts/glossary.md
+site:
+  options:
+    folders: true
+  template: book-theme

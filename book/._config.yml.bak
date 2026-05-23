@@ -1,0 +1,7 @@
+title: "NLP Notes"
+author: "matsunagateitoku"
+execute:
+  execute_notebooks: off
+  timeout: 60
+html:
+  use_directory_urls: true
