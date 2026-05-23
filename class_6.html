@@ -18,13 +18,67 @@
   <h1>Class 6 — Conducting Semantic and Sentiment Analysis</h1>
   <p>This class explores semantic analysis, sentiment detection, and lexical relationships using classic NLP tools and sentiment models.</p>
   <p class="note">These notebooks help you connect meaning, emotion, and lexical structure in text.</p>
-  <h2>Overview</h2>
-  <p>Examines lexical semantic relationships using WordNet (synsets, hypernyms/hyponyms, meronyms), named entity recognition (IOB tagging, CRF-based models), and sentiment analysis with VADER and TextBlob. Includes projects to compute synset similarities, train NER taggers, and expand lexicons for sentiment models.</p>
-  <h2>Embedded notebooks & exercises</h2>
+  <h2>Course Description</h2>
+  <p>Examine many kinds of semantic relationships that words can have (such as hypernyms, hyponyms, or meronyms), which go a long way toward extracting the meaning of documents at scale. You will also implement named entity recognition to identify proper nouns within a document and use several techniques to determine the sentiment of text: Is the tone positive or negative? These invaluable skills can easily turn the tide in a difficult project for your team at work or on the path toward achieving your personal goals.</p>
+  <p><a href="class_6/cis576_glossary.pdf">glossary</a> &nbsp; <a href="class_6/CIS576_course_transcript.pdf">transcript</a></p>
+
+  <h2>Module 1: Conduct Semantic Analysis Using WordNet</h2>
+  <h3>Key concepts</h3>
   <ul>
-    <li>WordNet and lexical relations: <a href="class_6/Synsets_Lemmas.ipynb">class_6/Synsets_Lemmas.ipynb</a>, <a href="class_6/Lexical_Relationships.ipynb">class_6/Lexical_Relationships.ipynb</a></li>
-    <li>NER training and IOB tagging: <a href="class_6/NER.ipynb">class_6/NER.ipynb</a>, <a href="class_6/Train.ipynb">class_6/Train.ipynb</a></li>
-    <li>Sentiment analysis experiments: <a href="class_6/VADER.ipynb">class_6/VADER.ipynb</a>, <a href="class_6/TextBlob.ipynb">class_6/TextBlob.ipynb</a></li>
+    <li><strong>WordNet</strong> — a large lexical database that groups words into synsets and links them via semantic relations: hypernyms, hyponyms, meronyms, holonyms, antonyms, and entailments.</li>
+    <li>Homophones: words that sound the same but have different senses (e.g., buy/by/bye).</li>
+    <li>Homographs: words spelled identically but with different senses (e.g., bat (animal) vs bat (baseball)).</li>
+    <li>Holonym / Meronym relationships: part-whole relations, e.g., lettuce and tomato are meronyms of sandwich (its holonym).</li>
+  </ul>
+  <h3>Lessons & Activities</h3>
+  <table>
+    <tr><th>Lesson</th><th>Description</th><th>Colab link</th></tr>
+    <tr><td>Module Intro</td><td>Introduction to semantic analysis and how WordNet helps compare vocabularies across texts.</td><td></td></tr>
+    <tr><td>Retrieve Synsets and Lemmas Using WordNet</td><td>How to access and interpret synsets and lemmas using NLTK's WordNet.</td><td></td></tr>
+    <tr><td>Practice: Synsets & Lemmas</td><td>Exercises on synset attributes and lemma retrieval.</td><td><a href="class_6/Synsets_Lemmas.ipynb">Colab</a></td></tr>
+    <tr><td>Retrieve Lexical Semantic Relationships</td><td>Analyze entailments, hyponyms/hypernyms, antonyms, paths and measure path similarity.</td><td></td></tr>
+    <tr><td>Practice Relationships</td><td>Optional practice using WordNet relationships and path similarity measures.</td><td><a href="class_6/relationships_WordNet.ipynb">Colab</a></td></tr>
+    <tr><td>Compute Document Similarity Using WordNet</td><td>Aggregate synset similarities to compute document-level similarity.</td><td><a href="class_6/P.ipynb">Colab</a></td></tr>
+  </table>
+
+  <h2>Module 2: Train a Model To Predict Named Entity Tags</h2>
+  <h3>Key concepts</h3>
+  <ul>
+    <li>IOB tagging: inside–outside–beginning tagging scheme for NER annotations.</li>
+    <li>Conditional Random Fields (CRF) for sequence labeling using neighboring-word features and POS tags.</li>
+  </ul>
+  <h3>Lessons & Activities</h3>
+  <ul>
+    <li>Introduction to NER and named entity linking/disambiguation (NEL).</li>
+    <li>IOB tagging examples using the Groningen Meaning Bank (GMB) corpus.</li>
+    <li>Practice building and evaluating a CRF-based NER model with <code>sklearn_crfsuite</code>: <a href="class_6/NER.ipynb">NER.ipynb</a>.</li>
+    <li>Course project: train and evaluate a CRF NER model to recognize movie-related entities: <a href="class_6/Train.ipynb">Train.ipynb</a> / <a href="class_6/Train1.ipynb">Train1.ipynb</a>.</li>
+  </ul>
+
+  <h2>Module 3: Conduct Sentiment Analysis</h2>
+  <h3>Key concepts</h3>
+  <ul>
+    <li>Lexicon-based sentiment models (VADER) and simple feature-based models (TextBlob).</li>
+    <li>Sentiment metrics: polarity, valence, objectivity, and discrete polarity labels.</li>
+  </ul>
+  <h3>Lessons & Activities</h3>
+  <ul>
+    <li>VADER: lexicon-based model tuned for short social text, emoticons, and slang. Practice with <a href="class_6/VADER.ipynb">VADER.ipynb</a>.</li>
+    <li>TextBlob sentiment analyzer and comparisons with VADER: <a href="class_6/TextBlob.ipynb">TextBlob.ipynb</a>.</li>
+    <li>Course project: expand VADER's lexicon using TextBlob and compare F1 scores between original and expanded lexicons. Starter and finished notebooks: <a href="class_6/Conduct2.ipynb">Conduct2.ipynb</a> / <a href="class_6/final.ipynb">final.ipynb</a>.</li>
+  </ul>
+
+  <h2>Practice Notebooks</h2>
+  <ul>
+    <li><a href="class_6/Synsets_Lemmas.ipynb">Synsets_Lemmas.ipynb</a></li>
+    <li><a href="class_6/Lexical_Relationships.ipynb">Lexical_Relationships.ipynb</a></li>
+    <li><a href="class_6/relationships_WordNet.ipynb">relationships_WordNet.ipynb</a></li>
+    <li><a href="class_6/NER.ipynb">NER.ipynb</a></li>
+    <li><a href="class_6/Train.ipynb">Train.ipynb</a></li>
+    <li><a href="class_6/VADER.ipynb">VADER.ipynb</a></li>
+    <li><a href="class_6/TextBlob.ipynb">TextBlob.ipynb</a></li>
+    <li><a href="class_6/Conduct2.ipynb">Conduct2.ipynb</a> &mdash; starter project</li>
+    <li><a href="class_6/final.ipynb">final.ipynb</a> &mdash; finished project</li>
   </ul>
   <h2>Core Notebooks</h2>
   <ul>
@@ -45,5 +99,20 @@
     <li><a href="class_6/final.ipynb">class_6/final.ipynb</a></li>
   </ul>
   <p><a href="index.html">Back to notebook portal</a></p>
+  <hr>
+  <h2>Full class notes (from markdown)</h2>
+  <div id="md-content-6">Loading markdown…</div>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script>
+    (async function(){
+      try{
+        const res = await fetch('Class__6.md');
+        const md = await res.text();
+        document.getElementById('md-content-6').innerHTML = marked.parse(md);
+      }catch(e){
+        document.getElementById('md-content-6').innerHTML = '<pre>Unable to load Class__6.md — see <a href="Class__6.md">raw</a></pre>';
+      }
+    })();
+  </script>
 </body>
 </html>

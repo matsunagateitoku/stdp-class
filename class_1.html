@@ -52,5 +52,20 @@
     <li><a href="Practice Measuring Keyword Quality.ipynb">Practice Measuring Keyword Quality.ipynb</a></li>
   </ul>
   <p><a href="index.html">Back to notebook portal</a></p>
+  <hr>
+  <h2>Full class notes (from markdown)</h2>
+  <div id="md-content-1">Loading markdown…</div>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script>
+    (async function(){
+      try{
+        const res = await fetch('Class_1.md');
+        const md = await res.text();
+        document.getElementById('md-content-1').innerHTML = marked.parse(md);
+      }catch(e){
+        document.getElementById('md-content-1').innerHTML = '<pre>Unable to load Class_1.md — see <a href="Class_1.md">raw</a></pre>';
+      }
+    })();
+  </script>
 </body>
 </html>

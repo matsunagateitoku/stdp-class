@@ -51,5 +51,20 @@
     <li><a href="Processing a Data Set for Supervised Machine Learning Classification Model.ipynb">Processing a Data Set for Supervised Machine Learning Classification Model.ipynb</a></li>
   </ul>
   <p><a href="index.html">Back to notebook portal</a></p>
+  <hr>
+  <h2>Full class notes (from markdown)</h2>
+  <div id="md-content-3">Loading markdown…</div>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script>
+    (async function(){
+      try{
+        const res = await fetch('Class_3_Classifying_Documents_With_Supervised_ML.md');
+        const md = await res.text();
+        document.getElementById('md-content-3').innerHTML = marked.parse(md);
+      }catch(e){
+        document.getElementById('md-content-3').innerHTML = '<pre>Unable to load Class_3_Classifying_Documents_With_Supervised_ML.md — see <a href="Class_3_Classifying_Documents_With_Supervised_ML.md">raw</a></pre>';
+      }
+    })();
+  </script>
 </body>
 </html>

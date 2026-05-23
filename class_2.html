@@ -47,5 +47,20 @@
     <li><a href="Identifying Topics From Documents.ipynb">Identifying Topics From Documents.ipynb</a></li>
   </ul>
   <p><a href="index.html">Back to notebook portal</a></p>
+  <hr>
+  <h2>Full class notes (from markdown)</h2>
+  <div id="md-content-2">Loading markdown…</div>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script>
+    (async function(){
+      try{
+        const res = await fetch('Class_2.md');
+        const md = await res.text();
+        document.getElementById('md-content-2').innerHTML = marked.parse(md);
+      }catch(e){
+        document.getElementById('md-content-2').innerHTML = '<pre>Unable to load Class_2.md — see <a href="Class_2.md">raw</a></pre>';
+      }
+    })();
+  </script>
 </body>
 </html>
