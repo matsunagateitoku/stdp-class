@@ -5,65 +5,546 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Class 4 — Topic Modeling With Unsupervised Machine Learning</title>
   <style>
-    body{font-family:system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;margin:1.5rem;line-height:1.6}
-    h1,h2{margin-top:1.6rem}
-    ul{margin:0.5rem 0 1rem 1.5rem}
-    li{margin:0.25rem 0}
+    *{box-sizing:border-box}
+    body{font-family:system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;margin:0;padding:1.5rem 2rem;line-height:1.7;color:#1a1a1a;max-width:960px}
+    h1{font-size:2rem;margin-bottom:.25rem}
+    h2{font-size:1.4rem;margin-top:2.5rem;margin-bottom:.5rem;padding-bottom:.3rem;border-bottom:2px solid #e1e4e8;color:#0366d6}
+    h3{font-size:1.1rem;margin-top:1.4rem;margin-bottom:.4rem;color:#24292e}
+    p{margin:.5rem 0 1rem}
+    ul,ol{margin:.4rem 0 1rem 1.5rem}
+    li{margin:.35rem 0}
     a{text-decoration:none;color:#0366d6}
     a:hover{text-decoration:underline}
-    .note{color:#555}
+    code{background:#f3f4f6;border:1px solid #e1e4e8;border-radius:4px;padding:.1em .4em;font-size:.9em;font-family:"SFMono-Regular",Consolas,monospace}
+    pre{background:#f6f8fa;border:1px solid #e1e4e8;border-radius:6px;padding:1rem 1.2rem;overflow-x:auto;font-size:.875rem;line-height:1.6}
+    pre code{background:none;border:none;padding:0;font-size:inherit}
+    .subtitle{color:#586069;font-size:1.05rem;margin-top:.25rem}
+    .tip{background:#fff8c5;border-left:4px solid #f0a000;border-radius:0 6px 6px 0;padding:.75rem 1rem;margin:1rem 0}
+    .tip strong{color:#a05000}
+    .concept{background:#f0f7ff;border-left:4px solid #0366d6;border-radius:0 6px 6px 0;padding:.75rem 1rem;margin:1rem 0}
+    .concept strong{color:#0366d6}
+    .warn{background:#fff0f0;border-left:4px solid #d73a49;border-radius:0 6px 6px 0;padding:.75rem 1rem;margin:1rem 0}
+    .warn strong{color:#d73a49}
+    table{border-collapse:collapse;width:100%;margin:1rem 0;font-size:.9rem}
+    th{background:#f6f8fa;font-weight:600;padding:.5rem .8rem;border:1px solid #ddd;text-align:left}
+    td{padding:.45rem .8rem;border:1px solid #ddd;vertical-align:top}
+    tr:nth-child(even) td{background:#fafafa}
+    .nav{margin-top:2.5rem;padding-top:1rem;border-top:1px solid #e1e4e8;color:#586069;font-size:.9rem}
+    .colab-badge{vertical-align:middle;margin-left:.5em}
+    .modules-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;margin:1rem 0}
+    .module-card{border:1px solid #e1e4e8;border-radius:8px;padding:1rem;background:#fff}
+    .module-card h4{margin:0 0 .5rem;font-size:1rem;color:#0366d6}
+    .module-card p{margin:0;font-size:.9rem;color:#444}
+    .data-flow{display:flex;flex-wrap:wrap;align-items:center;gap:.4rem;margin:1rem 0;font-size:.875rem}
+    .data-flow .step{background:#e8f4fd;border:1px solid #bcd9f1;border-radius:6px;padding:.4rem .75rem}
+    .data-flow .arrow{color:#999;font-size:1.1rem}
   </style>
 </head>
 <body>
+
   <h1>Class 4 — Topic Modeling With Unsupervised Machine Learning</h1>
-  <p>This class introduces unsupervised topic and summary modeling techniques that help identify latent structure in text.</p>
-  <p class="note">Explore topic extraction, matrix decomposition, and summary extraction with these notebooks.</p>
-  <h2>Course Description</h2>
-  <p>This class focuses on unsupervised methods to discover latent structure in text: identifying keywords and collocations, extracting keyphrases, dimensionality reduction (SVD/TruncatedSVD), and topic modeling (LSA and LDA). It also covers extractive summarization techniques using LSA and PageRank-style algorithms (TextRank) and practical keyword extraction methods (RAKE, PKE/TextRank).</p>
-  <h2>Modules & Key Concepts</h2>
+  <p class="subtitle">Finding hidden themes in text — no labels required</p>
+
+  <p>Unsupervised methods discover structure that was never explicitly annotated. Given a collection of documents, topic modeling answers: <em>what recurring themes exist, and which documents belong to each theme?</em> This class covers three complementary approaches — keyword extraction, matrix decomposition (LSA), and probabilistic topic modeling (LDA) — plus extractive summarization that selects the most representative sentences from a document.</p>
+
+  <div class="modules-grid">
+    <div class="module-card">
+      <h4>Module 1 — Keywords &amp; Keyphrases</h4>
+      <p>Collocations, PMI, RAKE, TextRank — find the most informative words and phrases without training a model</p>
+    </div>
+    <div class="module-card">
+      <h4>Module 2 — Matrix Decomposition &amp; LSA</h4>
+      <p>SVD and TruncatedSVD reduce a DTM to a compact topic space; Latent Semantic Analysis finds document themes</p>
+    </div>
+    <div class="module-card">
+      <h4>Module 3 — LDA &amp; Summarization</h4>
+      <p>Latent Dirichlet Allocation produces interpretable topic-word distributions; TextRank ranks sentences for extractive summaries</p>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <h2>Module 1 — Keywords and Keyphrases</h2>
+  <!-- ═══════════════════════════════════════════════════════════ -->
+
+  <p>Before fitting any model, a quick and interpretable way to understand a corpus is to find the most informative individual words (keywords) and multi-word expressions (keyphrases). These methods require no labeled data and no model training.</p>
+
+  <h3>Collocations — Words That Go Together</h3>
+  <p>A <strong>collocation</strong> is a sequence of words that co-occur more often than chance would predict. "New York", "machine learning", and "United States" are collocations — their words are not just neighbors by accident. NLTK provides finders for bigrams and trigrams:</p>
+  <pre><code>import nltk
+from nltk.collocations import BigramCollocationFinder, BigramAssocMeasures
+
+tokens = nltk.word_tokenize(text.lower())
+
+# Find bigram collocations
+finder = BigramCollocationFinder.from_words(tokens)
+finder.apply_freq_filter(5)        # ignore pairs appearing fewer than 5 times
+finder.apply_word_filter(lambda w: w in stop_words or not w.isalpha())
+
+bigram_measures = BigramAssocMeasures()
+
+# Score by Pointwise Mutual Information (PMI)
+top_pmi = finder.nbest(bigram_measures.pmi, 10)
+print(top_pmi)
+# [('machine', 'learning'), ('neural', 'network'), ('natural', 'language'), ...]
+
+# Score by raw frequency
+top_freq = finder.nbest(bigram_measures.raw_freq, 10)</code></pre>
+
+  <h3>Pointwise Mutual Information (PMI)</h3>
+  <p>PMI measures how much more often two words appear together compared to what you'd expect if they were independent:</p>
+  <pre><code># PMI(word_a, word_b) = log[ P(word_a, word_b) / (P(word_a) * P(word_b)) ]
+#
+# PMI > 0: words co-occur MORE than chance ("machine" + "learning")
+# PMI = 0: words are statistically independent
+# PMI < 0: words co-occur LESS than chance (likely avoided together)
+#
+# High PMI pairs make good keyphrases because they're specific and meaningful.
+# Low PMI pairs are incidental neighbors.</code></pre>
+
+  <div class="concept">
+    <strong>PMI vs. raw frequency:</strong> Raw frequency finds common pairs like "of the" and "in a" — grammatical but meaningless. PMI penalizes very common words and rewards pairs that are mutually informative, surfacing domain-specific terms instead.
+  </div>
+
+  <h3>Jaccard Similarity for Keyword Quality</h3>
+  <p>Given two keyword sets (e.g., from two different extraction methods or two document versions), Jaccard similarity measures how much they overlap:</p>
+  <pre><code>def jaccard(set_a, set_b):
+    intersection = set_a & set_b
+    union        = set_a | set_b
+    return len(intersection) / len(union) if union else 0.0
+
+keywords_rake    = {'machine', 'learning', 'neural', 'network', 'text'}
+keywords_textrank= {'machine', 'learning', 'language', 'model', 'text'}
+
+score = jaccard(keywords_rake, keywords_textrank)
+print(f"Jaccard similarity: {score:.3f}")   # 0.333 — 2 shared out of 6 total unique</code></pre>
+
+  <h3>RAKE — Rapid Automatic Keyword Extraction</h3>
+  <p>RAKE splits text on stopwords and punctuation to identify candidate phrases, then scores each word by the ratio of its co-occurrence degree to its frequency. Words that appear often in multi-word phrases get high scores:</p>
+  <pre><code>from rake_nltk import Rake
+
+r = Rake(
+    min_length=1,    # minimum phrase length in words
+    max_length=4,    # maximum phrase length in words
+)
+r.extract_keywords_from_text(text)
+
+# Get top keyphrases with their scores
+phrases = r.get_ranked_phrases_with_scores()
+for score, phrase in phrases[:10]:
+    print(f"{score:.2f}  {phrase}")
+# 9.00  machine learning algorithms
+# 8.50  natural language processing
+# 7.33  document term matrix</code></pre>
+
+  <div class="tip">
+    <strong>How RAKE scores words:</strong> For each word in a candidate phrase, RAKE computes <code>degree(word) / frequency(word)</code>, where degree is the total number of times the word appears in any multi-word phrase. Words that exclusively appear in phrases (never alone) get a high degree/frequency ratio.
+  </div>
+
+  <h3>TextRank for Keyword Extraction</h3>
+  <p>TextRank builds a graph where nodes are words and edges connect words that co-occur within a sliding window. It then runs PageRank on the graph — words pointed to by many other important words get high scores:</p>
+  <pre><code>import pytextrank
+import spacy
+
+nlp = spacy.load('en_core_web_sm')
+nlp.add_pipe('textrank')
+
+doc = nlp(text)
+
+# Top 10 keyphrases ranked by TextRank score
+for phrase in doc._.phrases[:10]:
+    print(f"{phrase.rank:.4f}  {phrase.text}")</code></pre>
+
+  <h3>Comparing RAKE vs. TextRank</h3>
+  <table>
+    <thead><tr><th>Property</th><th>RAKE</th><th>TextRank</th></tr></thead>
+    <tbody>
+      <tr><td>Approach</td><td>Rule-based: splits on stopwords, scores by degree/freq</td><td>Graph-based: PageRank on word co-occurrence graph</td></tr>
+      <tr><td>Speed</td><td>Very fast — no model needed</td><td>Slower — requires spaCy pipeline</td></tr>
+      <tr><td>Phrase length</td><td>Configurable min/max</td><td>Automatically determined</td></tr>
+      <tr><td>Best for</td><td>Quick extraction, short documents</td><td>Longer documents, more nuanced ranking</td></tr>
+      <tr><td>Handles stopwords</td><td>Uses them as phrase delimiters</td><td>Filters them during graph construction</td></tr>
+    </tbody>
+  </table>
+
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <h2>Module 2 — Matrix Decomposition and LSA</h2>
+  <!-- ═══════════════════════════════════════════════════════════ -->
+
+  <p>A Document-Term Matrix (DTM) has one row per document and one column per vocabulary word. Most entries are zero. <strong>Matrix decomposition</strong> finds a compact, low-rank approximation that captures the most important structure — which turns out to correspond to latent topics.</p>
+
+  <h3>Singular Value Decomposition (SVD)</h3>
+  <p>SVD decomposes any matrix <strong>M</strong> into three matrices: <strong>M = U · Σ · Vᵀ</strong></p>
+  <pre><code>import numpy as np
+
+M = np.array([[1, 0, 1, 0, 1],
+              [0, 1, 0, 1, 0],
+              [1, 1, 1, 0, 0],
+              [0, 0, 0, 1, 1]])
+
+U, sigma, Vt = np.linalg.svd(M, full_matrices=False)
+
+print("U shape:", U.shape)      # (4, 4)  — document × topic space
+print("σ shape:", sigma.shape)  # (4,)    — singular values (topic strengths)
+print("Vᵀ shape:", Vt.shape)    # (4, 5)  — topic × word space
+
+# Singular values tell you how much variance each topic captures
+print("Singular values:", sigma.round(2))
+# [2.56  1.73  1.41  0.57] — first topic captures the most variance</code></pre>
+
+  <div class="concept">
+    <strong>What U, Σ, Vᵀ represent in NLP:</strong><br>
+    <strong>U</strong> (docs × topics) — how strongly each document relates to each topic<br>
+    <strong>Σ</strong> (diagonal) — how important each topic is<br>
+    <strong>Vᵀ</strong> (topics × words) — which words define each topic
+  </div>
+
+  <h3>Truncated SVD — Keeping Only the Top Topics</h3>
+  <p>Full SVD produces as many topics as there are documents. We only want the top <em>k</em> topics — the ones that explain the most variance. Truncating to <em>k</em> gives a low-rank approximation:</p>
+  <pre><code>import numpy as np
+
+k = 2   # keep top 2 topics
+U_k  = U[:, :k]          # docs × k
+S_k  = np.diag(sigma[:k]) # k × k
+Vt_k = Vt[:k, :]          # k × words
+
+# Approximate reconstruction
+M_approx = U_k @ S_k @ Vt_k
+print(M_approx.round(2))
+# Captures the main structure while filtering noise</code></pre>
+
+  <h3>TruncatedSVD with scikit-learn</h3>
+  <p>For large sparse DTMs, use <code>sklearn.decomposition.TruncatedSVD</code> — it computes only the top <em>k</em> singular values without ever materializing the full matrix:</p>
+  <pre><code>from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.decomposition import TruncatedSVD
+import pandas as pd
+
+corpus = [...]   # list of documents
+
+tfidf = TfidfVectorizer(stop_words='english', max_features=10000)
+dtm   = tfidf.fit_transform(corpus)      # sparse (n_docs × vocab)
+
+svd = TruncatedSVD(n_components=20, random_state=42)
+doc_topics = svd.fit_transform(dtm)      # dense (n_docs × 20)
+
+print(doc_topics.shape)     # (n_docs, 20)
+print("Variance explained:", svd.explained_variance_ratio_.sum().round(3))
+
+# Inspect what words define each topic
+feature_names = tfidf.get_feature_names_out()
+for i, component in enumerate(svd.components_[:5]):   # first 5 topics
+    top_words = [feature_names[j] for j in component.argsort()[-8:][::-1]]
+    print(f"Topic {i}: {', '.join(top_words)}")</code></pre>
+
+  <h3>Latent Semantic Analysis (LSA)</h3>
+  <p>LSA <em>is</em> TruncatedSVD applied to a TF-IDF matrix. The resulting document vectors are in "topic space" — documents with similar topics will be close to each other even if they use different vocabulary (a form of semantic search):</p>
+  <pre><code># After running TruncatedSVD above, doc_topics is your LSA representation
+from sklearn.metrics.pairwise import cosine_similarity
+
+# Find documents most similar to doc 0 in topic space
+sim = cosine_similarity(doc_topics[0:1], doc_topics)[0]
+ranked = sim.argsort()[::-1][1:6]   # top 5 (skip self)
+for idx in ranked:
+    print(f"  doc {idx}: similarity = {sim[idx]:.3f}")
+
+# Query: transform a new document using the fitted pipeline
+query_dtm   = tfidf.transform(["machine learning neural networks"])
+query_topic = svd.transform(query_dtm)
+scores      = cosine_similarity(query_topic, doc_topics)[0]</code></pre>
+
+  <div class="tip">
+    <strong>How many topics?</strong> Check <code>svd.explained_variance_ratio_.cumsum()</code> — pick <em>k</em> where the cumulative explained variance levels off (the "elbow"). Common values are 50–300 for large corpora, 10–50 for smaller ones.
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <h2>Module 3 — LDA and Extractive Summarization</h2>
+  <!-- ═══════════════════════════════════════════════════════════ -->
+
+  <h3>Latent Dirichlet Allocation (LDA)</h3>
+  <p>LDA is a probabilistic generative model. It assumes each document is a <em>mixture of topics</em>, and each topic is a <em>distribution over words</em>. The model infers these distributions from the data using MCMC or variational inference.</p>
+
+  <div class="concept">
+    <strong>The generative story behind LDA:</strong><br>
+    To generate a document, first draw a topic mixture (e.g., 60% politics, 40% economics). Then for each word position, sample a topic from that mixture, then sample a word from that topic's word distribution. LDA inverts this process — given observed words, infer the topic mixtures and word distributions.
+  </div>
+
+  <div class="data-flow">
+    <div class="step">DTM (word counts)</div><div class="arrow">→</div>
+    <div class="step">LDA fitting</div><div class="arrow">→</div>
+    <div class="step">Topic-word distributions</div>
+    <br style="width:100%">
+    <div class="step">Per-document topic weights</div><div class="arrow">←</div>
+    <div class="step">Document-topic matrix</div>
+  </div>
+
+  <pre><code>from sklearn.decomposition import LatentDirichletAllocation
+from sklearn.feature_extraction.text import CountVectorizer
+import numpy as np
+
+# LDA works on raw counts, not TF-IDF
+cv  = CountVectorizer(stop_words='english', max_features=10000, max_df=0.95, min_df=2)
+dtm = cv.fit_transform(corpus)
+
+lda = LatentDirichletAllocation(
+    n_components=10,        # number of topics to find
+    max_iter=20,            # more iterations = better but slower
+    learning_method='batch',
+    random_state=42,
+    n_jobs=-1,
+)
+doc_topic_matrix = lda.fit_transform(dtm)   # shape: (n_docs, 10)
+
+print("Per-document topic weights (first doc):")
+print(doc_topic_matrix[0].round(3))
+# [0.02  0.61  0.03  0.21  0.01  0.04  0.03  0.02  0.01  0.02]
+# This document is ~61% topic 1 and ~21% topic 3</code></pre>
+
+  <h3>Inspecting Topic-Word Distributions</h3>
+  <pre><code>feature_names = cv.get_feature_names_out()
+
+def print_topics(model, feature_names, n_words=10):
+    for topic_idx, topic in enumerate(model.components_):
+        top_words = [feature_names[i] for i in topic.argsort()[:-n_words-1:-1]]
+        print(f"Topic {topic_idx:2d}: {', '.join(top_words)}")
+
+print_topics(lda, feature_names)
+# Topic  0: game, team, player, season, win, score, play, league, ball, year
+# Topic  1: space, nasa, launch, shuttle, orbit, mission, earth, satellite, moon, crew
+# Topic  2: government, tax, bill, law, congress, federal, senate, vote, policy, state
+# ...each topic is a coherent semantic cluster of words</code></pre>
+
+  <h3>Choosing the Number of Topics</h3>
+  <p>LDA's <code>score()</code> method returns log-likelihood — higher is better. <strong>Perplexity</strong> is the exponentiated negative log-likelihood per word — lower is better. Plot these over a range of topic counts and look for an elbow:</p>
+  <pre><code>import matplotlib.pyplot as plt
+
+perplexities = []
+n_topics_range = [5, 10, 15, 20, 30, 50]
+
+for n in n_topics_range:
+    lda_n = LatentDirichletAllocation(n_components=n, max_iter=15, random_state=42)
+    lda_n.fit(dtm)
+    perplexities.append(lda_n.perplexity(dtm))
+
+plt.plot(n_topics_range, perplexities, marker='o')
+plt.xlabel("Number of topics"); plt.ylabel("Perplexity (lower = better)")
+plt.title("Selecting number of LDA topics"); plt.show()</code></pre>
+
+  <h3>Visualizing LDA with pyLDAvis</h3>
+  <pre><code>import pyLDAvis
+import pyLDAvis.lda_model
+
+pyLDAvis.enable_notebook()   # in Jupyter
+
+vis = pyLDAvis.lda_model.prepare(lda, dtm, cv)
+pyLDAvis.display(vis)
+# Interactive bubble chart: bubble size = topic prevalence
+# Bar chart: top words for selected topic
+# Relevance slider (λ): λ=1 ranks by frequency, λ=0 ranks by exclusivity to topic</code></pre>
+
+  <h3>LSA vs. LDA — When to Use Each</h3>
+  <table>
+    <thead><tr><th>Property</th><th>LSA (TruncatedSVD)</th><th>LDA</th></tr></thead>
+    <tbody>
+      <tr><td>Input</td><td>TF-IDF matrix</td><td>Raw count matrix</td></tr>
+      <tr><td>Interpretability</td><td>Lower — topics can have negative word weights</td><td>Higher — word weights are probabilities (always positive)</td></tr>
+      <tr><td>Speed</td><td>Fast</td><td>Slower (iterative inference)</td></tr>
+      <tr><td>Topic overlap</td><td>Topics are orthogonal (uncorrelated)</td><td>Topics can overlap in word space</td></tr>
+      <tr><td>Best for</td><td>Semantic similarity search, dimensionality reduction</td><td>Human-interpretable topic discovery</td></tr>
+      <tr><td>Handles polysemy</td><td>Yes — words have different weights in different topics</td><td>Partially</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Extractive Summarization</h3>
+  <p>Extractive summarization selects the most representative <em>existing sentences</em> from a document — it does not generate new text. Two main approaches:</p>
+
+  <h3>Approach 1 — Sentence Scoring with TF-IDF</h3>
+  <p>Score each sentence by the average TF-IDF weight of its words. Sentences containing high-weight (rare, informative) words rank highest:</p>
+  <pre><code>import nltk
+import numpy as np
+from sklearn.feature_extraction.text import TfidfVectorizer
+
+text = """Your long document goes here. It has many sentences.
+          Some sentences are more informative than others.
+          The most important facts appear in key sentences."""
+
+sentences = nltk.sent_tokenize(text)
+
+# Vectorize sentences
+tfidf = TfidfVectorizer()
+tfidf_matrix = tfidf.fit_transform(sentences)
+
+# Score each sentence by its mean TF-IDF weight
+scores = np.array(tfidf_matrix.mean(axis=1)).flatten()
+
+# Select top 3 sentences (preserving original order)
+n = 3
+top_idx = np.argsort(scores)[-n:]
+top_idx_sorted = sorted(top_idx)
+summary = ' '.join([sentences[i] for i in top_idx_sorted])
+print(summary)</code></pre>
+
+  <h3>Approach 2 — TextRank (PageRank on Sentences)</h3>
+  <p>TextRank builds a graph where nodes are sentences and edge weights are cosine similarities between sentence TF-IDF vectors. Running PageRank on this graph finds sentences that are most similar to the most other sentences — i.e., most "central" to the document's content:</p>
+  <pre><code>import numpy as np
+from sklearn.metrics.pairwise import cosine_similarity
+
+# Build sentence similarity matrix (Gramian matrix)
+sim_matrix = cosine_similarity(tfidf_matrix)
+np.fill_diagonal(sim_matrix, 0)   # no self-similarity
+
+# PageRank via power iteration
+def pagerank(sim_matrix, damping=0.85, max_iter=100, tol=1e-6):
+    n = sim_matrix.shape[0]
+    # Normalize rows to sum to 1 (stochastic matrix)
+    row_sums = sim_matrix.sum(axis=1, keepdims=True)
+    row_sums[row_sums == 0] = 1    # avoid division by zero
+    trans = sim_matrix / row_sums
+    # Initialize uniform scores
+    scores = np.ones(n) / n
+    for _ in range(max_iter):
+        new_scores = (1 - damping) / n + damping * trans.T @ scores
+        if np.abs(new_scores - scores).max() < tol:
+            break
+        scores = new_scores
+    return scores
+
+scores = pagerank(sim_matrix)
+top_idx = np.argsort(scores)[-3:]          # top 3 sentences
+summary_sentences = [sentences[i] for i in sorted(top_idx)]
+print(' '.join(summary_sentences))</code></pre>
+
+  <div class="tip">
+    <strong>Or use a library:</strong> <code>sumy</code> and <code>pytextrank</code> implement TextRank for you. For sentence-level semantic similarity, encode sentences with Sentence-BERT instead of TF-IDF for much better results on complex text.
+  </div>
+
+  <h3>Extractive vs. Abstractive Summarization</h3>
+  <table>
+    <thead><tr><th>Type</th><th>How it works</th><th>Pros</th><th>Cons</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Extractive</strong></td><td>Selects existing sentences from the source</td><td>Factually accurate; fast; no hallucination</td><td>Can feel choppy; misses cross-sentence synthesis</td></tr>
+      <tr><td><strong>Abstractive</strong></td><td>Generates new text (seq2seq, GPT, BART, T5)</td><td>Fluent; can synthesize and rephrase</td><td>Can hallucinate facts; requires large models</td></tr>
+    </tbody>
+  </table>
+
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <h2>Key Tools Summary</h2>
+  <!-- ═══════════════════════════════════════════════════════════ -->
+
+  <table>
+    <thead><tr><th>Tool / Function</th><th>Library</th><th>Purpose</th></tr></thead>
+    <tbody>
+      <tr><td><code>BigramCollocationFinder.from_words()</code></td><td><code>nltk.collocations</code></td><td>Find word pairs that co-occur more than chance</td></tr>
+      <tr><td><code>BigramAssocMeasures().pmi</code></td><td><code>nltk.collocations</code></td><td>Score collocations by Pointwise Mutual Information</td></tr>
+      <tr><td><code>Rake().extract_keywords_from_text()</code></td><td><code>rake_nltk</code></td><td>Fast rule-based keyphrase extraction</td></tr>
+      <tr><td><code>nlp.add_pipe('textrank')</code></td><td><code>pytextrank</code> + <code>spacy</code></td><td>Graph-based keyword/keyphrase ranking</td></tr>
+      <tr><td><code>jaccard(set_a, set_b)</code></td><td>manual</td><td>Measure overlap between two keyword sets</td></tr>
+      <tr><td><code>np.linalg.svd(M)</code></td><td><code>numpy</code></td><td>Full SVD decomposition of a dense matrix</td></tr>
+      <tr><td><code>TruncatedSVD(n_components=k)</code></td><td><code>sklearn.decomposition</code></td><td>Efficient top-k SVD for sparse matrices (LSA)</td></tr>
+      <tr><td><code>svd.components_</code></td><td><code>sklearn</code></td><td>Topic-word matrix from fitted TruncatedSVD</td></tr>
+      <tr><td><code>svd.explained_variance_ratio_</code></td><td><code>sklearn</code></td><td>Fraction of variance captured by each topic</td></tr>
+      <tr><td><code>LatentDirichletAllocation(n_components=k)</code></td><td><code>sklearn.decomposition</code></td><td>Probabilistic topic model (LDA)</td></tr>
+      <tr><td><code>lda.components_</code></td><td><code>sklearn</code></td><td>Topic-word weight matrix from fitted LDA</td></tr>
+      <tr><td><code>lda.perplexity(dtm)</code></td><td><code>sklearn</code></td><td>Evaluate topic model quality (lower = better)</td></tr>
+      <tr><td><code>pyLDAvis.lda_model.prepare()</code></td><td><code>pyLDAvis</code></td><td>Interactive visualization of LDA topics</td></tr>
+      <tr><td><code>nltk.sent_tokenize(text)</code></td><td><code>nltk</code></td><td>Split document into sentences for summarization</td></tr>
+      <tr><td><code>cosine_similarity(tfidf_matrix)</code></td><td><code>sklearn.metrics.pairwise</code></td><td>Build sentence similarity matrix for TextRank</td></tr>
+    </tbody>
+  </table>
+
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <h2>Notebooks for This Class</h2>
+  <!-- ═══════════════════════════════════════════════════════════ -->
+
   <ul>
-    <li><strong>Identify Keywords & Keyphrases</strong> — collocations, pointwise mutual information (PMI), RAKE, TextRank, and keyword quality evaluation using Jaccard similarity.</li>
-    <li><strong>Matrix decomposition & LSA</strong> — SVD, truncated SVD, and approximating matrices for topic discovery and dimensionality reduction.</li>
-    <li><strong>Topic modeling</strong> — Latent Semantic Analysis (LSA), Latent Dirichlet Allocation (LDA), and interpreting topic-word distributions, with optional visualization through pyLDAVis.</li>
-    <li><strong>Summary extraction</strong> — extractive summarization using sentence scoring, Gramian similarity matrices, PageRank-style ranking, and graph-based sentence selection.</li>
-    <li><strong>Modeling vocabulary</strong> — n-gram/phrase extraction, keyword scoring, and comparing RAKE vs TextRank keyword lists.</li>
+    <li>
+      <a href="notebooks/class_4/4.1.1.Practice_Comparing_Texts_index.html">Practice Comparing Texts</a> — collocation finding, PMI scoring, Jaccard similarity between keyword sets
+      <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/4.1.1.Practice_Comparing_Texts.ipynb" target="_blank" rel="noopener">
+        <img class="colab-badge" src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab">
+      </a>
+    </li>
+    <li>
+      <a href="notebooks/class_4/Practice_Identifying_Collocations_index.html">Practice Identifying Collocations</a> — bigram and trigram collocations with NLTK
+      <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/Practice_Identifying_Collocations.ipynb" target="_blank" rel="noopener">
+        <img class="colab-badge" src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab">
+      </a>
+    </li>
+    <li>
+      <a href="notebooks/class_4/Practice_Measuring_Keyword_Quality_index.html">Practice Measuring Keyword Quality</a> — evaluate extracted keywords using Jaccard similarity
+      <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/Practice%20Measuring%20Keyword%20Quality.ipynb" target="_blank" rel="noopener">
+        <img class="colab-badge" src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab">
+      </a>
+    </li>
+    <li>
+      <a href="notebooks/class_4/Identifying_Keywords_and_Keyphrases_From_Text_index.html">Identifying Keywords and Keyphrases From Text</a> — RAKE and TextRank extraction with comparison
+      <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/Identifying%20Keywords%20and%20Keyphrases%20From%20Text.ipynb" target="_blank" rel="noopener">
+        <img class="colab-badge" src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab">
+      </a>
+    </li>
+    <li>
+      <a href="notebooks/class_4/Identifying_Keywords_and_Keyphrases_From_Text_1_index.html">Identifying Keywords and Keyphrases From Text (1)</a> — extended keyword extraction exercises
+      <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/Identifying%20Keywords%20and%20Keyphrases%20From%20Text%20%281%29.ipynb" target="_blank" rel="noopener">
+        <img class="colab-badge" src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab">
+      </a>
+    </li>
+    <li>
+      <a href="notebooks/class_4/Identifying_Topics_From_Documents_index.html">Identifying Topics From Documents</a> — TruncatedSVD and LSA topic discovery
+      <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/Identifying%20Topics%20From%20Documents.ipynb" target="_blank" rel="noopener">
+        <img class="colab-badge" src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab">
+      </a>
+    </li>
+    <li>
+      <a href="notebooks/class_4/Identifying_Topics_From_Documents_1_index.html">Identifying Topics From Documents (1)</a> — LDA topic modeling with sklearn
+      <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/Identifying%20Topics%20From%20Documents%20%281%29.ipynb" target="_blank" rel="noopener">
+        <img class="colab-badge" src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab">
+      </a>
+    </li>
+    <li>
+      <a href="notebooks/class_4/Identifying_Topics_From_Documents_2_index.html">Identifying Topics From Documents (2)</a> — LDA with pyLDAvis interactive visualization
+      <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/Identifying%20Topics%20From%20Documents%20%282%29.ipynb" target="_blank" rel="noopener">
+        <img class="colab-badge" src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab">
+      </a>
+    </li>
+    <li>
+      <a href="notebooks/class_4/Practice_Extracting_a_Summary_index.html">Practice Extracting a Summary</a> — sentence scoring and TextRank extractive summarization
+      <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/class_4/Practice_Extracting_a_Summary.ipynb" target="_blank" rel="noopener">
+        <img class="colab-badge" src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab">
+      </a>
+    </li>
+    <li>
+      <a href="notebooks/class_4/Extracting_Summary_Sentences_From_Documents_index.html">Extracting Summary Sentences From Documents</a> — Gramian similarity matrix and PageRank sentence ranking
+      <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/Extracting%20Summary%20Sentences%20From%20Documents.ipynb" target="_blank" rel="noopener">
+        <img class="colab-badge" src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab">
+      </a>
+    </li>
+    <li>
+      <a href="notebooks/class_4/Extracting_Summary_Sentences_From_Documents_1_index.html">Extracting Summary Sentences From Documents (1)</a> — extended summarization exercises
+      <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/Extracting%20Summary%20Sentences%20From%20Documents%20%281%29.ipynb" target="_blank" rel="noopener">
+        <img class="colab-badge" src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab">
+      </a>
+    </li>
+    <li>
+      <a href="notebooks/class_2/Practice_With_Basic_Matrix_Operations_index.html">Practice With Basic Matrix Operations</a> — NumPy matrix arithmetic as foundation for SVD
+      <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/Practice%20With%20Basic%20Matrix%20Operations.ipynb" target="_blank" rel="noopener">
+        <img class="colab-badge" src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab">
+      </a>
+    </li>
+    <li>
+      <a href="notebooks/class_2/Practice_Matrix_Decomposition_index.html">Practice Matrix Decomposition</a> — hands-on SVD and low-rank approximation
+      <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/Practice%20Matrix%20Decomposition.ipynb" target="_blank" rel="noopener">
+        <img class="colab-badge" src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab">
+      </a>
+    </li>
   </ul>
-  <h2>Practical Exercises & Notebooks</h2>
-  <ul>
-    <li>Practice identifying collocations and keywords: <a href="notebooks/class_4/4.1.1.Practice_Comparing_Texts_index.html">4.1.1.Practice_Comparing_Texts.ipynb</a> <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/4.1.1.Practice_Comparing_Texts.ipynb" target="_blank" rel="noopener"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" style="vertical-align:middle;margin-left:.3em"></a></li>
-    <li>Keyword extraction with RAKE and TextRank: RAKE/TextRank notebooks and examples referenced in the class material.</li>
-    <li>Topic modeling and SVD practice: <a href="notebooks/class_4/Identifying_Topics_From_Documents_index.html">Identifying Topics From Documents.ipynb</a> <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/Identifying%20Topics%20From%20Documents.ipynb" target="_blank" rel="noopener"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" style="vertical-align:middle;margin-left:.3em"></a>, and the class_4 summary extraction notebook: <a href="notebooks/class_4/Practice_Extracting_a_Summary_index.html">class_4/Practice_Extracting_a_Summary.ipynb</a> <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/class_4/Practice_Extracting_a_Summary.ipynb" target="_blank" rel="noopener"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" style="vertical-align:middle;margin-left:.3em"></a></li>
-  </ul>
-  <h2>Core Notebooks</h2>
-  <ul>
-    <li><a href="notebooks/class_4/Practice_Identifying_Collocations_index.html">Practice Identifying Collocations.ipynb</a> <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/Practice_Identifying_Collocations.ipynb" target="_blank" rel="noopener"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" style="vertical-align:middle;margin-left:.3em"></a></li>
-    <li><a href="notebooks/class_4/Practice_Measuring_Keyword_Quality_index.html">Practice Measuring Keyword Quality.ipynb</a> <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/Practice%20Measuring%20Keyword%20Quality.ipynb" target="_blank" rel="noopener"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" style="vertical-align:middle;margin-left:.3em"></a></li>
-    <li><a href="notebooks/class_4/Identifying_Keywords_and_Keyphrases_From_Text_index.html">Identifying Keywords and Keyphrases From Text.ipynb</a> <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/Identifying%20Keywords%20and%20Keyphrases%20From%20Text.ipynb" target="_blank" rel="noopener"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" style="vertical-align:middle;margin-left:.3em"></a></li>
-    <li><a href="notebooks/class_4/Identifying_Keywords_and_Keyphrases_From_Text_1_index.html">Identifying Keywords and Keyphrases From Text (1).ipynb</a> <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/Identifying%20Keywords%20and%20Keyphrases%20From%20Text%20%281%29.ipynb" target="_blank" rel="noopener"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" style="vertical-align:middle;margin-left:.3em"></a></li>
-    <li><a href="notebooks/class_4/Practice_Extracting_a_Summary_index.html">class_4/Practice_Extracting_a_Summary.ipynb</a> <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/class_4/Practice_Extracting_a_Summary.ipynb" target="_blank" rel="noopener"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" style="vertical-align:middle;margin-left:.3em"></a></li>
-    <li><a href="notebooks/class_4/Identifying_Topics_From_Documents_index.html">Identifying Topics From Documents.ipynb</a> <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/Identifying%20Topics%20From%20Documents.ipynb" target="_blank" rel="noopener"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" style="vertical-align:middle;margin-left:.3em"></a></li>
-    <li><a href="notebooks/class_4/Identifying_Topics_From_Documents_1_index.html">Identifying Topics From Documents (1).ipynb</a> <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/Identifying%20Topics%20From%20Documents%20%281%29.ipynb" target="_blank" rel="noopener"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" style="vertical-align:middle;margin-left:.3em"></a></li>
-    <li><a href="notebooks/class_4/Identifying_Topics_From_Documents_2_index.html">Identifying Topics From Documents (2).ipynb</a> <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/Identifying%20Topics%20From%20Documents%20%282%29.ipynb" target="_blank" rel="noopener"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" style="vertical-align:middle;margin-left:.3em"></a></li>
-    <li><a href="notebooks/class_2/Practice_With_Basic_Matrix_Operations_index.html">Practice With Basic Matrix Operations.ipynb</a> <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/Practice%20With%20Basic%20Matrix%20Operations.ipynb" target="_blank" rel="noopener"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" style="vertical-align:middle;margin-left:.3em"></a></li>
-    <li><a href="notebooks/class_2/Practice_Matrix_Decomposition_index.html">Practice Matrix Decomposition.ipynb</a> <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/Practice%20Matrix%20Decomposition.ipynb" target="_blank" rel="noopener"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" style="vertical-align:middle;margin-left:.3em"></a></li>
-    <li><a href="notebooks/class_4/Extracting_Summary_Sentences_From_Documents_index.html">Extracting Summary Sentences From Documents.ipynb</a> <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/Extracting%20Summary%20Sentences%20From%20Documents.ipynb" target="_blank" rel="noopener"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" style="vertical-align:middle;margin-left:.3em"></a></li>
-    <li><a href="notebooks/class_4/Extracting_Summary_Sentences_From_Documents_1_index.html">Extracting Summary Sentences From Documents (1).ipynb</a> <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/Extracting%20Summary%20Sentences%20From%20Documents%20%281%29.ipynb" target="_blank" rel="noopener"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" style="vertical-align:middle;margin-left:.3em"></a></li>
-  </ul>
-  <p><a href="index.html">Back to notebook portal</a></p>
-  <hr>
-  <h2>Full class notes (from markdown)</h2>
-  <div id="md-content-4">Loading markdown…</div>
-  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-  <script>
-    (async function(){
-      try{
-        const res = await fetch('Class_4.md');
-        const md = await res.text();
-        document.getElementById('md-content-4').innerHTML = marked.parse(md);
-      }catch(e){
-        document.getElementById('md-content-4').innerHTML = '<pre>Unable to load Class_4.md — see <a href="Class_4.md">raw</a></pre>';
-      }
-    })();
-  </script>
+
+  <div class="nav">
+    <a href="class_3.html">← Class 3 — Supervised Classification</a> &nbsp;·&nbsp;
+    <a href="index.html">Back to notebook portal</a> &nbsp;·&nbsp;
+    <a href="class_5.html">Class 5 — Document Clustering →</a>
+  </div>
+
 </body>
 </html>
