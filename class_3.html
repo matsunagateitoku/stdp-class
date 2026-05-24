@@ -5,68 +5,551 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Class 3 — Classifying Documents With Supervised Machine Learning</title>
   <style>
-    body{font-family:system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;margin:1.5rem;line-height:1.6}
-    h1,h2{margin-top:1.6rem}
-    ul{margin:0.5rem 0 1rem 1.5rem}
-    li{margin:0.25rem 0}
+    *{box-sizing:border-box}
+    body{font-family:system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;margin:0;padding:1.5rem 2rem;line-height:1.7;color:#1a1a1a;max-width:960px}
+    h1{font-size:2rem;margin-bottom:.25rem}
+    h2{font-size:1.4rem;margin-top:2.5rem;margin-bottom:.5rem;padding-bottom:.3rem;border-bottom:2px solid #e1e4e8;color:#0366d6}
+    h3{font-size:1.1rem;margin-top:1.4rem;margin-bottom:.4rem;color:#24292e}
+    p{margin:.5rem 0 1rem}
+    ul,ol{margin:.4rem 0 1rem 1.5rem}
+    li{margin:.35rem 0}
     a{text-decoration:none;color:#0366d6}
     a:hover{text-decoration:underline}
-    .note{color:#555}
+    code{background:#f3f4f6;border:1px solid #e1e4e8;border-radius:4px;padding:.1em .4em;font-size:.9em;font-family:"SFMono-Regular",Consolas,monospace}
+    pre{background:#f6f8fa;border:1px solid #e1e4e8;border-radius:6px;padding:1rem 1.2rem;overflow-x:auto;font-size:.875rem;line-height:1.6}
+    pre code{background:none;border:none;padding:0;font-size:inherit}
+    .subtitle{color:#586069;font-size:1.05rem;margin-top:.25rem}
+    .tip{background:#fff8c5;border-left:4px solid #f0a000;border-radius:0 6px 6px 0;padding:.75rem 1rem;margin:1rem 0}
+    .tip strong{color:#a05000}
+    .concept{background:#f0f7ff;border-left:4px solid #0366d6;border-radius:0 6px 6px 0;padding:.75rem 1rem;margin:1rem 0}
+    .concept strong{color:#0366d6}
+    .warn{background:#fff0f0;border-left:4px solid #d73a49;border-radius:0 6px 6px 0;padding:.75rem 1rem;margin:1rem 0}
+    .warn strong{color:#d73a49}
+    table{border-collapse:collapse;width:100%;margin:1rem 0;font-size:.9rem}
+    th{background:#f6f8fa;font-weight:600;padding:.5rem .8rem;border:1px solid #ddd;text-align:left}
+    td{padding:.45rem .8rem;border:1px solid #ddd;vertical-align:top}
+    tr:nth-child(even) td{background:#fafafa}
+    .nav{margin-top:2.5rem;padding-top:1rem;border-top:1px solid #e1e4e8;color:#586069;font-size:.9rem}
+    .colab-badge{vertical-align:middle;margin-left:.5em}
+    .modules-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;margin:1rem 0}
+    .module-card{border:1px solid #e1e4e8;border-radius:8px;padding:1rem;background:#fff}
+    .module-card h4{margin:0 0 .5rem;font-size:1rem;color:#0366d6}
+    .module-card p{margin:0;font-size:.9rem;color:#444}
+    .data-flow{display:flex;flex-wrap:wrap;align-items:center;gap:.4rem;margin:1rem 0;font-size:.875rem}
+    .data-flow .step{background:#e8f4fd;border:1px solid #bcd9f1;border-radius:6px;padding:.4rem .75rem}
+    .data-flow .arrow{color:#999;font-size:1.1rem}
+    .cm-table{border-collapse:collapse;margin:1rem 0;font-size:.9rem}
+    .cm-table th,.cm-table td{border:1px solid #ccc;padding:.45rem .8rem;text-align:center}
+    .cm-table th{background:#f0f4f8;font-weight:600}
+    .cm-table .tp{background:#d4edda;font-weight:600}
+    .cm-table .tn{background:#d4edda;font-weight:600}
+    .cm-table .fp{background:#f8d7da}
+    .cm-table .fn{background:#f8d7da}
   </style>
 </head>
 <body>
+
   <h1>Class 3 — Classifying Documents With Supervised Machine Learning</h1>
-  <p>This class covers labeled document classification, model training, evaluation, and improvement using supervised learning.</p>
-  <p class="note">Key notebooks include logistic regression, confusion matrices, validation, and hyperparameter tuning for text classification.</p>
-  <h2>Course Description</h2>
-  <p>This class covers the end-to-end supervised learning workflow for text classification: preparing labeled data, splitting into train/validation/test sets, choosing and training classifiers, evaluating performance, and improving models via hyperparameter tuning. Class emphasizes practical model choices (logistic regression, naive Bayes, SVM, kNN, decision trees, ensembles) and evaluation (confusion matrices, accuracy, F1, ROC).</p>
-  <h2>Modules & Key Concepts</h2>
+  <p class="subtitle">End-to-end text classification: from labeled data to a tuned, evaluated model</p>
+
+  <p>Supervised classification assigns a label to each document — "spam or not spam", "positive or negative sentiment", "which of 20 news topics". This class covers the complete workflow: preparing labeled data, training classifiers, evaluating with confusion matrices and F1, and improving models through hyperparameter tuning. The same pipeline works for any text classification problem.</p>
+
+  <div class="modules-grid">
+    <div class="module-card">
+      <h4>Module 1 — Data Preparation</h4>
+      <p>Load and vectorize labeled text, split into train/validation/test sets, establish a baseline to beat</p>
+    </div>
+    <div class="module-card">
+      <h4>Module 2 — Classifiers</h4>
+      <p>Logistic regression, Naive Bayes, SVM, kNN, decision trees — when to use each; sigmoid and logit functions</p>
+    </div>
+    <div class="module-card">
+      <h4>Module 3 — Evaluation & Tuning</h4>
+      <p>Confusion matrix, accuracy, precision, recall, F1, ROC; hyperparameter search with GridSearchCV</p>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <h2>Module 1 — Preparing Data for Classification</h2>
+  <!-- ═══════════════════════════════════════════════════════════ -->
+
+  <p>Before training any model, you need labeled data in the right shape — a feature matrix <code>X</code> and a label vector <code>y</code> — split so that you can train on one portion and evaluate honestly on another.</p>
+
+  <h3>The End-to-End Pipeline</h3>
+  <div class="data-flow">
+    <div class="step">Raw labeled text</div><div class="arrow">→</div>
+    <div class="step">Vectorize (TF-IDF)</div><div class="arrow">→</div>
+    <div class="step">Train / val / test split</div><div class="arrow">→</div>
+    <div class="step">Train classifier</div><div class="arrow">→</div>
+    <div class="step">Evaluate on val set</div><div class="arrow">→</div>
+    <div class="step">Tune hyperparameters</div><div class="arrow">→</div>
+    <div class="step">Final test score</div>
+  </div>
+
+  <h3>Loading a Labeled Dataset</h3>
+  <p>The 20 Newsgroups dataset is the standard benchmark for text classification. Each document is a newsgroup post labeled with one of 20 topics:</p>
+  <pre><code>from sklearn.datasets import fetch_20newsgroups
+
+# Load all 20 categories
+data = fetch_20newsgroups(subset='all', remove=('headers', 'footers', 'quotes'))
+print(data.target_names[:5])
+# ['alt.atheism', 'comp.graphics', 'comp.os.ms-windows.misc', 'comp.sys.ibm.pc.hardware', 'comp.sys.mac.hardware']
+
+texts  = data.data     # list of raw strings
+labels = data.target   # numpy array of integer class indices (0–19)
+
+# Load only specific categories (makes problem easier to start)
+cats = ['rec.sport.baseball', 'sci.space', 'talk.politics.guns']
+data = fetch_20newsgroups(subset='train', categories=cats)</code></pre>
+
+  <h3>Vectorizing Text for Classification</h3>
+  <p>Classifiers need numbers. Fit <code>TfidfVectorizer</code> on the training set only, then transform all splits with the fitted vocabulary:</p>
+  <pre><code>from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.model_selection import train_test_split
+
+# Split raw text first
+X_train_raw, X_test_raw, y_train, y_test = train_test_split(
+    texts, labels, test_size=0.2, random_state=42, stratify=labels
+)
+
+# Fit only on training data, transform both
+tfidf = TfidfVectorizer(stop_words='english', max_features=20000, sublinear_tf=True)
+X_train = tfidf.fit_transform(X_train_raw)
+X_test  = tfidf.transform(X_test_raw)       # never fit_transform on test data!
+
+print(X_train.shape)   # (n_train_docs, 20000)
+print(X_test.shape)    # (n_test_docs,  20000)</code></pre>
+
+  <div class="warn">
+    <strong>Stratify your splits.</strong> Pass <code>stratify=labels</code> to <code>train_test_split</code> so that each class is proportionally represented in both train and test. Without it, a random split might put 80% of one class into the test set.
+  </div>
+
+  <h3>Establishing a Baseline</h3>
+  <p>Before training any real model, establish a <strong>dummy baseline</strong> — the score you'd get by always predicting the most frequent class. Any real model must beat this to be useful:</p>
+  <pre><code>from sklearn.dummy import DummyClassifier
+
+dummy = DummyClassifier(strategy='most_frequent')
+dummy.fit(X_train, y_train)
+baseline_acc = dummy.score(X_test, y_test)
+print(f"Baseline accuracy: {baseline_acc:.3f}")
+# For balanced 20-class problem: 1/20 = 0.05 (5%)
+# For 3-class balanced problem:  1/3  ≈ 0.33 (33%)</code></pre>
+
+  <div class="concept">
+    <strong>Why baseline matters:</strong> If your dataset is 95% class A and 5% class B, a dummy classifier that always predicts A gets 95% accuracy. A real model at 96% accuracy sounds impressive but is barely better than doing nothing. Always compare to the baseline.
+  </div>
+
+  <h3>Train / Validation / Test Split Strategy</h3>
+  <table>
+    <thead><tr><th>Split</th><th>Typical size</th><th>Purpose</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Training set</strong></td><td>60–70%</td><td>Model learns parameters from this data</td></tr>
+      <tr><td><strong>Validation set</strong></td><td>15–20%</td><td>Select model type and tune hyperparameters</td></tr>
+      <tr><td><strong>Test set</strong></td><td>15–20%</td><td>Final, one-time evaluation — never look at this until done</td></tr>
+    </tbody>
+  </table>
+  <pre><code># Two-step split: first carve off test, then split remainder into train/val
+X_temp, X_test, y_temp, y_test = train_test_split(X, y, test_size=0.2, stratify=y)
+X_train, X_val, y_train, y_val = train_test_split(X_temp, y_temp, test_size=0.25, stratify=y_temp)
+# Result: 60% train, 20% val, 20% test</code></pre>
+
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <h2>Module 2 — Classifiers for Text</h2>
+  <!-- ═══════════════════════════════════════════════════════════ -->
+
+  <p>Scikit-learn provides a consistent API for all classifiers: <code>.fit(X_train, y_train)</code> to train, <code>.predict(X_test)</code> to classify, and <code>.score(X_test, y_test)</code> for accuracy. This means you can swap classifiers with a single line change.</p>
+
+  <h3>Logistic Regression — The Workhorse for Text</h3>
+  <p>Logistic regression is usually the best starting point for text classification. Despite its name, it's a classification algorithm — it predicts the probability that a document belongs to each class and picks the highest.</p>
+  <pre><code>from sklearn.linear_model import LogisticRegression
+
+lr = LogisticRegression(max_iter=1000, C=1.0, solver='lbfgs', multi_class='auto')
+lr.fit(X_train, y_train)
+
+print(lr.score(X_val, y_val))           # accuracy on validation set
+preds = lr.predict(X_val)              # predicted class labels
+probs = lr.predict_proba(X_val)        # probability for each class
+print(probs[0])   # e.g. [0.02, 0.91, 0.07] for 3 classes</code></pre>
+
+  <div class="concept">
+    <strong>Key parameter <code>C</code>:</strong> Controls regularization strength. Smaller C = stronger regularization = simpler model (less overfitting, more bias). Larger C = weaker regularization = complex model (may overfit). Default C=1.0 is a good starting point; tune with cross-validation.
+  </div>
+
+  <h3>The Sigmoid and Logit Functions</h3>
+  <p>Logistic regression maps a linear score (dot product of weights and features) to a probability via the <strong>sigmoid function</strong>:</p>
+  <pre><code>import numpy as np
+import matplotlib.pyplot as plt
+
+def sigmoid(z):
+    return 1 / (1 + np.exp(-z))
+
+z = np.linspace(-6, 6, 200)
+plt.plot(z, sigmoid(z))
+plt.axhline(0.5, color='gray', linestyle='--')
+plt.title("Sigmoid function: maps any real number to (0, 1)")
+plt.xlabel("Linear score z"); plt.ylabel("Probability")
+plt.show()
+
+# Examples
+sigmoid(0)    # → 0.5   (score = 0 means 50/50)
+sigmoid(2)    # → 0.88  (positive score → high probability)
+sigmoid(-3)   # → 0.047 (negative score → low probability)</code></pre>
+
+  <p>The <strong>logit</strong> (log-odds) is the inverse — it converts probabilities back to the raw linear score:</p>
+  <pre><code>from scipy.special import logit
+
+logit(0.5)    # → 0.0    (50% probability = score of 0)
+logit(0.9)    # → 2.197  (90% probability)
+logit(0.1)    # → -2.197 (10% probability — symmetric)</code></pre>
+
+  <h3>Naive Bayes — Fast and Often Surprisingly Good</h3>
+  <p>Multinomial Naive Bayes is extremely fast, works well on sparse count matrices, and often performs competitively with logistic regression on short documents:</p>
+  <pre><code>from sklearn.naive_bayes import MultinomialNB, ComplementNB
+
+# MultinomialNB works on raw counts or TF-IDF (non-negative values)
+nb = MultinomialNB(alpha=1.0)   # alpha = Laplace smoothing
+nb.fit(X_train, y_train)
+print(nb.score(X_val, y_val))
+
+# ComplementNB often works better for imbalanced classes
+cnb = ComplementNB(alpha=1.0)
+cnb.fit(X_train, y_train)</code></pre>
+
+  <div class="tip">
+    <strong>Why "Naive"?</strong> It assumes all features (words) are independent given the class — a very wrong assumption in practice (words have strong co-occurrence patterns). Yet it works surprisingly well because all it needs are the word frequency counts per class, which it estimates robustly even from small data.
+  </div>
+
+  <h3>Support Vector Machine (SVM)</h3>
+  <p>SVM finds the hyperplane that maximally separates classes. <code>LinearSVC</code> is the most efficient choice for high-dimensional sparse text data:</p>
+  <pre><code>from sklearn.svm import LinearSVC
+
+svm = LinearSVC(C=1.0, max_iter=2000)
+svm.fit(X_train, y_train)
+print(svm.score(X_val, y_val))
+
+# SVM can't output probabilities directly — use CalibratedClassifierCV
+from sklearn.calibration import CalibratedClassifierCV
+svm_cal = CalibratedClassifierCV(svm)
+svm_cal.fit(X_train, y_train)
+probs = svm_cal.predict_proba(X_val)</code></pre>
+
+  <h3>Parametric vs. Non-Parametric Models</h3>
+  <table>
+    <thead><tr><th>Model Type</th><th>Examples</th><th>How it learns</th><th>For text?</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Parametric</strong></td><td>Logistic Regression, Naive Bayes, Neural Net</td><td>Learns fixed set of weight parameters; training data not needed after fitting</td><td>Excellent — scales to millions of documents</td></tr>
+      <tr><td><strong>Non-parametric</strong></td><td>kNN, Decision Tree, Random Forest</td><td>Keeps training data or grows a tree; complexity grows with data size</td><td>Slow on high-dimensional sparse TF-IDF vectors</td></tr>
+    </tbody>
+  </table>
+  <pre><code>from sklearn.neighbors import KNeighborsClassifier
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.ensemble import RandomForestClassifier
+
+knn = KNeighborsClassifier(n_neighbors=5)
+dt  = DecisionTreeClassifier(max_depth=20)
+rf  = RandomForestClassifier(n_estimators=100, n_jobs=-1)
+
+# kNN is very slow on sparse 20k-dim vectors — use only on small datasets
+# Decision trees and forests work but rarely beat logistic regression on text</code></pre>
+
+  <h3>Comparing Classifiers Quickly</h3>
+  <pre><code>from sklearn.linear_model import LogisticRegression
+from sklearn.naive_bayes import MultinomialNB
+from sklearn.svm import LinearSVC
+
+models = {
+    'Logistic Regression': LogisticRegression(max_iter=1000),
+    'Naive Bayes':          MultinomialNB(),
+    'Linear SVM':           LinearSVC(max_iter=2000),
+}
+
+for name, model in models.items():
+    model.fit(X_train, y_train)
+    acc = model.score(X_val, y_val)
+    print(f"{name:25s}: {acc:.4f}")</code></pre>
+
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <h2>Module 3 — Evaluation and Hyperparameter Tuning</h2>
+  <!-- ═══════════════════════════════════════════════════════════ -->
+
+  <p>Accuracy alone is a misleading metric, especially when classes are imbalanced. A full evaluation uses the confusion matrix to break performance down by class.</p>
+
+  <h3>The Confusion Matrix</h3>
+  <p>For binary classification (positive / negative), the confusion matrix is a 2×2 table showing where the model was right and where it was wrong:</p>
+
+  <table class="cm-table">
+    <thead>
+      <tr><th></th><th>Predicted Positive</th><th>Predicted Negative</th></tr>
+    </thead>
+    <tbody>
+      <tr><th>Actually Positive</th><td class="tp">True Positive (TP)</td><td class="fn">False Negative (FN) — missed it</td></tr>
+      <tr><th>Actually Negative</th><td class="fp">False Positive (FP) — false alarm</td><td class="tn">True Negative (TN)</td></tr>
+    </tbody>
+  </table>
+
+  <pre><code>from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
+import matplotlib.pyplot as plt
+
+cm = confusion_matrix(y_val, preds)
+print(cm)
+# [[85  5]    ← 85 true negatives, 5 false positives
+#  [ 8 72]]   ← 8 false negatives, 72 true positives
+
+# Plot it
+disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=['neg', 'pos'])
+disp.plot(cmap='Blues')
+plt.title("Confusion Matrix")
+plt.show()</code></pre>
+
+  <h3>Precision, Recall, and F1</h3>
+  <p>These three metrics come directly from the confusion matrix cells:</p>
+  <pre><code>from sklearn.metrics import precision_score, recall_score, f1_score, classification_report
+
+# Precision: of everything predicted positive, what fraction was actually positive?
+# Precision = TP / (TP + FP)
+# Use when false positives are costly (e.g., spam filter — don't block real email)
+
+# Recall: of everything actually positive, what fraction did we find?
+# Recall = TP / (TP + FN)
+# Use when false negatives are costly (e.g., cancer screening — don't miss cases)
+
+# F1: harmonic mean of precision and recall — balances both
+# F1 = 2 * (precision * recall) / (precision + recall)
+
+print(precision_score(y_val, preds, average='weighted'))
+print(recall_score(y_val, preds, average='weighted'))
+print(f1_score(y_val, preds, average='weighted'))
+
+# Full per-class breakdown
+print(classification_report(y_val, preds, target_names=class_names))</code></pre>
+
+  <table>
+    <thead><tr><th>Metric</th><th>Formula</th><th>High when…</th><th>Use when…</th></tr></thead>
+    <tbody>
+      <tr><td>Accuracy</td><td>(TP + TN) / all</td><td>Most predictions correct</td><td>Classes are balanced</td></tr>
+      <tr><td>Precision</td><td>TP / (TP + FP)</td><td>Few false alarms</td><td>FP is expensive (spam filter)</td></tr>
+      <tr><td>Recall</td><td>TP / (TP + FN)</td><td>Few misses</td><td>FN is expensive (medical diagnosis)</td></tr>
+      <tr><td>F1</td><td>2 · P · R / (P + R)</td><td>Both precision and recall are high</td><td>Classes are imbalanced</td></tr>
+    </tbody>
+  </table>
+
+  <h3>ROC Curve and AUC</h3>
+  <p>The ROC curve plots true positive rate vs. false positive rate at every possible probability threshold. AUC (Area Under Curve) summarizes it as a single number — 1.0 is perfect, 0.5 is random:</p>
+  <pre><code>from sklearn.metrics import roc_curve, roc_auc_score
+import matplotlib.pyplot as plt
+
+# For binary classification with probability estimates
+probs_pos = lr.predict_proba(X_val)[:, 1]   # probability of positive class
+fpr, tpr, thresholds = roc_curve(y_val, probs_pos)
+auc = roc_auc_score(y_val, probs_pos)
+
+plt.plot(fpr, tpr, label=f"AUC = {auc:.3f}")
+plt.plot([0,1], [0,1], 'k--', label='Random (AUC=0.5)')
+plt.xlabel("False Positive Rate"); plt.ylabel("True Positive Rate")
+plt.title("ROC Curve"); plt.legend(); plt.show()</code></pre>
+
+  <h3>Hyperparameter Tuning with <code>GridSearchCV</code></h3>
+  <p>Hyperparameters are settings chosen before training (like regularization strength <code>C</code>) that control how the model learns. <code>GridSearchCV</code> tries every combination in a grid and uses cross-validation to find the best one:</p>
+  <pre><code>from sklearn.model_selection import GridSearchCV
+
+param_grid = {
+    'C':       [0.01, 0.1, 1.0, 10.0, 100.0],
+    'solver':  ['lbfgs', 'saga'],
+    'penalty': ['l2'],
+}
+
+grid = GridSearchCV(
+    LogisticRegression(max_iter=1000),
+    param_grid,
+    cv=5,                    # 5-fold cross-validation
+    scoring='f1_weighted',   # optimize for F1
+    n_jobs=-1,               # use all CPU cores
+    verbose=1,
+)
+grid.fit(X_train, y_train)
+
+print("Best params:", grid.best_params_)
+print("Best CV F1: ", grid.best_score_)
+
+# Evaluate the best model on the held-out test set
+best_model = grid.best_estimator_
+print("Test accuracy:", best_model.score(X_test, y_test))</code></pre>
+
+  <div class="tip">
+    <strong>Cross-validation vs. a single validation split:</strong> With k-fold CV, the data is split k times so every sample is used for validation exactly once. This gives a more reliable estimate of performance than a single 80/20 split, especially with small datasets.
+  </div>
+
+  <h3>Cross-Validation Without GridSearch</h3>
+  <pre><code>from sklearn.model_selection import cross_val_score
+
+scores = cross_val_score(
+    LogisticRegression(max_iter=1000, C=1.0),
+    X_train, y_train,
+    cv=5,
+    scoring='accuracy'
+)
+print(f"CV accuracy: {scores.mean():.4f} ± {scores.std():.4f}")
+# e.g. CV accuracy: 0.8742 ± 0.0183</code></pre>
+
+  <h3>Processing a Real Text Dataset End-to-End</h3>
+  <pre><code>from sklearn.datasets import fetch_20newsgroups
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.linear_model import LogisticRegression
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import classification_report
+
+# 1. Load data
+data = fetch_20newsgroups(subset='all', remove=('headers','footers','quotes'))
+X_raw, y = data.data, data.target
+
+# 2. Split
+X_train_raw, X_test_raw, y_train, y_test = train_test_split(
+    X_raw, y, test_size=0.2, stratify=y, random_state=42
+)
+
+# 3. Vectorize (fit only on train)
+tfidf = TfidfVectorizer(stop_words='english', max_features=30000, sublinear_tf=True)
+X_train = tfidf.fit_transform(X_train_raw)
+X_test  = tfidf.transform(X_test_raw)
+
+# 4. Train
+model = LogisticRegression(C=5.0, max_iter=1000, solver='lbfgs', multi_class='auto')
+model.fit(X_train, y_train)
+
+# 5. Evaluate
+print(classification_report(y_test, model.predict(X_test), target_names=data.target_names))</code></pre>
+
+  <h3>Inspecting What the Model Learned</h3>
+  <p>For logistic regression and linear SVM, you can directly read the most important words (features with highest weights) for each class:</p>
+  <pre><code>import numpy as np
+
+feature_names = tfidf.get_feature_names_out()
+
+# Top 10 words for each class
+for i, class_name in enumerate(data.target_names):
+    top_idx = np.argsort(model.coef_[i])[-10:][::-1]
+    top_words = [feature_names[j] for j in top_idx]
+    print(f"{class_name}: {', '.join(top_words)}")</code></pre>
+
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <h2>Key Tools Summary</h2>
+  <!-- ═══════════════════════════════════════════════════════════ -->
+
+  <table>
+    <thead><tr><th>Tool / Function</th><th>Library</th><th>Purpose</th></tr></thead>
+    <tbody>
+      <tr><td><code>fetch_20newsgroups()</code></td><td><code>sklearn.datasets</code></td><td>Load standard text classification benchmark dataset</td></tr>
+      <tr><td><code>train_test_split(..., stratify=y)</code></td><td><code>sklearn.model_selection</code></td><td>Split data preserving class proportions</td></tr>
+      <tr><td><code>DummyClassifier(strategy='most_frequent')</code></td><td><code>sklearn.dummy</code></td><td>Establish accuracy baseline to beat</td></tr>
+      <tr><td><code>LogisticRegression(C=..., max_iter=...)</code></td><td><code>sklearn.linear_model</code></td><td>Best default classifier for sparse text vectors</td></tr>
+      <tr><td><code>MultinomialNB(alpha=1.0)</code></td><td><code>sklearn.naive_bayes</code></td><td>Fast probabilistic classifier for count data</td></tr>
+      <tr><td><code>LinearSVC(C=...)</code></td><td><code>sklearn.svm</code></td><td>Efficient linear SVM for high-dimensional text</td></tr>
+      <tr><td><code>sigmoid(z)</code></td><td>manual / <code>scipy.special.expit</code></td><td>Map linear score to probability [0, 1]</td></tr>
+      <tr><td><code>logit(p)</code></td><td><code>scipy.special</code></td><td>Map probability to log-odds (inverse sigmoid)</td></tr>
+      <tr><td><code>confusion_matrix(y_true, y_pred)</code></td><td><code>sklearn.metrics</code></td><td>Count TP / FP / TN / FN across all classes</td></tr>
+      <tr><td><code>classification_report()</code></td><td><code>sklearn.metrics</code></td><td>Per-class precision, recall, F1, and support</td></tr>
+      <tr><td><code>roc_curve()</code>, <code>roc_auc_score()</code></td><td><code>sklearn.metrics</code></td><td>ROC curve and area-under-curve for binary classification</td></tr>
+      <tr><td><code>cross_val_score()</code></td><td><code>sklearn.model_selection</code></td><td>k-fold cross-validation scores</td></tr>
+      <tr><td><code>GridSearchCV(estimator, param_grid, cv=5)</code></td><td><code>sklearn.model_selection</code></td><td>Exhaustive hyperparameter search with cross-validation</td></tr>
+      <tr><td><code>model.coef_</code></td><td><code>sklearn</code></td><td>Linear model feature weights — inspect top words per class</td></tr>
+    </tbody>
+  </table>
+
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <h2>Notebooks for This Class</h2>
+  <!-- ═══════════════════════════════════════════════════════════ -->
+
   <ul>
-    <li><strong>Data preparation</strong> — splitting datasets, feature extraction, cross-validation strategies, and scikit-learn utilities.</li>
-    <li><strong>Parametric vs Non-parametric models</strong> — logistic regression and neural nets (parametric) versus kNN, trees, and SVM (non-parametric), with discussion of model complexity and bias-variance tradeoffs.</li>
-    <li><strong>Logistic regression fundamentals</strong> — sigmoid and logit functions, interpreting probabilities, and parameter effects.</li>
-    <li><strong>Model selection & tuning</strong> — baseline models, hyperparameter search, and validation to select models that outperform baselines.</li>
-    <li><strong>Classification application</strong> — process text datasets, split into training and validation sets, train classifiers, and evaluate performance using confusion matrices and accuracy metrics.</li>
+    <li>
+      <a href="notebooks/class_3/Processing_a_Data_Set_for_Supervised_Machine_Learning_Classification_Model_index.html">Processing a Data Set for Supervised Machine Learning Classification Model</a> — prepare and vectorize a labeled text corpus
+      <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/Processing%20a%20Data%20Set%20for%20Supervised%20Machine%20Learning%20Classification%20Model.ipynb" target="_blank" rel="noopener">
+        <img class="colab-badge" src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab">
+      </a>
+    </li>
+    <li>
+      <a href="notebooks/class_3/Train_a_Classification_Model_To_Categorize_Text_index.html">Train a Classification Model To Categorize Text</a> — fit and evaluate classifiers on the 20 Newsgroups dataset
+      <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/Train%20a%20Classification%20Model%20To%20Categorize%20Text.ipynb" target="_blank" rel="noopener">
+        <img class="colab-badge" src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab">
+      </a>
+    </li>
+    <li>
+      <a href="notebooks/class_3/Train_a_Classification_Model_To_Categorize_Text__1__index.html">Train a Classification Model To Categorize Text (1)</a> — extended version with additional model comparisons
+      <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/Train%20a%20Classification%20Model%20To%20Categorize%20Text%20%281%29.ipynb" target="_blank" rel="noopener">
+        <img class="colab-badge" src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab">
+      </a>
+    </li>
+    <li>
+      <a href="notebooks/class_3/Practice_Training_and_Validating_a_Baseline_Classification_Model_index.html">Practice Training and Validating a Baseline Classification Model</a> — dummy baseline, train/val split, first real model
+      <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/Practice%20Training%20and%20Validating%20a%20Baseline%20Classification%20Model.ipynb" target="_blank" rel="noopener">
+        <img class="colab-badge" src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab">
+      </a>
+    </li>
+    <li>
+      <a href="notebooks/class_3/Practice_Creating_and_Analyzing_a_Confusion_Matrix_index.html">Practice Creating and Analyzing a Confusion Matrix</a> — build and interpret confusion matrices for multi-class problems
+      <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/Practice%20Creating%20and%20Analyzing%20a%20Confusion%20Matrix.ipynb" target="_blank" rel="noopener">
+        <img class="colab-badge" src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab">
+      </a>
+    </li>
+    <li>
+      <a href="notebooks/class_3/Evaluating_the_Performance_of_a_Classification_Model_index.html">Evaluating the Performance of a Classification Model</a> — accuracy, precision, recall, F1, and ROC
+      <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/Evaluating%20the%20Performance%20of%20a%20Classification%20Model.ipynb" target="_blank" rel="noopener">
+        <img class="colab-badge" src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab">
+      </a>
+    </li>
+    <li>
+      <a href="notebooks/class_3/Practice_Calculating_Metrics_To_Evaluate_Classification_Model_Performance_index.html">Practice Calculating Metrics To Evaluate Classification Model Performance</a>
+      <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/Practice%20Calculating%20Metrics%20To%20Evaluate%20Classification%20Model%20Performance%20.ipynb" target="_blank" rel="noopener">
+        <img class="colab-badge" src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab">
+      </a>
+    </li>
+    <li>
+      <a href="notebooks/class_3/Practice_Calculating_Metrics_To_Evaluate_Classification_Model_Performance_1_index.html">Practice Calculating Metrics To Evaluate Classification Model Performance (1)</a>
+      <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/Practice%20Calculating%20Metrics%20To%20Evaluate%20Classification%20Model%20Performance%20%20%281%29.ipynb" target="_blank" rel="noopener">
+        <img class="colab-badge" src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab">
+      </a>
+    </li>
+    <li>
+      <a href="notebooks/class_3/Practice_Applying_Sigmoid_and_Logit_Functions_for_Logistic_Regression_index.html">Practice Applying Sigmoid and Logit Functions for Logistic Regression</a> — understand the math behind logistic regression
+      <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/Practice%20Applying%20Sigmoid%20and%20Logit%20Functions%20for%20Logistic%20Regression.ipynb" target="_blank" rel="noopener">
+        <img class="colab-badge" src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab">
+      </a>
+    </li>
+    <li>
+      <a href="notebooks/class_3/Practice_Calculating_the_Accuracy_for_a_New_Logistic_Regression_Model_index.html">Practice Calculating the Accuracy for a New Logistic Regression Model</a>
+      <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/Practice%20Calculating%20the%20Accuracy%20for%20a%20New%20Logistic%20Regression%20Model.ipynb" target="_blank" rel="noopener">
+        <img class="colab-badge" src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab">
+      </a>
+    </li>
+    <li>
+      <a href="notebooks/class_3/Practice_Selecting_a_Model_To_Outperform_the_Baseline_index.html">Practice Selecting a Model To Outperform the Baseline</a> — compare classifiers and pick the best one
+      <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/Practice%20Selecting%20a%20Model%20To%20Outperform%20the%20Baseline.ipynb" target="_blank" rel="noopener">
+        <img class="colab-badge" src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab">
+      </a>
+    </li>
+    <li>
+      <a href="notebooks/class_3/Practice_Improving_a_Model_Using_Hyperparameter_Tuning_index.html">Practice Improving a Model Using Hyperparameter Tuning</a> — GridSearchCV for logistic regression and SVM
+      <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/Practice%20Improving%20a%20Model%20Using%20Hyperparameter%20Tuning.ipynb" target="_blank" rel="noopener">
+        <img class="colab-badge" src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab">
+      </a>
+    </li>
+    <li>
+      <a href="notebooks/class_3/Practice_Improving_a_Model_Using_Hyperparameter_Tuning__1__index.html">Practice Improving a Model Using Hyperparameter Tuning (1)</a> — extended tuning exercises
+      <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/Practice%20Improving%20a%20Model%20Using%20Hyperparameter%20Tuning%20%281%29.ipynb" target="_blank" rel="noopener">
+        <img class="colab-badge" src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab">
+      </a>
+    </li>
   </ul>
-  <h2>Practical Exercises</h2>
-  <ul>
-    <li>Train a text classifier: <a href="notebooks/class_3/Train_a_Classification_Model_To_Categorize_Text_index.html">Train a Classification Model To Categorize Text.ipynb</a> <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/Train%20a%20Classification%20Model%20To%20Categorize%20Text.ipynb" target="_blank" rel="noopener"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" style="vertical-align:middle;margin-left:.3em"></a></li>
-    <li>Baseline model training and validation: <a href="notebooks/class_3/Practice_Training_and_Validating_a_Baseline_Classification_Model_index.html">Practice Training and Validating a Baseline Classification Model.ipynb</a> <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/Practice%20Training%20and%20Validating%20a%20Baseline%20Classification%20Model.ipynb" target="_blank" rel="noopener"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" style="vertical-align:middle;margin-left:.3em"></a></li>
-    <li>Confusion matrix creation and analysis: <a href="notebooks/class_3/Practice_Creating_and_Analyzing_a_Confusion_Matrix_index.html">Practice Creating and Analyzing a Confusion Matrix.ipynb</a> <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/Practice%20Creating%20and%20Analyzing%20a%20Confusion%20Matrix.ipynb" target="_blank" rel="noopener"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" style="vertical-align:middle;margin-left:.3em"></a></li>
-    <li>Hyperparameter tuning examples: <a href="notebooks/class_3/Practice_Improving_a_Model_Using_Hyperparameter_Tuning_index.html">Practice Improving a Model Using Hyperparameter Tuning.ipynb</a> <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/Practice%20Improving%20a%20Model%20Using%20Hyperparameter%20Tuning.ipynb" target="_blank" rel="noopener"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" style="vertical-align:middle;margin-left:.3em"></a></li>
-    <li>Logistic regression practice: <a href="notebooks/class_3/Practice_Applying_Sigmoid_and_Logit_Functions_for_Logistic_Regression_index.html">Practice Applying Sigmoid and Logit Functions for Logistic Regression.ipynb</a> <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/Practice%20Applying%20Sigmoid%20and%20Logit%20Functions%20for%20Logistic%20Regression.ipynb" target="_blank" rel="noopener"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" style="vertical-align:middle;margin-left:.3em"></a></li>
-  </ul>
-  <h2>Core Notebooks</h2>
-  <ul>
-    <li><a href="notebooks/class_3/Train_a_Classification_Model_To_Categorize_Text_index.html">Train a Classification Model To Categorize Text.ipynb</a> <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/Train%20a%20Classification%20Model%20To%20Categorize%20Text.ipynb" target="_blank" rel="noopener"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" style="vertical-align:middle;margin-left:.3em"></a></li>
-    <li><a href="notebooks/class_3/Train_a_Classification_Model_To_Categorize_Text__1__index.html">Train a Classification Model To Categorize Text (1).ipynb</a> <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/Train%20a%20Classification%20Model%20To%20Categorize%20Text%20%281%29.ipynb" target="_blank" rel="noopener"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" style="vertical-align:middle;margin-left:.3em"></a></li>
-    <li><a href="notebooks/class_3/Practice_Training_and_Validating_a_Baseline_Classification_Model_index.html">Practice Training and Validating a Baseline Classification Model.ipynb</a> <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/Practice%20Training%20and%20Validating%20a%20Baseline%20Classification%20Model.ipynb" target="_blank" rel="noopener"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" style="vertical-align:middle;margin-left:.3em"></a></li>
-    <li><a href="notebooks/class_3/Evaluating_the_Performance_of_a_Classification_Model_index.html">Evaluating the Performance of a Classification Model.ipynb</a> <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/Evaluating%20the%20Performance%20of%20a%20Classification%20Model.ipynb" target="_blank" rel="noopener"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" style="vertical-align:middle;margin-left:.3em"></a></li>
-    <li><a href="notebooks/class_3/Practice_Calculating_Metrics_To_Evaluate_Classification_Model_Performance_index.html">Practice Calculating Metrics To Evaluate Classification Model Performance .ipynb</a> <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/Practice%20Calculating%20Metrics%20To%20Evaluate%20Classification%20Model%20Performance%20.ipynb" target="_blank" rel="noopener"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" style="vertical-align:middle;margin-left:.3em"></a></li>
-    <li><a href="notebooks/class_3/Practice_Calculating_Metrics_To_Evaluate_Classification_Model_Performance_1_index.html">Practice Calculating Metrics To Evaluate Classification Model Performance  (1).ipynb</a> <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/Practice%20Calculating%20Metrics%20To%20Evaluate%20Classification%20Model%20Performance%20%20%281%29.ipynb" target="_blank" rel="noopener"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" style="vertical-align:middle;margin-left:.3em"></a></li>
-    <li><a href="notebooks/class_3/Practice_Creating_and_Analyzing_a_Confusion_Matrix_index.html">Practice Creating and Analyzing a Confusion Matrix.ipynb</a> <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/Practice%20Creating%20and%20Analyzing%20a%20Confusion%20Matrix.ipynb" target="_blank" rel="noopener"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" style="vertical-align:middle;margin-left:.3em"></a></li>
-    <li><a href="notebooks/class_3/Practice_Applying_Sigmoid_and_Logit_Functions_for_Logistic_Regression_index.html">Practice Applying Sigmoid and Logit Functions for Logistic Regression.ipynb</a> <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/Practice%20Applying%20Sigmoid%20and%20Logit%20Functions%20for%20Logistic%20Regression.ipynb" target="_blank" rel="noopener"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" style="vertical-align:middle;margin-left:.3em"></a></li>
-    <li><a href="notebooks/class_3/Practice_Calculating_the_Accuracy_for_a_New_Logistic_Regression_Model_index.html">Practice Calculating the Accuracy for a New Logistic Regression Model.ipynb</a> <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/Practice%20Calculating%20the%20Accuracy%20for%20a%20New%20Logistic%20Regression%20Model.ipynb" target="_blank" rel="noopener"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" style="vertical-align:middle;margin-left:.3em"></a></li>
-    <li><a href="notebooks/class_3/Practice_Selecting_a_Model_To_Outperform_the_Baseline_index.html">Practice Selecting a Model To Outperform the Baseline.ipynb</a> <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/Practice%20Selecting%20a%20Model%20To%20Outperform%20the%20Baseline.ipynb" target="_blank" rel="noopener"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" style="vertical-align:middle;margin-left:.3em"></a></li>
-    <li><a href="notebooks/class_3/Practice_Improving_a_Model_Using_Hyperparameter_Tuning_index.html">Practice Improving a Model Using Hyperparameter Tuning.ipynb</a> <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/Practice%20Improving%20a%20Model%20Using%20Hyperparameter%20Tuning.ipynb" target="_blank" rel="noopener"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" style="vertical-align:middle;margin-left:.3em"></a></li>
-    <li><a href="notebooks/class_3/Practice_Improving_a_Model_Using_Hyperparameter_Tuning__1__index.html">Practice Improving a Model Using Hyperparameter Tuning (1).ipynb</a> <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/Practice%20Improving%20a%20Model%20Using%20Hyperparameter%20Tuning%20%281%29.ipynb" target="_blank" rel="noopener"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" style="vertical-align:middle;margin-left:.3em"></a></li>
-    <li><a href="notebooks/class_3/Processing_a_Data_Set_for_Supervised_Machine_Learning_Classification_Model_index.html">Processing a Data Set for Supervised Machine Learning Classification Model.ipynb</a> <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/Processing%20a%20Data%20Set%20for%20Supervised%20Machine%20Learning%20Classification%20Model.ipynb" target="_blank" rel="noopener"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" style="vertical-align:middle;margin-left:.3em"></a></li>
-  </ul>
-  <p><a href="index.html">Back to notebook portal</a></p>
-  <hr>
-  <h2>Full class notes (from markdown)</h2>
-  <div id="md-content-3">Loading markdown…</div>
-  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-  <script>
-    (async function(){
-      try{
-        const res = await fetch('Class_3_Classifying_Documents_With_Supervised_ML.md');
-        const md = await res.text();
-        document.getElementById('md-content-3').innerHTML = marked.parse(md);
-      }catch(e){
-        document.getElementById('md-content-3').innerHTML = '<pre>Unable to load Class_3_Classifying_Documents_With_Supervised_ML.md — see <a href="Class_3_Classifying_Documents_With_Supervised_ML.md">raw</a></pre>';
-      }
-    })();
-  </script>
+
+  <div class="nav">
+    <a href="class_2.html">← Class 2 — Transforming Text Into Vectors</a> &nbsp;·&nbsp;
+    <a href="index.html">Back to notebook portal</a> &nbsp;·&nbsp;
+    <a href="class_4.html">Class 4 — Topic Modeling →</a>
+  </div>
+
 </body>
 </html>
