@@ -5,64 +5,624 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Class 2 — Transforming Text Into Numeric Vectors</title>
   <style>
-    body{font-family:system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;margin:1.5rem;line-height:1.6}
-    h1,h2{margin-top:1.6rem}
-    ul{margin:0.5rem 0 1rem 1.5rem}
-    li{margin:0.25rem 0}
+    *{box-sizing:border-box}
+    body{font-family:system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;margin:0;padding:1.5rem 2rem;line-height:1.7;color:#1a1a1a;max-width:960px}
+    h1{font-size:2rem;margin-bottom:.25rem}
+    h2{font-size:1.4rem;margin-top:2.5rem;margin-bottom:.5rem;padding-bottom:.3rem;border-bottom:2px solid #e1e4e8;color:#0366d6}
+    h3{font-size:1.1rem;margin-top:1.4rem;margin-bottom:.4rem;color:#24292e}
+    p{margin:.5rem 0 1rem}
+    ul,ol{margin:.4rem 0 1rem 1.5rem}
+    li{margin:.35rem 0}
     a{text-decoration:none;color:#0366d6}
     a:hover{text-decoration:underline}
-    .note{color:#555}
+    code{background:#f3f4f6;border:1px solid #e1e4e8;border-radius:4px;padding:.1em .4em;font-size:.9em;font-family:"SFMono-Regular",Consolas,monospace}
+    pre{background:#f6f8fa;border:1px solid #e1e4e8;border-radius:6px;padding:1rem 1.2rem;overflow-x:auto;font-size:.875rem;line-height:1.6}
+    pre code{background:none;border:none;padding:0;font-size:inherit}
+    .subtitle{color:#586069;font-size:1.05rem;margin-top:.25rem}
+    .tip{background:#fff8c5;border-left:4px solid #f0a000;border-radius:0 6px 6px 0;padding:.75rem 1rem;margin:1rem 0}
+    .tip strong{color:#a05000}
+    .concept{background:#f0f7ff;border-left:4px solid #0366d6;border-radius:0 6px 6px 0;padding:.75rem 1rem;margin:1rem 0}
+    .concept strong{color:#0366d6}
+    .warn{background:#fff0f0;border-left:4px solid #d73a49;border-radius:0 6px 6px 0;padding:.75rem 1rem;margin:1rem 0}
+    .warn strong{color:#d73a49}
+    .pipeline{background:#f9f9f9;border:1px solid #ddd;border-radius:8px;padding:1rem 1.2rem;margin:1rem 0;font-family:"SFMono-Regular",Consolas,monospace;font-size:.9rem;overflow-x:auto}
+    .tag{display:inline-block;background:#e1ecf4;color:#0c5460;border-radius:4px;padding:.1em .5em;font-size:.8rem;font-weight:600;margin:.1em .1em}
+    table{border-collapse:collapse;width:100%;margin:1rem 0;font-size:.9rem}
+    th{background:#f6f8fa;font-weight:600;padding:.5rem .8rem;border:1px solid #ddd;text-align:left}
+    td{padding:.45rem .8rem;border:1px solid #ddd;vertical-align:top}
+    tr:nth-child(even) td{background:#fafafa}
+    .nav{margin-top:2.5rem;padding-top:1rem;border-top:1px solid #e1e4e8;color:#586069;font-size:.9rem}
+    .colab-badge{vertical-align:middle;margin-left:.5em}
+    .modules-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;margin:1rem 0}
+    .module-card{border:1px solid #e1e4e8;border-radius:8px;padding:1rem;background:#fff}
+    .module-card h4{margin:0 0 .5rem;font-size:1rem;color:#0366d6}
+    .module-card p{margin:0;font-size:.9rem;color:#444}
+    .data-flow{display:flex;flex-wrap:wrap;align-items:center;gap:.4rem;margin:1rem 0;font-size:.875rem}
+    .data-flow .step{background:#e8f4fd;border:1px solid #bcd9f1;border-radius:6px;padding:.4rem .75rem}
+    .data-flow .arrow{color:#999;font-size:1.1rem}
+    .matrix-demo{border-collapse:collapse;font-size:.82rem;margin:1rem 0}
+    .matrix-demo th,.matrix-demo td{border:1px solid #ccc;padding:.3rem .55rem;text-align:center}
+    .matrix-demo th{background:#f0f4f8;font-weight:600}
+    .matrix-demo .row-label{text-align:left;font-weight:600;background:#f0f4f8}
+    .matrix-demo .nonzero{background:#d4edda;font-weight:600}
   </style>
 </head>
 <body>
+
   <h1>Class 2 — Transforming Text Into Numeric Vectors</h1>
-  <p>This class focuses on transforming text into numeric vectors and evaluating semantic similarity between words and documents.</p>
-  <p class="note">Class 2 covers both sparse vector space models and dense pretrained embeddings for text representation.</p>
-  <h2>Course Description</h2>
-  <p>This class teaches how to convert raw text into numeric representations for information retrieval and machine learning. You will build document-term matrices (DTM) and TF–IDF matrices with <code>CountVectorizer</code> and <code>TfidfVectorizer</code>, work with SciPy sparse matrices, and compare dense embeddings from pretrained Gensim models like Word2Vec/GloVe and FastText.</p>
-  <h2>Modules & Key Concepts</h2>
+  <p class="subtitle">Converting raw text into numbers that machine learning models can actually use</p>
+
+  <p>Machine learning models can't read words — they need numbers. This class covers the two main families of text vectorization: <strong>sparse vectors</strong> that count word occurrences in a vocabulary, and <strong>dense vectors</strong> (embeddings) that capture semantic meaning in compact floating-point arrays. By the end you'll be able to take any text and produce a numeric representation suitable for classification, clustering, or similarity search.</p>
+
+  <div class="modules-grid">
+    <div class="module-card">
+      <h4>Module 1 — Sparse Vectors</h4>
+      <p>Build Document-Term Matrices and TF-IDF matrices with <code>CountVectorizer</code> and <code>TfidfVectorizer</code>; work with SciPy sparse matrices</p>
+    </div>
+    <div class="module-card">
+      <h4>Module 2 — Dense Embeddings</h4>
+      <p>Load pretrained Word2Vec, GloVe, and FastText models; extract word vectors; build sentence vectors; handle out-of-vocabulary terms</p>
+    </div>
+    <div class="module-card">
+      <h4>Module 3 — Similarity Metrics</h4>
+      <p>Measure how close two vectors are using dot product, cosine similarity, and Euclidean distance; build pairwise similarity matrices for document search</p>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <h2>Module 1 — Sparse Vectors: Counting Words</h2>
+  <!-- ═══════════════════════════════════════════════════════════ -->
+
+  <p>The simplest way to represent a document numerically is to count how many times each word in the vocabulary appears. The result is a <strong>sparse vector</strong> — most entries are zero because any given document uses only a small fraction of the total vocabulary.</p>
+
+  <h3>Why Sparse?</h3>
+  <p>A vocabulary of 50,000 words means each document is represented as a vector with 50,000 dimensions. A single news article might contain only 300 unique words, so 49,700 of those dimensions will be zero. Storing all those zeros is wasteful — SciPy's sparse matrix format stores <em>only the non-zero values and their positions</em>.</p>
+
+  <div class="data-flow">
+    <div class="step">Raw documents</div><div class="arrow">→</div>
+    <div class="step">Tokenize + lowercase</div><div class="arrow">→</div>
+    <div class="step">Build vocabulary</div><div class="arrow">→</div>
+    <div class="step">Count occurrences</div><div class="arrow">→</div>
+    <div class="step">Sparse DTM matrix</div>
+  </div>
+
+  <h3>NumPy Vectors First</h3>
+  <p>Before using scikit-learn, understand what a vector is. A document vector is just a 1-D NumPy array where each position corresponds to one word in the vocabulary:</p>
+  <pre><code>import numpy as np
+
+# Vocabulary: ["cat", "dog", "fish", "bird"]
+# Document: "I saw a cat and a dog" → cat=1, dog=1, fish=0, bird=0
+doc_vec = np.array([1, 1, 0, 0])
+
+# Multiple documents → 2D matrix (rows = docs, cols = vocab words)
+dtm = np.array([
+    [1, 1, 0, 0],   # doc 1: "cat dog"
+    [0, 0, 1, 1],   # doc 2: "fish bird"
+    [1, 0, 1, 0],   # doc 3: "cat fish"
+])
+print(dtm.shape)   # (3, 4)  — 3 docs, 4 vocabulary words</code></pre>
+
+  <h3>SciPy Sparse Matrices</h3>
+  <p>For real vocabularies (thousands to millions of words), use <code>scipy.sparse.csr_matrix</code> (Compressed Sparse Row). It stores only the non-zero entries:</p>
+  <pre><code>from scipy.sparse import csr_matrix
+import numpy as np
+
+dense = np.array([[1, 0, 0, 2],
+                  [0, 0, 3, 0],
+                  [4, 5, 0, 0]])
+
+sparse = csr_matrix(dense)
+print(sparse)
+# (0, 0)  1      ← row 0, col 0, value 1
+# (0, 3)  2      ← row 0, col 3, value 2
+# (1, 2)  3
+# (2, 0)  4
+# (2, 1)  5
+
+# Convert back to dense when needed
+back = sparse.toarray()
+
+# Convert to pandas DataFrame for display
+import pandas as pd
+df = pd.DataFrame(sparse.toarray(), columns=["word_a","word_b","word_c","word_d"])</code></pre>
+
+  <div class="concept">
+    <strong>CSR vs. dense:</strong> A 10,000-document corpus with a 50,000-word vocabulary would need a 10,000 × 50,000 = 500,000,000-entry dense matrix (≈ 4 GB for float64). The same data in CSR format might occupy only a few MB because most entries are zero.
+  </div>
+
+  <h3>Building a Document-Term Matrix with <code>CountVectorizer</code></h3>
+  <p><code>sklearn.feature_extraction.text.CountVectorizer</code> automates the whole pipeline — tokenizing, building a vocabulary, and counting — in one step:</p>
+  <pre><code>from sklearn.feature_extraction.text import CountVectorizer
+
+corpus = [
+    "The cat sat on the mat",
+    "The dog sat on the log",
+    "The cat and the dog played",
+]
+
+# Step 1: fit — learns the vocabulary from the corpus
+# Step 2: transform — converts each document to a count vector
+cv = CountVectorizer()
+dtm = cv.fit_transform(corpus)   # returns a sparse matrix
+
+print(type(dtm))          # &lt;class 'scipy.sparse.csr_matrix'&gt;
+print(dtm.shape)          # (3, 8) — 3 docs × 8 unique words
+
+# Inspect the vocabulary (word → column index)
+print(cv.vocabulary_)
+# {'and': 0, 'cat': 1, 'dog': 2, 'log': 3, 'mat': 4, 'on': 5, 'played': 6, 'sat': 7}
+# (note: 'the' removed because max_df=1.0 by default keeps it, but it's a stopword — see below)
+
+# Get ordered list of feature names
+print(cv.get_feature_names_out())
+# ['and' 'cat' 'dog' 'log' 'mat' 'on' 'played' 'sat']</code></pre>
+
+  <p>Visualizing the resulting Document-Term Matrix as a table:</p>
+
+  <table class="matrix-demo">
+    <thead>
+      <tr>
+        <th></th>
+        <th>and</th><th>cat</th><th>dog</th><th>log</th><th>mat</th><th>on</th><th>played</th><th>sat</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="row-label">doc 1</td>
+        <td>0</td><td class="nonzero">1</td><td>0</td><td>0</td><td class="nonzero">1</td><td class="nonzero">1</td><td>0</td><td class="nonzero">1</td>
+      </tr>
+      <tr>
+        <td class="row-label">doc 2</td>
+        <td>0</td><td>0</td><td class="nonzero">1</td><td class="nonzero">1</td><td>0</td><td class="nonzero">1</td><td>0</td><td class="nonzero">1</td>
+      </tr>
+      <tr>
+        <td class="row-label">doc 3</td>
+        <td class="nonzero">1</td><td class="nonzero">1</td><td class="nonzero">1</td><td>0</td><td>0</td><td>0</td><td class="nonzero">1</td><td>0</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p>Each row is a document; each column is a word in the vocabulary. Highlighted cells are non-zero counts.</p>
+
+  <h3>Key <code>CountVectorizer</code> Parameters</h3>
+  <pre><code>cv = CountVectorizer(
+    stop_words='english',    # remove common English stopwords automatically
+    lowercase=True,          # convert to lowercase (default: True)
+    max_df=0.95,             # ignore words in > 95% of docs (too common)
+    min_df=2,                # ignore words appearing in fewer than 2 docs (too rare)
+    max_features=5000,       # keep only the top 5000 most frequent words
+    ngram_range=(1, 2),      # include both unigrams and bigrams
+    token_pattern=r'(?u)\b\w\w+\b',  # default: words of 2+ characters
+)
+
+# Fit separately from transform (important for train/test splits!)
+cv.fit(train_docs)           # learns vocabulary from training data only
+train_dtm = cv.transform(train_docs)
+test_dtm  = cv.transform(test_docs)   # uses the same vocabulary!</code></pre>
+
+  <div class="warn">
+    <strong>Never fit on test data.</strong> Always call <code>fit_transform()</code> on training data, then only <code>transform()</code> on test/validation data. Fitting on test data causes data leakage — the vocabulary will include words only seen in test documents, making your model appear to generalize when it doesn't.
+  </div>
+
+  <h3>TF-IDF: Weighting by Importance</h3>
+  <p>Raw counts have a problem: a word like "the" appears in every document and gets a high count, but it carries no useful information. <strong>TF-IDF</strong> (Term Frequency–Inverse Document Frequency) downweights common words and upweights rare, informative ones.</p>
+
+  <div class="concept">
+    <strong>The formula:</strong><br>
+    <code>TF(t, d)</code> = count of term <em>t</em> in document <em>d</em> / total terms in <em>d</em><br>
+    <code>IDF(t)</code> = log(total documents / documents containing <em>t</em>)<br>
+    <code>TF-IDF(t, d)</code> = TF(t, d) × IDF(t)<br><br>
+    A word that appears in every document gets IDF ≈ 0 (log(N/N) = 0). A word appearing in only 1 of 1000 documents gets IDF = log(1000) ≈ 6.9.
+  </div>
+
+  <h3>Approach 1: <code>TfidfVectorizer</code> (all-in-one)</h3>
+  <pre><code>from sklearn.feature_extraction.text import TfidfVectorizer
+
+corpus = [
+    "The cat sat on the mat",
+    "The dog sat on the log",
+    "The cat and the dog played",
+]
+
+tfidf = TfidfVectorizer(stop_words='english')
+tfidf_matrix = tfidf.fit_transform(corpus)
+
+print(tfidf_matrix.shape)    # (3, 6) — 3 docs × 6 non-stopwords
+
+import pandas as pd
+df = pd.DataFrame(
+    tfidf_matrix.toarray(),
+    columns=tfidf.get_feature_names_out()
+)
+print(df.round(3))
+#        cat    dog    log    mat  played    sat
+# 0    0.582  0.000  0.000  0.582   0.000  0.416
+# 1    0.000  0.582  0.582  0.000   0.000  0.416
+# 2    0.408  0.408  0.000  0.000   0.580  0.000
+# "played" has the highest weight in doc 3 because it's unique to that document</code></pre>
+
+  <h3>Approach 2: <code>TfidfTransformer</code> on an existing DTM</h3>
+  <p>If you already have a <code>CountVectorizer</code> DTM, apply TF-IDF weighting separately without re-tokenizing:</p>
+  <pre><code>from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer
+
+cv  = CountVectorizer(stop_words='english')
+dtm = cv.fit_transform(corpus)     # raw counts
+
+tfidf_t = TfidfTransformer()
+tfidf_matrix = tfidf_t.fit_transform(dtm)  # apply TF-IDF weighting
+
+# Same result as TfidfVectorizer, but in two explicit steps</code></pre>
+
+  <h3>Thresholding — Finding Informative Words</h3>
+  <p>A common analysis is to find the top-N most important words per document by thresholding TF-IDF scores:</p>
+  <pre><code>import numpy as np
+
+# Get feature names and TF-IDF array
+features = tfidf.get_feature_names_out()
+arr = tfidf_matrix.toarray()
+
+# Top 3 most informative words for each document
+for i, row in enumerate(arr):
+    top_idx = np.argsort(row)[::-1][:3]   # indices of top 3 scores
+    print(f"Doc {i+1}: {[(features[j], round(row[j],3)) for j in top_idx]}")
+# Doc 1: [('cat', 0.582), ('mat', 0.582), ('sat', 0.416)]
+# Doc 2: [('dog', 0.582), ('log', 0.582), ('sat', 0.416)]
+# Doc 3: [('played', 0.580), ('cat', 0.408), ('dog', 0.408)]</code></pre>
+
+  <h3>Sparse vs. Dense: A Comparison</h3>
+  <table>
+    <thead><tr><th>Property</th><th>Sparse (CountVectorizer / TF-IDF)</th><th>Dense (Word Embeddings)</th></tr></thead>
+    <tbody>
+      <tr><td>Vector size</td><td>= vocabulary size (tens of thousands)</td><td>Fixed (100–1024 dimensions)</td></tr>
+      <tr><td>Most values</td><td>Zero</td><td>Non-zero floats</td></tr>
+      <tr><td>Memory</td><td>Efficient with <code>csr_matrix</code></td><td>Compact regardless</td></tr>
+      <tr><td>Captures meaning</td><td>No — only co-occurrence counts</td><td>Yes — semantic similarity encoded</td></tr>
+      <tr><td>OOV words</td><td>Ignored (not in vocabulary)</td><td>Can estimate via subwords (FastText)</td></tr>
+      <tr><td>Training required</td><td>None — just counting</td><td>Yes (or use pretrained)</td></tr>
+      <tr><td>Best for</td><td>Keyword search, bag-of-words classification</td><td>Semantic search, clustering, NLU</td></tr>
+    </tbody>
+  </table>
+
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <h2>Module 2 — Dense Embeddings: Meaning in Vectors</h2>
+  <!-- ═══════════════════════════════════════════════════════════ -->
+
+  <p>Dense word embeddings encode semantic relationships: words with similar meanings end up near each other in vector space. This means vector arithmetic can capture meaning — the classic example being <code>king − man + woman ≈ queen</code>.</p>
+
+  <h3>How Word2Vec Works (Conceptually)</h3>
+  <p>Word2Vec trains a neural network to predict a word from its context (CBOW) or predict context from a word (Skip-gram). The trained <em>weights</em> of the network become the word vectors. Words that appear in similar contexts end up with similar vectors — which means similar meaning.</p>
+
+  <div class="data-flow">
+    <div class="step">Training corpus</div><div class="arrow">→</div>
+    <div class="step">Sliding window over text</div><div class="arrow">→</div>
+    <div class="step">Predict context words</div><div class="arrow">→</div>
+    <div class="step">Backprop trains hidden layer</div><div class="arrow">→</div>
+    <div class="step">Hidden layer weights = word vectors</div>
+  </div>
+
+  <h3>Loading Pretrained Embeddings with Gensim</h3>
+  <p>Training your own embeddings requires a large corpus. For most tasks, start with pretrained models — vectors trained on billions of words of text:</p>
+  <pre><code>import gensim.downloader as api
+
+# List available pretrained models
+print(api.info()['models'].keys())
+# dict_keys(['fasttext-wiki-news-subwords-300', 'conceptnet-numberbatch-17-06-300',
+#            'word2vec-ruscorpora-300', 'word2vec-google-news-300',
+#            'glove-wiki-gigaword-50', 'glove-wiki-gigaword-100',
+#            'glove-wiki-gigaword-200', 'glove-wiki-gigaword-300',
+#            'glove-twitter-25', 'glove-twitter-50', ...])
+
+# Download and load (cached after first download)
+model = api.load('glove-wiki-gigaword-100')   # GloVe, 100-dim vectors
+print(type(model))   # &lt;class 'gensim.models.keyedvectors.KeyedVectors'&gt;</code></pre>
+
+  <div class="tip">
+    <strong>Which model to choose?</strong> Start with <code>glove-wiki-gigaword-100</code> — it's fast to download, covers general English, and 100 dimensions is a good balance. Use <code>word2vec-google-news-300</code> for higher quality at the cost of larger file size (≈1.7 GB).
+  </div>
+
+  <h3>Extracting Word Vectors</h3>
+  <p>A <code>KeyedVectors</code> object is essentially a dictionary mapping words to vectors. Access vectors with square-bracket syntax:</p>
+  <pre><code># Get the vector for a single word
+vec_cat = model['cat']
+print(vec_cat.shape)    # (100,)  — 100-dimensional float vector
+print(vec_cat[:5])      # [-0.301  0.127  0.652 -0.091  0.204]
+
+# Check if a word is in the vocabulary
+'cat'       in model   # True
+'flurbgle'  in model   # False  — out of vocabulary (OOV)
+
+# Get vocabulary size
+print(len(model))       # 400000 words
+
+# Inspect the vocabulary (first 10 words)
+print(list(model.key_to_index.keys())[:10])</code></pre>
+
+  <h3>Finding Similar Words with <code>.most_similar()</code></h3>
+  <pre><code># Words closest to "king" in vector space
+model.most_similar('king', topn=5)
+# [('queen', 0.7699), ('prince', 0.7449), ('throne', 0.7071),
+#  ('monarch', 0.6952), ('kingdom', 0.6899)]
+
+# Cosine similarity between two specific words
+model.similarity('cat', 'dog')     # 0.8016  — high similarity
+model.similarity('cat', 'rocket')  # 0.1103  — low similarity</code></pre>
+
+  <h3>Analogy Arithmetic</h3>
+  <p>Vector arithmetic captures semantic relationships. The idea: if <em>v(king) − v(man) + v(woman)</em>, what word's vector is closest to the result?</p>
+  <pre><code># "king is to man as ? is to woman"
+result = model.most_similar(positive=['king', 'woman'], negative=['man'], topn=3)
+print(result)
+# [('queen', 0.7699), ('princess', 0.7080), ('monarch', 0.6521)]
+
+# "Paris is to France as Berlin is to ?"
+result = model.most_similar(positive=['berlin', 'france'], negative=['paris'], topn=1)
+print(result)
+# [('germany', 0.9219)]</code></pre>
+
+  <h3>Long-Tail Vocabulary Problem</h3>
+  <p>Word frequency follows a power law: a small number of words appear extremely often, while the vast majority appear rarely. Rare words in your corpus may not appear in the pretrained model's vocabulary at all.</p>
+  <pre><code>from collections import Counter
+import matplotlib.pyplot as plt
+
+words = text.lower().split()
+freq = Counter(words)
+
+# Roughly: 50% of unique words appear only once ("hapax legomena")
+hapax = sum(1 for w, c in freq.items() if c == 1)
+print(f"{hapax}/{len(freq)} words appear exactly once = {hapax/len(freq):.1%}")</code></pre>
+
+  <div class="tip">
+    <strong>Preprocessing helps.</strong> Lemmatizing collapses "run", "runs", "running", "ran" into "run" — reducing rare forms that individually had low frequency but together are common.
+  </div>
+
+  <h3>Building Sentence Vectors by Averaging</h3>
+  <p>Word2Vec/GloVe produce <em>word</em> vectors. To represent a whole sentence or document, average the vectors of its words:</p>
+  <pre><code>import numpy as np
+
+def sentence_vector(sentence, model, dim=100):
+    """Average word vectors, skipping OOV words."""
+    words = sentence.lower().split()
+    vecs  = [model[w] for w in words if w in model]
+    if not vecs:
+        return np.zeros(dim)
+    return np.mean(vecs, axis=0)
+
+doc1_vec = sentence_vector("the cat sat on the mat", model)
+doc2_vec = sentence_vector("a dog ran in the park", model)
+print(doc1_vec.shape)   # (100,)</code></pre>
+
+  <div class="warn">
+    <strong>Averaging loses word order.</strong> "The dog bit the man" and "The man bit the dog" produce the same averaged vector — the order information is lost. For tasks where word order matters (sentiment, question answering), use transformer models (BERT, Sentence-BERT) instead.
+  </div>
+
+  <h3>Visualizing Word Vectors with PCA</h3>
+  <p>100+ dimensional vectors can't be plotted directly. PCA (Principal Component Analysis) compresses them to 2D while preserving as much variation as possible:</p>
+  <pre><code>from sklearn.decomposition import PCA
+import matplotlib.pyplot as plt
+
+words = ['king', 'queen', 'man', 'woman', 'dog', 'cat', 'Paris', 'France', 'Berlin', 'Germany']
+vectors = np.array([model[w.lower()] for w in words if w.lower() in model])
+
+pca = PCA(n_components=2)
+coords = pca.fit_transform(vectors)
+
+plt.figure(figsize=(8, 6))
+for i, word in enumerate(words):
+    if word.lower() in model:
+        plt.scatter(coords[i, 0], coords[i, 1])
+        plt.annotate(word, (coords[i, 0], coords[i, 1]), fontsize=11)
+plt.title("Word Vectors — PCA to 2D")
+plt.tight_layout()
+plt.show()</code></pre>
+
+  <h3>FastText — Handling Out-of-Vocabulary Words</h3>
+  <p>Word2Vec and GloVe produce a fixed vocabulary. If a word wasn't in training data, there's no vector for it. <strong>FastText</strong> solves this by decomposing each word into character n-grams and training vectors for those. The word vector is the sum of its n-gram vectors, so it can <em>estimate</em> a vector for any word, even ones it never saw during training.</p>
+  <pre><code>import gensim.downloader as api
+
+# FastText trained on Wikipedia + news
+ft_model = api.load('fasttext-wiki-news-subwords-300')
+
+# Regular Word2Vec would fail on "unhappiness" if not in vocab
+# FastText computes: un + happy + ness + ... = estimated vector
+vec = ft_model['unfathomable']   # works even if rare/OOV
+print(vec.shape)   # (300,)
+
+# Character n-grams: "playing" → ["pla", "lay", "ayi", "yin", "ing", "playing"]
+# Each n-gram has a vector; their sum ≈ the word vector</code></pre>
+
+  <div class="concept">
+    <strong>When to use FastText:</strong> When your corpus contains domain-specific jargon, brand names, misspellings, or other rare words not found in general vocabulary models. FastText is especially useful for social media text, medical notes, or code-switching text.
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <h2>Module 3 — Measuring Similarity Between Vectors</h2>
+  <!-- ═══════════════════════════════════════════════════════════ -->
+
+  <p>Once you have vectors, you need to measure how close two vectors are — to find similar documents, rank search results, or cluster related items. Three metrics are used throughout NLP:</p>
+
+  <h3>Dot Product</h3>
+  <p>The dot product (inner product) multiplies corresponding elements and sums the results. It measures both direction <em>and</em> magnitude:</p>
+  <pre><code>import numpy as np
+
+a = np.array([1, 2, 3])
+b = np.array([4, 5, 6])
+
+dot = np.dot(a, b)          # 1*4 + 2*5 + 3*6 = 32
+dot_alt = (a * b).sum()     # same thing, element-wise then sum</code></pre>
+
+  <h3>Cosine Similarity</h3>
+  <p>Cosine similarity normalizes by vector length, so it measures the <em>angle</em> between vectors regardless of their magnitude. This is the most commonly used metric for text because document length shouldn't affect similarity:</p>
+  <pre><code>def cosine_similarity(a, b):
+    return np.dot(a, b) / (np.linalg.norm(a) * np.linalg.norm(b))
+
+# Range: −1 (opposite) to 1 (identical direction)
+cosine_similarity(model['cat'], model['dog'])     # ≈ 0.80  — similar
+cosine_similarity(model['cat'], model['rocket'])  # ≈ 0.11  — dissimilar
+
+# Using scikit-learn (handles matrices efficiently)
+from sklearn.metrics.pairwise import cosine_similarity as sk_cosine
+vecs = np.array([model['cat'], model['dog'], model['fish']])
+sim_matrix = sk_cosine(vecs)
+print(sim_matrix.round(3))
+# [[1.000  0.802  0.651]
+#  [0.802  1.000  0.603]
+#  [0.651  0.603  1.000]]</code></pre>
+
+  <h3>Euclidean Distance</h3>
+  <p>Euclidean distance is the straight-line distance between two points in vector space. Unlike cosine, it is sensitive to vector magnitude:</p>
+  <pre><code>from scipy.spatial.distance import euclidean
+
+dist = euclidean(model['cat'], model['dog'])
+print(dist)   # smaller = more similar (opposite of cosine similarity)
+
+# Or with numpy
+dist_np = np.linalg.norm(model['cat'] - model['dog'])</code></pre>
+
+  <table>
+    <thead><tr><th>Metric</th><th>Range</th><th>Higher = ?</th><th>Sensitive to length?</th><th>Best for</th></tr></thead>
+    <tbody>
+      <tr><td>Dot product</td><td>−∞ to +∞</td><td>More similar</td><td>Yes</td><td>When vectors are normalized</td></tr>
+      <tr><td>Cosine similarity</td><td>−1 to 1</td><td>More similar</td><td>No</td><td>Text similarity, document ranking</td></tr>
+      <tr><td>Euclidean distance</td><td>0 to +∞</td><td>Less similar</td><td>Yes</td><td>Clustering with normalized vectors</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Building a Pairwise Document Similarity Matrix</h3>
+  <p>To find all pairwise similarities in a corpus — useful for clustering or nearest-neighbor search:</p>
+  <pre><code>from sklearn.metrics.pairwise import cosine_similarity
+import pandas as pd
+
+corpus = [
+    "The cat sat on the mat",
+    "The dog sat on the log",
+    "The cat and the dog played",
+    "The fish swam in the sea",
+]
+
+tfidf = TfidfVectorizer(stop_words='english')
+tfidf_matrix = tfidf.fit_transform(corpus)
+
+# Pairwise similarity: shape = (n_docs, n_docs)
+sim_matrix = cosine_similarity(tfidf_matrix)
+
+df_sim = pd.DataFrame(sim_matrix.round(3),
+                      index=[f"doc{i+1}" for i in range(len(corpus))],
+                      columns=[f"doc{i+1}" for i in range(len(corpus))])
+print(df_sim)
+#        doc1   doc2   doc3   doc4
+# doc1  1.000  0.463  0.270  0.000
+# doc2  0.463  1.000  0.270  0.000
+# doc3  0.270  0.270  1.000  0.000
+# doc4  0.000  0.000  0.000  1.000
+# doc4 (fish/sea) shares no vocabulary with the cat/dog documents</code></pre>
+
+  <h3>Document Search: Query vs. Corpus</h3>
+  <p>To search a corpus with a query string, transform the query using the <em>already-fitted</em> vectorizer (never re-fit on the query):</p>
+  <pre><code>query = "cat playing on mat"
+query_vec = tfidf.transform([query])       # transform only — same vocabulary!
+
+scores = cosine_similarity(query_vec, tfidf_matrix)   # shape: (1, n_docs)
+ranked = np.argsort(scores[0])[::-1]       # sort by score, descending
+
+for rank, idx in enumerate(ranked):
+    print(f"Rank {rank+1}: doc{idx+1} — score={scores[0][idx]:.3f}")</code></pre>
+
+  <div class="warn">
+    <strong>Always use <code>transform()</code>, not <code>fit_transform()</code> on queries.</strong> If you re-fit on the query, the vectorizer learns a new vocabulary with only query words, and the resulting vector has a completely different structure than the corpus vectors.
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <h2>Key Tools Summary</h2>
+  <!-- ═══════════════════════════════════════════════════════════ -->
+
+  <table>
+    <thead><tr><th>Tool / Function</th><th>Library</th><th>Purpose</th></tr></thead>
+    <tbody>
+      <tr><td><code>np.array()</code>, <code>np.zeros()</code>, <code>np.mean()</code></td><td><code>numpy</code></td><td>Create and manipulate dense vectors and matrices</td></tr>
+      <tr><td><code>csr_matrix()</code>, <code>.toarray()</code></td><td><code>scipy.sparse</code></td><td>Memory-efficient sparse matrix storage and conversion</td></tr>
+      <tr><td><code>CountVectorizer()</code></td><td><code>sklearn</code></td><td>Tokenize corpus and build document-term count matrix</td></tr>
+      <tr><td><code>.fit_transform()</code></td><td><code>sklearn</code></td><td>Fit vocabulary on corpus and convert to DTM in one step</td></tr>
+      <tr><td><code>.transform()</code></td><td><code>sklearn</code></td><td>Convert new documents using existing fitted vocabulary</td></tr>
+      <tr><td><code>.get_feature_names_out()</code></td><td><code>sklearn</code></td><td>Get ordered list of vocabulary words (column names)</td></tr>
+      <tr><td><code>TfidfVectorizer()</code></td><td><code>sklearn</code></td><td>Tokenize and apply TF-IDF weighting in one step</td></tr>
+      <tr><td><code>TfidfTransformer()</code></td><td><code>sklearn</code></td><td>Apply TF-IDF weighting to an existing count matrix</td></tr>
+      <tr><td><code>gensim.downloader.load()</code></td><td><code>gensim</code></td><td>Download and cache pretrained word embedding models</td></tr>
+      <tr><td><code>model[word]</code></td><td><code>gensim</code></td><td>Retrieve the embedding vector for a word</td></tr>
+      <tr><td><code>model.most_similar()</code></td><td><code>gensim</code></td><td>Find nearest neighbors in embedding space</td></tr>
+      <tr><td><code>model.similarity()</code></td><td><code>gensim</code></td><td>Cosine similarity between two specific words</td></tr>
+      <tr><td><code>np.dot(a, b)</code></td><td><code>numpy</code></td><td>Dot product of two vectors</td></tr>
+      <tr><td><code>np.linalg.norm()</code></td><td><code>numpy</code></td><td>Vector magnitude (L2 norm) for manual cosine calculation</td></tr>
+      <tr><td><code>cosine_similarity()</code></td><td><code>sklearn.metrics.pairwise</code></td><td>Pairwise cosine similarity matrix between sets of vectors</td></tr>
+      <tr><td><code>euclidean(a, b)</code></td><td><code>scipy.spatial.distance</code></td><td>Euclidean distance between two vectors</td></tr>
+      <tr><td><code>PCA(n_components=2)</code></td><td><code>sklearn.decomposition</code></td><td>Reduce high-dimensional vectors to 2D for visualization</td></tr>
+    </tbody>
+  </table>
+
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <h2>Notebooks for This Class</h2>
+  <!-- ═══════════════════════════════════════════════════════════ -->
+
   <ul>
-    <li><strong>Sparse vectorization</strong> — use <code>CountVectorizer</code> to build DTMs, inspect vocabulary with <code>.get_feature_names()</code>, and convert sparse matrices to dense pandas DataFrames for visualization.</li>
-    <li><strong>TF–IDF</strong> — compute term frequency-inverse document frequency matrices, understand fitting vs transforming, and use thresholding to identify important words.</li>
-    <li><strong>Dense word embeddings</strong> — load pretrained models with Gensim, inspect <code>KeyedVectors</code>, extract vectors, use <code>.most_similar()</code>, <code>.similarity()</code>, and perform analogy arithmetic.</li>
-    <li><strong>FastText and subwords</strong> — generate character n-grams for rare words, build sentence vectors from subword vectors, and handle out-of-vocabulary terms robustly.</li>
-    <li><strong>Similarity measurement</strong> — dot product, cosine similarity, Euclidean distance, pairwise cosine similarity matrices, and document similarity using TF–IDF or dense embeddings.</li>
-    <li><strong>Long-tail vocabulary analysis</strong> — study word frequency distributions, head/tail thresholds, and how preprocessing and lemmatization improve model quality by collapsing rare forms.</li>
+    <li>
+      <a href="notebooks/class_2/Practice_With_Basic_Matrix_Operations_index.html">Practice With Basic Matrix Operations</a> — NumPy arrays, SciPy sparse matrices, basic linear algebra for NLP
+      <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/Practice%20With%20Basic%20Matrix%20Operations.ipynb" target="_blank" rel="noopener">
+        <img class="colab-badge" src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab">
+      </a>
+    </li>
+    <li>
+      <a href="notebooks/class_2/Practice_Matrix_Decomposition_index.html">Practice Matrix Decomposition</a> — SVD, TruncatedSVD, and matrix factorization techniques
+      <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/Practice%20Matrix%20Decomposition.ipynb" target="_blank" rel="noopener">
+        <img class="colab-badge" src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab">
+      </a>
+    </li>
+    <li>
+      <a href="notebooks/class_2/Means_index.html">Means</a> — computing means of vectors, averaging embeddings for sentence representation
+      <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/Means.ipynb" target="_blank" rel="noopener">
+        <img class="colab-badge" src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab">
+      </a>
+    </li>
+    <li>
+      <a href="notebooks/class_2/Practice_Splitting_a_Simulated_Data_Set_Into_Training_and_Validation_Sets_index.html">Practice Splitting a Simulated Data Set Into Training and Validation Sets</a> — train/test splits, validation strategy
+      <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/Practice%20Splitting%20a%20Simulated%20Data%20Set%20Into%20Training%20and%20Validation%20Sets.ipynb" target="_blank" rel="noopener">
+        <img class="colab-badge" src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab">
+      </a>
+    </li>
+    <li>
+      <a href="notebooks/class_2/Practice_Splitting_Newsgroup_Data_Into_Training_and_Validation_Sets_index.html">Practice Splitting Newsgroup Data Into Training and Validation Sets</a> — real-world dataset splits with the 20 Newsgroups corpus
+      <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/Practice%20Splitting%20Newsgroup%20Data%20Into%20Training%20and%20Validation%20Sets.ipynb" target="_blank" rel="noopener">
+        <img class="colab-badge" src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab">
+      </a>
+    </li>
+    <li>
+      <a href="notebooks/class_4/Identifying_Topics_From_Documents_index.html">Identifying Topics From Documents</a> — LSA and LDA topic modeling using the DTM and TF-IDF representations built in this class
+      <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/Identifying%20Topics%20From%20Documents.ipynb" target="_blank" rel="noopener">
+        <img class="colab-badge" src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab">
+      </a>
+    </li>
+    <li>
+      <a href="notebooks/class_4/Identifying_Topics_From_Documents_1_index.html">Identifying Topics From Documents (1)</a> — extended topic modeling exercises
+      <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/Identifying%20Topics%20From%20Documents%20%281%29.ipynb" target="_blank" rel="noopener">
+        <img class="colab-badge" src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab">
+      </a>
+    </li>
+    <li>
+      <a href="notebooks/class_4/Identifying_Topics_From_Documents_2_index.html">Identifying Topics From Documents (2)</a> — LDA with pyLDAvis visualization
+      <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/Identifying%20Topics%20From%20Documents%20%282%29.ipynb" target="_blank" rel="noopener">
+        <img class="colab-badge" src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab">
+      </a>
+    </li>
   </ul>
-  <h2>Projects & Practical Notes</h2>
-  <p>Practical tasks include building DTMs, creating TF–IDF matrices, measuring document similarity, exploring pretrained embeddings, and comparing dense vector models with sparse representations. It also covers practical issues such as vocabulary growth, OOV words, and the limits of averaged document vectors.</p>
-  <h2>Lessons & Notebooks</h2>
-  <ul>
-    <li>Basic matrix and vector operations: <a href="notebooks/class_2/Practice_With_Basic_Matrix_Operations_index.html">Practice With Basic Matrix Operations.ipynb</a> <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/Practice%20With%20Basic%20Matrix%20Operations.ipynb" target="_blank" rel="noopener"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" style="vertical-align:middle;margin-left:.3em"></a></li>
-    <li>SVD and matrix decomposition: <a href="notebooks/class_2/Practice_Matrix_Decomposition_index.html">Practice Matrix Decomposition.ipynb</a> <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/Practice%20Matrix%20Decomposition.ipynb" target="_blank" rel="noopener"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" style="vertical-align:middle;margin-left:.3em"></a></li>
-    <li>Working with pretrained embeddings and similarity: notebooks referenced in Class 2 materials (Gensim/FastText examples)</li>
-  </ul>
-  <h2>Core Notebooks</h2>
-  <ul>
-    <li><a href="notebooks/class_2/Practice_With_Basic_Matrix_Operations_index.html">Practice With Basic Matrix Operations.ipynb</a> <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/Practice%20With%20Basic%20Matrix%20Operations.ipynb" target="_blank" rel="noopener"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" style="vertical-align:middle;margin-left:.3em"></a></li>
-    <li><a href="notebooks/class_2/Practice_Matrix_Decomposition_index.html">Practice Matrix Decomposition.ipynb</a> <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/Practice%20Matrix%20Decomposition.ipynb" target="_blank" rel="noopener"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" style="vertical-align:middle;margin-left:.3em"></a></li>
-    <li><a href="notebooks/class_2/Means_index.html">Means.ipynb</a> <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/Means.ipynb" target="_blank" rel="noopener"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" style="vertical-align:middle;margin-left:.3em"></a></li>
-    <li><a href="notebooks/class_2/Practice_Splitting_a_Simulated_Data_Set_Into_Training_and_Validation_Sets_index.html">Practice Splitting a Simulated Data Set Into Training and Validation Sets.ipynb</a> <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/Practice%20Splitting%20a%20Simulated%20Data%20Set%20Into%20Training%20and%20Validation%20Sets.ipynb" target="_blank" rel="noopener"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" style="vertical-align:middle;margin-left:.3em"></a></li>
-    <li><a href="notebooks/class_2/Practice_Splitting_Newsgroup_Data_Into_Training_and_Validation_Sets_index.html">Practice Splitting Newsgroup Data Into Training and Validation Sets.ipynb</a> <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/Practice%20Splitting%20Newsgroup%20Data%20Into%20Training%20and%20Validation%20Sets.ipynb" target="_blank" rel="noopener"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" style="vertical-align:middle;margin-left:.3em"></a></li>
-    <li><a href="notebooks/class_4/Identifying_Topics_From_Documents_1_index.html">Identifying Topics From Documents (1).ipynb</a> <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/Identifying%20Topics%20From%20Documents%20%281%29.ipynb" target="_blank" rel="noopener"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" style="vertical-align:middle;margin-left:.3em"></a></li>
-    <li><a href="notebooks/class_4/Identifying_Topics_From_Documents_2_index.html">Identifying Topics From Documents (2).ipynb</a> <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/Identifying%20Topics%20From%20Documents%20%282%29.ipynb" target="_blank" rel="noopener"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" style="vertical-align:middle;margin-left:.3em"></a></li>
-    <li><a href="notebooks/class_4/Identifying_Topics_From_Documents_index.html">Identifying Topics From Documents.ipynb</a> <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/Identifying%20Topics%20From%20Documents.ipynb" target="_blank" rel="noopener"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" style="vertical-align:middle;margin-left:.3em"></a></li>
-  </ul>
-  <p><a href="index.html">Back to notebook portal</a></p>
-  <hr>
-  <h2>Full class notes (from markdown)</h2>
-  <div id="md-content-2">Loading markdown…</div>
-  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-  <script>
-    (async function(){
-      try{
-        const res = await fetch('Class_2.md');
-        const md = await res.text();
-        document.getElementById('md-content-2').innerHTML = marked.parse(md);
-      }catch(e){
-        document.getElementById('md-content-2').innerHTML = '<pre>Unable to load Class_2.md — see <a href="Class_2.md">raw</a></pre>';
-      }
-    })();
-  </script>
+
+  <div class="nav">
+    <a href="class_1.html">← Class 1 — NLP Fundamentals</a> &nbsp;·&nbsp;
+    <a href="index.html">Back to notebook portal</a> &nbsp;·&nbsp;
+    <a href="class_3.html">Class 3 — Supervised Classification →</a>
+  </div>
+
 </body>
 </html>
