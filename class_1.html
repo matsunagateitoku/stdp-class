@@ -5,69 +5,424 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Class 1 — Natural Language Processing Fundamentals</title>
   <style>
-    body{font-family:system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;margin:1.5rem;line-height:1.6}
-    h1,h2{margin-top:1.6rem}
-    ul{margin:0.5rem 0 1rem 1.5rem}
-    li{margin:0.25rem 0}
+    *{box-sizing:border-box}
+    body{font-family:system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;margin:0;padding:1.5rem 2rem;line-height:1.7;color:#1a1a1a;max-width:960px}
+    h1{font-size:2rem;margin-bottom:.25rem}
+    h2{font-size:1.4rem;margin-top:2.5rem;margin-bottom:.5rem;padding-bottom:.3rem;border-bottom:2px solid #e1e4e8;color:#0366d6}
+    h3{font-size:1.1rem;margin-top:1.4rem;margin-bottom:.4rem;color:#24292e}
+    p{margin:.5rem 0 1rem}
+    ul,ol{margin:.4rem 0 1rem 1.5rem}
+    li{margin:.35rem 0}
     a{text-decoration:none;color:#0366d6}
     a:hover{text-decoration:underline}
-    .note{color:#555}
+    code{background:#f3f4f6;border:1px solid #e1e4e8;border-radius:4px;padding:.1em .4em;font-size:.9em;font-family:"SFMono-Regular",Consolas,monospace}
+    pre{background:#f6f8fa;border:1px solid #e1e4e8;border-radius:6px;padding:1rem 1.2rem;overflow-x:auto;font-size:.875rem;line-height:1.6}
+    pre code{background:none;border:none;padding:0;font-size:inherit}
+    .subtitle{color:#586069;font-size:1.05rem;margin-top:.25rem}
+    .tip{background:#fff8c5;border-left:4px solid #f0a000;border-radius:0 6px 6px 0;padding:.75rem 1rem;margin:1rem 0}
+    .tip strong{color:#a05000}
+    .concept{background:#f0f7ff;border-left:4px solid #0366d6;border-radius:0 6px 6px 0;padding:.75rem 1rem;margin:1rem 0}
+    .concept strong{color:#0366d6}
+    .pipeline{background:#f9f9f9;border:1px solid #ddd;border-radius:8px;padding:1rem 1.2rem;margin:1rem 0;font-family:"SFMono-Regular",Consolas,monospace;font-size:.9rem;overflow-x:auto}
+    .tag{display:inline-block;background:#e1ecf4;color:#0c5460;border-radius:4px;padding:.1em .5em;font-size:.8rem;font-weight:600;margin:.1em .1em}
+    table{border-collapse:collapse;width:100%;margin:1rem 0;font-size:.9rem}
+    th{background:#f6f8fa;font-weight:600;padding:.5rem .8rem;border:1px solid #ddd;text-align:left}
+    td{padding:.45rem .8rem;border:1px solid #ddd;vertical-align:top}
+    tr:nth-child(even) td{background:#fafafa}
+    .nav{margin-top:2.5rem;padding-top:1rem;border-top:1px solid #e1e4e8;color:#586069;font-size:.9rem}
+    .modules-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;margin:1rem 0}
+    .module-card{border:1px solid #e1e4e8;border-radius:8px;padding:1rem;background:#fff}
+    .module-card h4{margin:0 0 .5rem;font-size:1rem;color:#0366d6}
+    .module-card p{margin:0;font-size:.9rem;color:#444}
+    .data-flow{display:flex;flex-wrap:wrap;align-items:center;gap:.4rem;margin:1rem 0;font-size:.875rem}
+    .data-flow .step{background:#e8f4fd;border:1px solid #bcd9f1;border-radius:6px;padding:.4rem .75rem}
+    .data-flow .arrow{color:#999;font-size:1.1rem}
   </style>
 </head>
 <body>
+
   <h1>Class 1 — Natural Language Processing Fundamentals</h1>
-  <p>This class introduces natural language processing fundamentals through practical text cleaning, tokenization, and preprocessing workflows.</p>
-  <p class="note">Class 1 is focused on turning raw text into useful tokens and reducing vocabulary size while preserving meaning.</p>
-  <h2>Course Description</h2>
-  <p>This class teaches the fundamentals of NLP preprocessing and early-stage analysis. Topics include basic string manipulation (<code>lower()</code>, <code>split()</code>), regex pattern matching, frequency counting with <code>collections.Counter</code>, tokenization, unicode normalization, contraction handling, stopword removal, spelling correction, stemming, lemmatization, and building reusable preprocessing pipelines.</p>
-  <h2>Modules & Key Concepts</h2>
+  <p class="subtitle">Turning raw text into clean, structured tokens ready for analysis</p>
+
+  <p>Before any machine learning model can understand language, text must be transformed from messy, raw strings into consistent, normalized tokens. This class builds that foundation step by step — from simple Python string tricks all the way to building a reusable preprocessing pipeline.</p>
+
+  <div class="modules-grid">
+    <div class="module-card">
+      <h4>Module 1</h4>
+      <p>Finding patterns in text using string methods, regex, and frequency counting</p>
+    </div>
+    <div class="module-card">
+      <h4>Module 2</h4>
+      <p>Preprocessing to reduce vocabulary — normalization, stemming, lemmatization, and building a pipeline</p>
+    </div>
+    <div class="module-card">
+      <h4>Module 3</h4>
+      <p>Tagging and parsing documents — POS tags, lemmatization with tags, and chunking phrases</p>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <h2>Module 1 — Finding Simple Patterns in Text</h2>
+  <!-- ═══════════════════════════════════════════════════════════ -->
+
+  <p>This module starts with the simplest possible tools: Python's built-in string methods. The goal is to extract tokens (individual words or units) from raw text and count them to discover what words appear most often.</p>
+
+  <h3>Basic String Operations</h3>
+  <p>Two operations you will use constantly in NLP:</p>
   <ul>
-    <li><strong>Finding simple patterns in text</strong> — lowercase, split, regex, <code>Counter()</code>, and <code>most_common()</code> to count tokens and discover frequent words.</li>
-    <li><strong>Preprocessing to reduce vocabulary</strong> — parsing raw documents, sentence splitting, normalizing unicode to ASCII, removing punctuation and numbers, and cleaning with NLTK.</li>
-    <li><strong>Pipeline design</strong> — a custom <code>Pipe</code> class with chained preprocessing operations exposed as properties like <code>Low</code>, <code>Norm</code>, <code>Exp</code>, <code>Words</code>, <code>Stem</code>, <code>Stop</code>, and <code>NoNum</code>.</li>
-    <li><strong>Stemming and lemmatization</strong> — <code>nltk.stem.PorterStemmer</code>, <code>WordNetLemmatizer</code>, and POS-aware lemma conversion to reduce vocabulary variance.</li>
-    <li><strong>Parsing and tagging</strong> — <code>nltk.sent_tokenize()</code>, <code>nltk.word_tokenize()</code>, <code>nltk.pos_tag()</code>, Penn Treebank to WordNet POS conversion, and <code>nltk.RegexpParser</code> chunking for phrase extraction.</li>
+    <li><code>str.lower()</code> — converts all characters to lowercase so "The" and "the" are treated as the same word</li>
+    <li><code>str.split()</code> — splits a string on whitespace, producing a list of tokens</li>
   </ul>
-  <h2>Course Project / Tasks</h2>
-  <p>Hands-on tasks include initializing pipeline attributes in <code>__init__()</code>, formatting output with <code>Out()</code>, implementing preprocessing steps as @property methods, and validating inputs with assertions such as <code>assert isinstance(LsWords, list)</code>.</p>
-  <p>Practical examples cover NLTK downloads, Brown corpus processing, stopword removal, contraction expansion, HTML tag removal, and spell correction with <em>textblob</em> or custom regex-based fixes.</p>
-  <h2>Lessons & Notebooks</h2>
+  <pre><code>text = "The quick brown Fox jumps over the lazy Dog"
+tokens = text.lower().split()
+# ['the', 'quick', 'brown', 'fox', 'jumps', 'over', 'the', 'lazy', 'dog']</code></pre>
+
+  <h3>Regex Pattern Matching with <code>re</code></h3>
+  <p>Regular expressions let you define flexible patterns to find or replace text. Python's <code>re</code> module is the standard tool for this.</p>
+  <pre><code>import re
+
+# Find all sequences of word characters (letters/digits)
+tokens = re.findall(r'\b[a-z]+\b', text.lower())
+
+# Remove punctuation
+clean = re.sub(r'[^a-z\s]', '', text.lower())</code></pre>
+  <div class="tip">
+    <strong>Why regex?</strong> <code>split()</code> leaves punctuation attached to words ("dog." instead of "dog"). Regex lets you define exactly what counts as a token.
+  </div>
+
+  <h3>Counting Tokens with <code>Counter</code></h3>
+  <p><code>collections.Counter</code> is a dictionary subclass that counts how many times each element appears in an iterable. It is the fastest built-in way to build a word-frequency table.</p>
+  <pre><code>from collections import Counter
+
+tokens = ['the', 'cat', 'sat', 'on', 'the', 'mat', 'the']
+counts = Counter(tokens)
+print(counts.most_common(3))
+# [('the', 3), ('cat', 1), ('sat', 1)]</code></pre>
   <ul>
-    <li>Practice comparing texts and similarity metrics: <a href="4.1.1.Practice_Comparing_Texts.ipynb">4.1.1.Practice_Comparing_Texts.ipynb</a></li>
-    <li>Tokenization, collocations, and keyword extraction: <a href="Practice_Identifying_Collocations.ipynb">Practice_Identifying_Collocations.ipynb</a></li>
-    <li>Measuring keyword quality and preprocessing pipeline examples: <a href="Practice Measuring Keyword Quality.ipynb">Practice Measuring Keyword Quality.ipynb</a></li>
-    <li>Additional resources and examples: <a href="Identifying Keywords and Keyphrases From Text.ipynb">Identifying Keywords and Keyphrases From Text.ipynb</a></li>
+    <li><code>Counter(iterable)</code> — builds the frequency dictionary in one step</li>
+    <li><code>.most_common(n)</code> — returns the top <em>n</em> items as <code>(word, count)</code> tuples, sorted by frequency</li>
   </ul>
-  <h2>Core Notebooks</h2>
+
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <h2>Module 2 — Preprocessing to Reduce Vocabulary</h2>
+  <!-- ═══════════════════════════════════════════════════════════ -->
+
+  <p>A raw document might contain thousands of unique surface forms — "run", "runs", "running", "ran" — that all mean the same thing. Preprocessing collapses these variants so models see a smaller, cleaner vocabulary. This module covers every major step in that pipeline.</p>
+
+  <h3>The Text Preprocessing Pipeline</h3>
+  <p>Each step below reduces noise and vocabulary size:</p>
+  <div class="data-flow">
+    <div class="step">Raw text</div><div class="arrow">→</div>
+    <div class="step">Lowercase</div><div class="arrow">→</div>
+    <div class="step">Unicode → ASCII</div><div class="arrow">→</div>
+    <div class="step">Expand contractions</div><div class="arrow">→</div>
+    <div class="step">Remove HTML/punctuation/numbers</div><div class="arrow">→</div>
+    <div class="step">Tokenize</div><div class="arrow">→</div>
+    <div class="step">Remove stopwords</div><div class="arrow">→</div>
+    <div class="step">Stem or Lemmatize</div><div class="arrow">→</div>
+    <div class="step">Clean tokens</div>
+  </div>
+
+  <h3>Introducing NLTK</h3>
+  <p>The Natural Language Toolkit (<code>nltk</code>) is the most widely used Python library for NLP preprocessing. Before using its data (corpora, tokenizers, stopword lists), you must download the required packages once:</p>
+  <pre><code>import nltk
+nltk.download('punkt')         # Punkt sentence tokenizer
+nltk.download('stopwords')     # Common stopword lists
+nltk.download('wordnet')       # WordNet lexical database
+nltk.download('brown')         # Brown corpus (for practice)
+nltk.download('averaged_perceptron_tagger')  # POS tagger</code></pre>
+  <p>You can then load a large text corpus for experiments:</p>
+  <pre><code># All unique lowercased words from the Brown corpus
+Ss6 = {s.lower() for s in nltk.corpus.brown.words()}</code></pre>
+
+  <h3>Unicode Normalization</h3>
+  <p>Text from the web often contains accented characters (é, ü, ñ) or special Unicode symbols. Normalizing to ASCII removes these so tokens are consistent:</p>
+  <pre><code>import unicodedata
+
+def normalize(word):
+    return unicodedata.normalize('NFKD', word).encode('ascii', 'ignore').decode('utf-8')
+
+normalize('café')   # → 'cafe'
+normalize('naïve')  # → 'naive'</code></pre>
+  <div class="concept">
+    <strong>What is NFKD?</strong> Unicode Normalization Form KD decomposes characters into their base letter plus a combining accent mark. The <code>encode('ascii', 'ignore')</code> then drops the accent, leaving only the base letter.
+  </div>
+
+  <h3>Expanding Contractions</h3>
+  <p>Contractions like "don't" or "I'm" are actually two words combined. Expanding them before tokenizing prevents "don't" and "do not" from being treated as different terms.</p>
+  <pre><code># Simple approach — a lookup dictionary + regex substitution
+CONTRACTIONS = {"don't": "do not", "I'm": "I am", "it's": "it is", ...}
+
+# Or use the contractions library (handles hundreds of cases automatically)
+import contractions
+contractions.fix("I don't know what it's about.")
+# → "I do not know what it is about."</code></pre>
+
+  <h3>Removing HTML, Punctuation, and Numbers</h3>
+  <pre><code>import re
+from html.parser import HTMLParser
+
+# Strip HTML tags
+clean = re.sub(r'<.*?>', '', raw_html)
+
+# Remove punctuation and numbers, keep only letters and spaces
+clean = re.sub(r'[^a-z\s]', '', clean.lower())</code></pre>
+
+  <h3>Tokenization</h3>
+  <p>Tokenization is the process of splitting a string into a list of tokens (words, sentences, or subwords). NLTK provides two key tokenizers:</p>
+  <pre><code>import nltk
+
+sDoc = "I love NLP. It's fascinating!"
+
+# Split into sentences
+LsSents = nltk.sent_tokenize(sDoc)
+# → ["I love NLP.", "It's fascinating!"]
+
+# Split into words (handles punctuation correctly)
+LsWords = nltk.word_tokenize(sDoc)
+# → ['I', 'love', 'NLP', '.', 'It', "'s", 'fascinating', '!']</code></pre>
+  <div class="tip">
+    <strong>Punkt Tokenizer:</strong> NLTK's sentence tokenizer uses the Punkt algorithm — an unsupervised model trained on large corpora to recognize sentence boundaries. It handles abbreviations ("Dr.", "U.S.A.") without splitting on every period.
+  </div>
+
+  <h3>Removing Stopwords</h3>
+  <p>Stopwords are extremely common words ("the", "a", "is", "and") that carry little meaning on their own and inflate vocabulary size. Removing them reduces noise:</p>
+  <pre><code>from nltk.corpus import stopwords
+
+stop_words = set(stopwords.words('english'))
+filtered = [w for w in tokens if w.lower() not in stop_words]</code></pre>
+
+  <h3>Stemming</h3>
+  <p>Stemming removes suffixes from words to reduce them to a common root (the <em>stem</em>). The stem does not need to be a real dictionary word — it just needs to group similar words together.</p>
+  <pre><code>from nltk.stem import PorterStemmer
+
+ps = PorterStemmer()
+ps.stem('running')   # → 'run'
+ps.stem('studies')   # → 'studi'   (not a real word — that's OK)
+ps.stem('fairly')    # → 'fairli'</code></pre>
+  <div class="tip">
+    <strong>Stemming is fast but crude.</strong> It uses fixed rules (chop off "-ing", "-ed", "-s") without any knowledge of the word's meaning. Use it when speed matters more than accuracy.
+  </div>
+
+  <h3>Lemmatization</h3>
+  <p>Lemmatization also reduces words to a base form (the <em>lemma</em>), but it uses a real dictionary (WordNet) and the word's grammatical role. The result is always a valid English word.</p>
+  <pre><code>from nltk.stem import WordNetLemmatizer
+
+lem = WordNetLemmatizer()
+lem.lemmatize('running', pos='v')   # → 'run'   (verb)
+lem.lemmatize('better',  pos='a')   # → 'good'  (adjective — knows "better" is comparative of "good")
+lem.lemmatize('studies', pos='v')   # → 'study' (not "studi" like Porter)</code></pre>
+
+  <table>
+    <thead>
+      <tr><th>Word</th><th>Stemmed (Porter)</th><th>Lemmatized (WordNet)</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>running</td><td>run</td><td>run (verb)</td></tr>
+      <tr><td>studies</td><td>studi</td><td>study (verb)</td></tr>
+      <tr><td>better</td><td>better</td><td>good (adjective)</td></tr>
+      <tr><td>fairly</td><td>fairli</td><td>fairly (adverb)</td></tr>
+      <tr><td>wolves</td><td>wolv</td><td>wolf (noun)</td></tr>
+    </tbody>
+  </table>
+
+  <h3>The <code>Pipe</code> Class — A Reusable Pipeline</h3>
+  <p>Rather than applying each step manually every time, the course introduces a custom <code>Pipe</code> class that chains preprocessing operations together using Python <code>@property</code> decorators. Each property modifies the token list in-place and returns <code>self</code>, enabling method chaining.</p>
+  <pre><code># How you call the pipeline — each step is a property, no parentheses needed
+pp = Pipe(LsBookWords, SsStopWords='nltk', SsLex='nltk').Low.Norm.Exp.Words.Stem.Stop.NoNum
+
+# The steps in order:
+#   .Low    → lowercase all tokens
+#   .Norm   → normalize unicode to ASCII
+#   .Exp    → expand contractions
+#   .Words  → keep only alphabetic tokens
+#   .Stem   → apply Porter stemmer
+#   .Stop   → remove stopwords
+#   .NoNum  → remove numeric tokens</code></pre>
+
+  <div class="concept">
+    <strong>How <code>@property</code> enables chaining:</strong> Each method is decorated with <code>@property</code>, which means you access it as an attribute (no parentheses). Each method transforms <code>self.LsWords</code> and returns <code>self</code>, so the next step is called on the same object. This makes the pipeline read like a sentence.
+  </div>
+
+  <p>The pipeline also records statistics at each step (original token count vs. count after each operation), so you can see exactly how much each step reduces the vocabulary.</p>
+
+  <h3>The <code>enumerate()</code> Function</h3>
+  <p>Used throughout preprocessing to loop over a list while keeping track of position:</p>
+  <pre><code>sentences = ['Hello world.', 'NLP is fun.', 'Let us begin.']
+for i, sent in enumerate(sentences):
+    print(i, sent)
+# 0 Hello world.
+# 1 NLP is fun.
+# 2 Let us begin.</code></pre>
+
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <h2>Module 3 — Tagging and Parsing a Document</h2>
+  <!-- ═══════════════════════════════════════════════════════════ -->
+
+  <p>Once text is tokenized, we can assign a <strong>part-of-speech (POS) tag</strong> to each word. Tags tell the computer whether a word is a noun, verb, adjective, etc. — which is essential for accurate lemmatization and phrase extraction.</p>
+
+  <h3>The Document Transformation Pipeline</h3>
+  <p>The data changes shape at each stage. Here are the standard variable names used in the course and what each one contains:</p>
+
+  <table>
+    <thead>
+      <tr><th>Variable</th><th>Type</th><th>Example</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><code>sDoc</code></td><td>string</td><td><code>'I do. We go.'</code></td></tr>
+      <tr><td><code>LsSents</code></td><td>list of strings</td><td><code>['I do.', 'We go.']</code></td></tr>
+      <tr><td><code>LLsWords</code></td><td>list of lists of strings</td><td><code>[['I','do','.'],['We','go','.']]</code></td></tr>
+      <tr><td><code>LLTsWordPOST</code></td><td>list of lists of (word, Penn-tag) tuples</td><td><code>[[('I','PRP'),('do','VBP')],[('We','PRP'),('go','VBP')]]</code></td></tr>
+      <tr><td>(after conversion)</td><td>list of lists of (word, WordNet-tag) tuples</td><td><code>[[('I','n'),('do','v')],[('We','n'),('go','v')]]</code></td></tr>
+    </tbody>
+  </table>
+
+  <h3>Part-of-Speech Tagging</h3>
+  <pre><code>import nltk
+
+tokens = nltk.word_tokenize("The cat sat on the mat.")
+tagged = nltk.pos_tag(tokens)
+# [('The','DT'), ('cat','NN'), ('sat','VBD'), ('on','IN'), ('the','DT'), ('mat','NN'), ('.', '.')]</code></pre>
+
+  <p>NLTK uses <strong>Penn Treebank POS tags</strong>. The most common ones:</p>
+  <table>
+    <thead><tr><th>Tag</th><th>Meaning</th><th>Example</th></tr></thead>
+    <tbody>
+      <tr><td><code>NN</code></td><td>Noun, singular</td><td>cat, table</td></tr>
+      <tr><td><code>NNS</code></td><td>Noun, plural</td><td>cats, tables</td></tr>
+      <tr><td><code>VB</code></td><td>Verb, base form</td><td>run, eat</td></tr>
+      <tr><td><code>VBD</code></td><td>Verb, past tense</td><td>ran, ate</td></tr>
+      <tr><td><code>VBG</code></td><td>Verb, gerund/present participle</td><td>running, eating</td></tr>
+      <tr><td><code>JJ</code></td><td>Adjective</td><td>quick, large</td></tr>
+      <tr><td><code>RB</code></td><td>Adverb</td><td>quickly, very</td></tr>
+      <tr><td><code>DT</code></td><td>Determiner</td><td>the, a, an</td></tr>
+      <tr><td><code>PRP</code></td><td>Personal pronoun</td><td>I, he, she</td></tr>
+      <tr><td><code>IN</code></td><td>Preposition or subordinating conjunction</td><td>on, in, that</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Converting Penn Tags to WordNet Tags</h3>
+  <p>There is a mismatch: <code>nltk.pos_tag()</code> produces Penn Treebank tags, but <code>WordNetLemmatizer</code> expects WordNet tags (<code>'n'</code>, <code>'v'</code>, <code>'a'</code>, <code>'r'</code>). You must convert between them before lemmatizing:</p>
+  <pre><code>from nltk.corpus import wordnet
+
+def penn_to_wordnet(tag):
+    if tag.startswith('J'):
+        return wordnet.ADJ      # 'a'
+    elif tag.startswith('V'):
+        return wordnet.VERB     # 'v'
+    elif tag.startswith('N'):
+        return wordnet.NOUN     # 'n'
+    elif tag.startswith('R'):
+        return wordnet.ADV      # 'r'
+    else:
+        return wordnet.NOUN     # default to noun
+
+# Lemmatize each word using its POS tag
+from nltk.stem import WordNetLemmatizer
+lem = WordNetLemmatizer()
+
+tagged = [('running', 'VBG'), ('cats', 'NNS'), ('better', 'JJR')]
+lemmatized = [lem.lemmatize(word, penn_to_wordnet(tag)) for word, tag in tagged]
+# → ['run', 'cat', 'good']</code></pre>
+
+  <div class="tip">
+    <strong>Why does this matter?</strong> Without providing a POS tag, WordNetLemmatizer defaults to treating every word as a noun. That means "running" → "running" (unchanged) instead of "run". Providing the correct tag dramatically improves lemmatization quality.
+  </div>
+
+  <h3>Chunking — Extracting Phrases</h3>
+  <p><strong>Chunking</strong> (also called shallow parsing) groups consecutive tagged tokens into meaningful phrases like noun phrases (NP) or verb phrases (VP). You define grammar rules as regex patterns over POS tags, and NLTK's <code>RegexpParser</code> applies them.</p>
+  <pre><code># Grammar rule: an optional determiner, optional adjective, followed by one or more nouns
+sGrammar = r'NP: {<DT>? <JJ>? <NN.*>+}'
+parser = nltk.RegexpParser(sGrammar)
+
+tagged = nltk.pos_tag(nltk.word_tokenize("The big brown dog sat quietly."))
+ChunkTree = parser.parse(tagged)
+print(ChunkTree)
+# (S
+#   (NP The/DT big/JJ dog/NN)     ← chunk found
+#   sat/VBD
+#   quietly/RB ./.)</code></pre>
+
+  <p>Common grammar patterns:</p>
+  <table>
+    <thead><tr><th>Pattern</th><th>Captures</th><th>Example match</th></tr></thead>
+    <tbody>
+      <tr><td><code>NP: {&lt;DT&gt;? &lt;JJ&gt;? &lt;NN.*&gt;+}</code></td><td>Noun phrases</td><td>"the big dog", "cats"</td></tr>
+      <tr><td><code>VP: {&lt;V.*&gt;+}</code></td><td>Verb phrases</td><td>"has been running"</td></tr>
+      <tr><td><code>NP1: {&lt;DT&gt;? &lt;JJ&gt;? &lt;NN.*&gt;+}</code></td><td>Simpler noun phrases</td><td>"quick fox"</td></tr>
+    </tbody>
+  </table>
+
+  <div class="concept">
+    <strong>Chunking vs. full parsing:</strong> Chunking finds flat phrases (no nesting or hierarchy) and is fast. Full syntactic parsing builds a complete tree of a sentence's grammatical structure but is much slower. For most NLP tasks, chunking is sufficient.
+  </div>
+
+  <h3>Parse Trees</h3>
+  <p>NLTK can also produce three types of parse trees for deeper structural analysis:</p>
   <ul>
-    <li><a href="4.1.1.Practice_Comparing_Texts.ipynb">4.1.1.Practice_Comparing_Texts.ipynb</a></li>
-    <li><a href="Using Metrics To Determine Text Similarity.ipynb">Using Metrics To Determine Text Similarity.ipynb</a></li>
-    <li><a href="Practice_Finding_Mismatches.ipynb">Practice_Finding_Mismatches.ipynb</a></li>
-    <li><a href="Practice_Identifying_Collocations.ipynb">Practice_Identifying_Collocations.ipynb</a></li>
-    <li><a href="Identifying Keywords and Keyphrases From Text.ipynb">Identifying Keywords and Keyphrases From Text.ipynb</a></li>
-    <li><a href="Identifying Keywords and Keyphrases From Text (1).ipynb">Identifying Keywords and Keyphrases From Text (1).ipynb</a></li>
-    <li><a href="Identifying Topics From Documents.ipynb">Identifying Topics From Documents.ipynb</a></li>
-    <li><a href="Identifying Topics From Documents (1).ipynb">Identifying Topics From Documents (1).ipynb</a></li>
-    <li><a href="Identifying Topics From Documents (2).ipynb">Identifying Topics From Documents (2).ipynb</a></li>
-    <li><a href="Extracting Summary Sentences From Documents.ipynb">Extracting Summary Sentences From Documents.ipynb</a></li>
-    <li><a href="Extracting Summary Sentences From Documents (1).ipynb">Extracting Summary Sentences From Documents (1).ipynb</a></li>
-    <li><a href="Practice Measuring Keyword Quality.ipynb">Practice Measuring Keyword Quality.ipynb</a></li>
+    <li><strong>Constituency parse</strong> — breaks the sentence into nested phrases (NP, VP, etc.) according to grammar rules</li>
+    <li><strong>Dependency parse</strong> — draws directed edges between words showing which word depends on which (e.g., "dog" is the subject of "sat")</li>
+    <li><strong>Syntactic parse</strong> — a full hierarchical tree of the sentence structure</li>
   </ul>
-  <p><a href="index.html">Back to notebook portal</a></p>
-  <hr>
-  <h2>Full class notes (from markdown)</h2>
-  <div id="md-content-1">Loading markdown…</div>
-  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-  <script>
-    (async function(){
-      try{
-        const res = await fetch('Class_1.md');
-        const md = await res.text();
-        document.getElementById('md-content-1').innerHTML = marked.parse(md);
-      }catch(e){
-        document.getElementById('md-content-1').innerHTML = '<pre>Unable to load Class_1.md — see <a href="Class_1.md">raw</a></pre>';
-      }
-    })();
-  </script>
+  <p>For production-quality parsing, the <code>spaCy</code> library is far faster and more accurate than NLTK's built-in parsers.</p>
+
+  <h3><code>FreqDist</code> — Frequency Distributions in NLTK</h3>
+  <pre><code>from nltk import FreqDist
+
+fd = FreqDist(tokens)
+fd.most_common(10)   # same idea as Counter, but with more NLTK-integrated methods
+fd.plot(30)          # plot the top-30 word frequencies</code></pre>
+
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <h2>Key Tools Summary</h2>
+  <!-- ═══════════════════════════════════════════════════════════ -->
+
+  <table>
+    <thead><tr><th>Tool / Function</th><th>Library</th><th>Purpose</th></tr></thead>
+    <tbody>
+      <tr><td><code>str.lower()</code>, <code>str.split()</code></td><td>Python built-in</td><td>Basic tokenization</td></tr>
+      <tr><td><code>re.findall()</code>, <code>re.sub()</code></td><td><code>re</code></td><td>Regex pattern matching and substitution</td></tr>
+      <tr><td><code>Counter()</code>, <code>.most_common()</code></td><td><code>collections</code></td><td>Word frequency counting</td></tr>
+      <tr><td><code>unicodedata.normalize()</code></td><td><code>unicodedata</code></td><td>Unicode → ASCII normalization</td></tr>
+      <tr><td><code>contractions.fix()</code></td><td><code>contractions</code></td><td>Expand contractions</td></tr>
+      <tr><td><code>nltk.sent_tokenize()</code></td><td><code>nltk</code></td><td>Split document into sentences</td></tr>
+      <tr><td><code>nltk.word_tokenize()</code></td><td><code>nltk</code></td><td>Split sentence into word tokens</td></tr>
+      <tr><td><code>nltk.pos_tag()</code></td><td><code>nltk</code></td><td>Assign Penn POS tags to tokens</td></tr>
+      <tr><td><code>PorterStemmer().stem()</code></td><td><code>nltk.stem</code></td><td>Fast rule-based stemming</td></tr>
+      <tr><td><code>WordNetLemmatizer().lemmatize()</code></td><td><code>nltk.stem</code></td><td>Dictionary-based lemmatization</td></tr>
+      <tr><td><code>stopwords.words('english')</code></td><td><code>nltk.corpus</code></td><td>English stopword list</td></tr>
+      <tr><td><code>FreqDist()</code></td><td><code>nltk</code></td><td>Frequency distribution with plotting</td></tr>
+      <tr><td><code>nltk.RegexpParser(grammar)</code></td><td><code>nltk</code></td><td>Chunk text into phrases via regex grammar</td></tr>
+      <tr><td><code>enumerate()</code></td><td>Python built-in</td><td>Loop with index and value together</td></tr>
+    </tbody>
+  </table>
+
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <h2>Notebooks for This Class</h2>
+  <!-- ═══════════════════════════════════════════════════════════ -->
+
+  <ul>
+    <li><a href="4.1.1.Practice_Comparing_Texts.ipynb">Practice Comparing Texts</a> — text similarity metrics and preprocessing comparison</li>
+    <li><a href="Practice_Identifying_Collocations.ipynb">Practice Identifying Collocations</a> — finding words that frequently appear together</li>
+    <li><a href="Practice Measuring Keyword Quality.ipynb">Practice Measuring Keyword Quality</a> — evaluating extracted keywords</li>
+    <li><a href="Practice_Finding_Mismatches.ipynb">Practice Finding Mismatches</a> — spotting tokenization and tagging errors</li>
+    <li><a href="Identifying Keywords and Keyphrases From Text.ipynb">Identifying Keywords and Keyphrases From Text</a></li>
+    <li><a href="Identifying Keywords and Keyphrases From Text (1).ipynb">Identifying Keywords and Keyphrases From Text (variant)</a></li>
+    <li><a href="Identifying Topics From Documents.ipynb">Identifying Topics From Documents</a></li>
+    <li><a href="Extracting Summary Sentences From Documents.ipynb">Extracting Summary Sentences From Documents</a></li>
+    <li><a href="Using Metrics To Determine Text Similarity.ipynb">Using Metrics To Determine Text Similarity</a></li>
+    <li><a href="Notes from SANS course .ipynb">Notes from SANS course</a></li>
+  </ul>
+
+  <div class="nav">
+    <a href="index.html">← Back to notebook portal</a> &nbsp;·&nbsp;
+    <a href="class_2.html">Class 2 — Transforming Text Into Numeric Vectors →</a>
+  </div>
+
 </body>
 </html>
