@@ -5,71 +5,590 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Class 5 — Clustering Documents With Unsupervised Machine Learning</title>
   <style>
-    body{font-family:system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;margin:1.5rem;line-height:1.6}
-    h1,h2{margin-top:1.6rem}
-    ul{margin:0.5rem 0 1rem 1.5rem}
-    li{margin:0.25rem 0}
+    *{box-sizing:border-box}
+    body{font-family:system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;margin:0;padding:1.5rem 2rem;line-height:1.7;color:#1a1a1a;max-width:960px}
+    h1{font-size:2rem;margin-bottom:.25rem}
+    h2{font-size:1.4rem;margin-top:2.5rem;margin-bottom:.5rem;padding-bottom:.3rem;border-bottom:2px solid #e1e4e8;color:#0366d6}
+    h3{font-size:1.1rem;margin-top:1.4rem;margin-bottom:.4rem;color:#24292e}
+    p{margin:.5rem 0 1rem}
+    ul,ol{margin:.4rem 0 1rem 1.5rem}
+    li{margin:.35rem 0}
     a{text-decoration:none;color:#0366d6}
     a:hover{text-decoration:underline}
-    .note{color:#555}
+    code{background:#f3f4f6;border:1px solid #e1e4e8;border-radius:4px;padding:.1em .4em;font-size:.9em;font-family:"SFMono-Regular",Consolas,monospace}
+    pre{background:#f6f8fa;border:1px solid #e1e4e8;border-radius:6px;padding:1rem 1.2rem;overflow-x:auto;font-size:.875rem;line-height:1.6}
+    pre code{background:none;border:none;padding:0;font-size:inherit}
+    .subtitle{color:#586069;font-size:1.05rem;margin-top:.25rem}
+    .tip{background:#fff8c5;border-left:4px solid #f0a000;border-radius:0 6px 6px 0;padding:.75rem 1rem;margin:1rem 0}
+    .tip strong{color:#a05000}
+    .concept{background:#f0f7ff;border-left:4px solid #0366d6;border-radius:0 6px 6px 0;padding:.75rem 1rem;margin:1rem 0}
+    .concept strong{color:#0366d6}
+    .warn{background:#fff0f0;border-left:4px solid #d73a49;border-radius:0 6px 6px 0;padding:.75rem 1rem;margin:1rem 0}
+    .warn strong{color:#d73a49}
+    table{border-collapse:collapse;width:100%;margin:1rem 0;font-size:.9rem}
+    th{background:#f6f8fa;font-weight:600;padding:.5rem .8rem;border:1px solid #ddd;text-align:left}
+    td{padding:.45rem .8rem;border:1px solid #ddd;vertical-align:top}
+    tr:nth-child(even) td{background:#fafafa}
+    .nav{margin-top:2.5rem;padding-top:1rem;border-top:1px solid #e1e4e8;color:#586069;font-size:.9rem}
+    .colab-badge{vertical-align:middle;margin-left:.5em}
+    .modules-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;margin:1rem 0}
+    .module-card{border:1px solid #e1e4e8;border-radius:8px;padding:1rem;background:#fff}
+    .module-card h4{margin:0 0 .5rem;font-size:1rem;color:#0366d6}
+    .module-card p{margin:0;font-size:.9rem;color:#444}
+    .data-flow{display:flex;flex-wrap:wrap;align-items:center;gap:.4rem;margin:1rem 0;font-size:.875rem}
+    .data-flow .step{background:#e8f4fd;border:1px solid #bcd9f1;border-radius:6px;padding:.4rem .75rem}
+    .data-flow .arrow{color:#999;font-size:1.1rem}
   </style>
 </head>
 <body>
+
   <h1>Class 5 — Clustering Documents With Unsupervised Machine Learning</h1>
-  <p>This class covers document clustering techniques, including similarity metrics, hierarchical clustering, and K-Means on sentence embeddings.</p>
-  <p class="note">Use these practical notebooks to explore cluster analysis and evaluate grouping quality.</p>
-  <h2>Course Description</h2>
-  <p>Class 5 explores similarity measures for text and unsupervised clustering approaches to group documents by similarity. It covers lexical similarity (Jaccard), edit distances (Hamming, Levenshtein), semantic embeddings (SBERT), hierarchical clustering and dendrograms, k‑means clustering on sentence embeddings, and evaluation metrics like silhouette score and adjusted Rand index (ARI). The class includes practical code labs on medoids, centroids, and choosing linkage methods.</p>
-  <h2>Modules & Key Concepts</h2>
+  <p class="subtitle">Grouping similar texts without labels — from string metrics to semantic embeddings</p>
+
+  <p>Clustering finds natural groupings in data without any pre-defined categories. Where classification (Class 3) requires thousands of labeled examples, clustering only needs the documents themselves. This class builds from simple string-level similarity metrics all the way to clustering dense sentence embeddings, and covers how to evaluate whether the resulting clusters are actually meaningful.</p>
+
+  <div class="modules-grid">
+    <div class="module-card">
+      <h4>Module 1 — Similarity Metrics</h4>
+      <p>Jaccard, Hamming, Levenshtein — measure how alike two strings or sets are before any embedding is needed</p>
+    </div>
+    <div class="module-card">
+      <h4>Module 2 — Hierarchical Clustering</h4>
+      <p>Agglomerative clustering builds a tree of merges; dendrograms visualize the full cluster hierarchy; linkage method controls shape</p>
+    </div>
+    <div class="module-card">
+      <h4>Module 3 — K-Means &amp; Evaluation</h4>
+      <p>K-means partitions sentence embeddings into k groups; centroids and medoids summarize clusters; silhouette and ARI measure quality</p>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <h2>Module 1 — Similarity and Distance Metrics</h2>
+  <!-- ═══════════════════════════════════════════════════════════ -->
+
+  <p>Before clustering documents, you need a way to measure how similar two documents are. The right metric depends on whether you're comparing sets of words, character sequences, or dense embedding vectors.</p>
+
+  <h3>Jaccard Similarity — Set Overlap</h3>
+  <p>Jaccard similarity treats each document as a <em>set of words</em> and measures the fraction of vocabulary shared between two documents. It ignores word order and counts only presence or absence:</p>
+  <pre><code>def jaccard_similarity(doc_a, doc_b):
+    set_a = set(doc_a.lower().split())
+    set_b = set(doc_b.lower().split())
+    intersection = set_a & set_b
+    union        = set_a | set_b
+    return len(intersection) / len(union) if union else 0.0
+
+a = "the cat sat on the mat"
+b = "the cat and the dog played"
+c = "the rocket launched into orbit"
+
+print(jaccard_similarity(a, b))   # 0.375 — share "the", "cat"
+print(jaccard_similarity(a, c))   # 0.083 — share only "the"
+
+# Range: 0.0 (no overlap) to 1.0 (identical sets)</code></pre>
+
+  <div class="concept">
+    <strong>Jaccard distance</strong> = 1 − Jaccard similarity. Use Jaccard similarity when you care about shared vocabulary; use Jaccard distance when you need a proper distance metric for clustering algorithms that expect dissimilarity.
+  </div>
+
+  <h3>Hamming Distance — Position-by-Position Differences</h3>
+  <p>Hamming distance counts the number of positions where two equal-length sequences differ. It was originally designed for binary strings but applies to any fixed-length sequence:</p>
+  <pre><code>def hamming_distance(s1, s2):
+    if len(s1) != len(s2):
+        raise ValueError("Hamming distance requires equal-length strings")
+    return sum(c1 != c2 for c1, c2 in zip(s1, s2))
+
+hamming_distance("karolin", "kathrin")   # 3 — positions 2, 4, 5 differ
+hamming_distance("1011101", "1001001")   # 2
+
+# Use cases: error detection in bit strings, comparing fixed-length codes, DNA sequences</code></pre>
+
+  <div class="tip">
+    <strong>Hamming requires equal length.</strong> For strings of different lengths, use Levenshtein edit distance instead — it handles insertions and deletions.
+  </div>
+
+  <h3>Levenshtein (Edit) Distance — Flexible String Comparison</h3>
+  <p>Edit distance counts the minimum number of <em>insertions</em>, <em>deletions</em>, and <em>substitutions</em> needed to transform one string into another. It works on strings of any length and is the standard metric for spell-checking and fuzzy matching:</p>
+  <pre><code>from Levenshtein import distance   # pip install python-Levenshtein
+
+distance("kitten", "sitting")   # 3
+# k→s (substitution), e→i (substitution), insert g at end
+
+distance("saturday", "sunday")  # 3
+distance("",         "hello")   # 5 (5 insertions)
+distance("hello",    "hello")   # 0 (identical)
+
+# Normalized edit distance: divide by max possible distance
+def normalized_levenshtein(s1, s2):
+    max_len = max(len(s1), len(s2))
+    if max_len == 0:
+        return 0.0
+    return distance(s1, s2) / max_len
+
+normalized_levenshtein("kitten", "sitting")   # 3/7 ≈ 0.43</code></pre>
+
+  <h3>Finding Mismatches in Record Linkage</h3>
+  <p>Edit distance is widely used to find near-duplicate records — for example, matching customer names across databases where one has typos or abbreviations:</p>
+  <pre><code>import pandas as pd
+from Levenshtein import distance
+
+names_a = ["John Smith", "Jane Doe", "Robert Johnson", "Mary Williams"]
+names_b = ["Jon Smith",  "Jane Doe", "Rob Johnson",    "Maria Williams"]
+
+threshold = 3   # strings within 3 edits are likely the same entity
+
+for a, b in zip(names_a, names_b):
+    d = distance(a, b)
+    match = "MATCH" if d <= threshold else "no match"
+    print(f"{d:2d}  {match}  |  '{a}'  vs  '{b}'")</code></pre>
+
+  <h3>Sentence Embeddings with SBERT</h3>
+  <p>String metrics work on surface form. For semantic similarity — where "automobile" and "car" should be close even though they share no characters — you need dense embedding vectors. <strong>Sentence-BERT (SBERT)</strong> produces 384- or 768-dimensional vectors where semantic similarity corresponds to vector proximity:</p>
+  <pre><code>from sentence_transformers import SentenceTransformer
+import numpy as np
+
+model = SentenceTransformer('all-MiniLM-L6-v2')   # fast, 384-dim
+
+sentences = [
+    "The cat sat on the mat.",
+    "A feline rested on the rug.",   # same meaning, different words
+    "The dog chased the ball.",
+    "A rocket launched into orbit.",
+]
+
+# Encode all sentences at once (batched internally)
+embeddings = model.encode(sentences)
+print(embeddings.shape)   # (4, 384)
+
+# Cosine similarity between sentence 0 and sentence 1
+from sklearn.metrics.pairwise import cosine_similarity
+sim = cosine_similarity(embeddings[0:1], embeddings[1:2])[0][0]
+print(f"cat/mat vs feline/rug: {sim:.3f}")   # ≈ 0.85 — high semantic similarity</code></pre>
+
+  <div class="concept">
+    <strong>Why SBERT over word averaging?</strong> Averaging Word2Vec/GloVe vectors loses sentence structure and negation. SBERT fine-tunes BERT with a siamese network on sentence-pair tasks, so the resulting vectors are specifically optimized for semantic sentence similarity.
+  </div>
+
+  <h3>Metric Comparison</h3>
+  <table>
+    <thead><tr><th>Metric</th><th>Input type</th><th>Captures</th><th>Best for</th></tr></thead>
+    <tbody>
+      <tr><td>Jaccard</td><td>Word sets</td><td>Vocabulary overlap</td><td>Document deduplication, keyword comparison</td></tr>
+      <tr><td>Hamming</td><td>Equal-length strings</td><td>Position-wise differences</td><td>Fixed-length codes, binary strings, DNA</td></tr>
+      <tr><td>Levenshtein</td><td>Any strings</td><td>Edit operations (ins/del/sub)</td><td>Spell check, record linkage, fuzzy matching</td></tr>
+      <tr><td>Cosine (TF-IDF)</td><td>Sparse count vectors</td><td>Term importance overlap</td><td>Keyword-based document similarity</td></tr>
+      <tr><td>Cosine (SBERT)</td><td>Dense embeddings</td><td>Semantic meaning</td><td>Paraphrase detection, semantic search, clustering</td></tr>
+    </tbody>
+  </table>
+
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <h2>Module 2 — Hierarchical Clustering</h2>
+  <!-- ═══════════════════════════════════════════════════════════ -->
+
+  <p>Hierarchical clustering builds a complete tree of merges from individual documents up to one big cluster. You don't need to choose the number of clusters in advance — you cut the tree at whatever level gives a useful grouping.</p>
+
+  <div class="data-flow">
+    <div class="step">Sentence embeddings</div><div class="arrow">→</div>
+    <div class="step">Pairwise distance matrix</div><div class="arrow">→</div>
+    <div class="step">Agglomerative merging</div><div class="arrow">→</div>
+    <div class="step">Dendrogram</div><div class="arrow">→</div>
+    <div class="step">Cut tree at threshold</div><div class="arrow">→</div>
+    <div class="step">Cluster labels</div>
+  </div>
+
+  <h3>Agglomerative Clustering with scikit-learn</h3>
+  <p>Agglomerative clustering starts with every document in its own cluster and repeatedly merges the two closest clusters until only one remains:</p>
+  <pre><code>from sklearn.cluster import AgglomerativeClustering
+from sentence_transformers import SentenceTransformer
+
+model_sbert = SentenceTransformer('all-MiniLM-L6-v2')
+embeddings  = model_sbert.encode(documents)
+
+# Cluster into 5 groups using cosine distance and average linkage
+agg = AgglomerativeClustering(
+    n_clusters=5,
+    metric='cosine',
+    linkage='average',
+)
+labels = agg.fit_predict(embeddings)
+print(labels)   # [0, 2, 0, 1, 3, 2, 0, 4, ...]  — cluster assignment per document
+
+# Group documents by cluster
+from collections import defaultdict
+clusters = defaultdict(list)
+for doc, label in zip(documents, labels):
+    clusters[label].append(doc)
+
+for cluster_id, docs in sorted(clusters.items()):
+    print(f"\n--- Cluster {cluster_id} ({len(docs)} docs) ---")
+    for d in docs[:3]:
+        print(" ", d[:80])</code></pre>
+
+  <h3>Linkage Methods</h3>
+  <p>The <strong>linkage method</strong> determines how distance between two clusters is measured when deciding which to merge next:</p>
+  <table>
+    <thead><tr><th>Linkage</th><th>Distance between clusters A and B is…</th><th>Produces</th></tr></thead>
+    <tbody>
+      <tr><td><code>single</code></td><td>Distance between the two closest points (one from each cluster)</td><td>Long, chain-like clusters ("chaining effect")</td></tr>
+      <tr><td><code>complete</code></td><td>Distance between the two farthest points</td><td>Compact, roughly spherical clusters</td></tr>
+      <tr><td><code>average</code></td><td>Average of all pairwise distances between the clusters</td><td>Good balance — most common choice for text</td></tr>
+      <tr><td><code>ward</code></td><td>Increase in total within-cluster variance from merging</td><td>Minimizes intra-cluster variance; requires Euclidean distance</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Dendrograms with SciPy</h3>
+  <p>A dendrogram visualizes the full merge history. The y-axis shows the distance at which each merge happened — clusters merged at a high distance are dissimilar:</p>
+  <pre><code>from scipy.cluster.hierarchy import dendrogram, linkage, fcluster
+import matplotlib.pyplot as plt
+import numpy as np
+from sklearn.metrics.pairwise import cosine_distances
+
+# SciPy linkage works on a distance matrix (not similarity)
+dist_matrix = cosine_distances(embeddings)
+
+# Condense to upper-triangle vector (required by SciPy)
+from scipy.spatial.distance import squareform
+condensed = squareform(dist_matrix)
+
+# Compute linkage matrix
+Z = linkage(condensed, method='average')   # Z shape: (n-1, 4)
+
+# Plot dendrogram
+plt.figure(figsize=(12, 5))
+dendrogram(
+    Z,
+    labels=[doc[:30] for doc in documents],
+    leaf_rotation=90,
+    leaf_font_size=8,
+)
+plt.title("Hierarchical Clustering Dendrogram")
+plt.tight_layout()
+plt.show()
+
+# Cut the tree to get flat cluster labels
+labels = fcluster(Z, t=0.4, criterion='distance')   # cut at distance 0.4
+# or
+labels = fcluster(Z, t=5, criterion='maxclust')      # exactly 5 clusters</code></pre>
+
+  <div class="tip">
+    <strong>Reading a dendrogram:</strong> The horizontal line where you "cut" the tree determines the number of clusters — each vertical branch below the cut becomes one cluster. A good cut leaves a large vertical gap between merges, meaning the clusters you're keeping are well-separated.
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <h2>Module 3 — K-Means Clustering and Evaluation</h2>
+  <!-- ═══════════════════════════════════════════════════════════ -->
+
+  <p>K-means partitions documents into exactly <em>k</em> clusters by alternating between assigning each document to its nearest cluster center (centroid) and recomputing centroids from the assigned documents. It's fast and scales well, but requires choosing <em>k</em> in advance.</p>
+
+  <h3>K-Means on Sentence Embeddings</h3>
+  <pre><code>from sklearn.cluster import KMeans
+from sentence_transformers import SentenceTransformer
+
+sbert  = SentenceTransformer('all-MiniLM-L6-v2')
+embeds = sbert.encode(documents)
+
+km = KMeans(
+    n_clusters=5,
+    n_init=10,          # run 10 times with different random seeds, keep best
+    max_iter=300,
+    random_state=42,
+)
+km.fit(embeds)
+
+labels    = km.labels_          # cluster index for each document
+centroids = km.cluster_centers_ # shape: (k, embedding_dim)
+inertia   = km.inertia_         # sum of squared distances to nearest centroid
+
+print(f"Inertia: {inertia:.2f}")   # lower = tighter clusters</code></pre>
+
+  <div class="warn">
+    <strong>K-means uses Euclidean distance.</strong> Sentence embeddings are typically L2-normalized, so Euclidean distance and cosine distance give the same ranking. If your embeddings are not normalized, normalize them first: <code>embeds = embeds / np.linalg.norm(embeds, axis=1, keepdims=True)</code>
+  </div>
+
+  <h3>Centroids vs. Medoids</h3>
+  <p>The <strong>centroid</strong> of a cluster is the mean of all its member vectors — a mathematical average that may not correspond to any actual document. The <strong>medoid</strong> is the actual document whose vector is closest to the centroid — useful when you need a real representative example:</p>
+  <pre><code>import numpy as np
+from sklearn.metrics.pairwise import cosine_distances
+
+def find_medoids(embeddings, labels, k):
+    """For each cluster, find the document index closest to the centroid."""
+    medoid_indices = []
+    for cluster_id in range(k):
+        mask    = labels == cluster_id
+        cluster_embeds = embeddings[mask]
+        cluster_indices = np.where(mask)[0]
+        # Compute centroid
+        centroid = cluster_embeds.mean(axis=0, keepdims=True)
+        # Find closest actual document to the centroid
+        dists = cosine_distances(centroid, cluster_embeds)[0]
+        medoid_local = dists.argmin()
+        medoid_indices.append(cluster_indices[medoid_local])
+    return medoid_indices
+
+medoids = find_medoids(embeds, km.labels_, k=5)
+for cluster_id, idx in enumerate(medoids):
+    print(f"Cluster {cluster_id} representative: {documents[idx][:80]}")</code></pre>
+
+  <h3>Choosing k — The Elbow Method</h3>
+  <p>Plot inertia (sum of squared distances to centroids) against k. Inertia always decreases as k increases, but the rate of decrease slows — the "elbow" is where adding more clusters gives diminishing returns:</p>
+  <pre><code>import matplotlib.pyplot as plt
+
+inertias = []
+k_range  = range(2, 20)
+
+for k in k_range:
+    km_k = KMeans(n_clusters=k, n_init=10, random_state=42)
+    km_k.fit(embeds)
+    inertias.append(km_k.inertia_)
+
+plt.plot(k_range, inertias, marker='o')
+plt.xlabel("Number of clusters k")
+plt.ylabel("Inertia (sum of squared distances)")
+plt.title("Elbow Method for Selecting k")
+plt.show()</code></pre>
+
+  <h3>Silhouette Score — How Well-Separated Are the Clusters?</h3>
+  <p>The silhouette score for a single document measures how much closer it is to its own cluster than to the nearest other cluster:</p>
+  <pre><code>from sklearn.metrics import silhouette_score, silhouette_samples
+import matplotlib.pyplot as plt
+import numpy as np
+
+# Overall score: mean silhouette across all documents
+score = silhouette_score(embeds, km.labels_, metric='cosine')
+print(f"Silhouette score: {score:.4f}")
+# Range: -1 (wrong cluster) to 0 (on boundary) to +1 (tight cluster, well separated)
+# Typical good clustering: > 0.3; excellent: > 0.5
+
+# Per-sample scores — useful for finding outliers in each cluster
+sample_scores = silhouette_samples(embeds, km.labels_, metric='cosine')
+
+# Plot silhouette per cluster
+fig, ax = plt.subplots(figsize=(8, 5))
+y_lower = 0
+for cluster_id in range(km.n_clusters):
+    cluster_scores = sorted(sample_scores[km.labels_ == cluster_id])
+    size = len(cluster_scores)
+    ax.barh(range(y_lower, y_lower + size), cluster_scores, height=1.0)
+    y_lower += size + 5
+ax.axvline(score, color='red', linestyle='--', label=f'Mean = {score:.3f}')
+ax.set_xlabel("Silhouette score"); ax.legend()
+plt.tight_layout(); plt.show()</code></pre>
+
+  <h3>Adjusted Rand Index — Comparing to Ground Truth</h3>
+  <p>If you have ground-truth labels (e.g., known genre labels for movie descriptions), the <strong>Adjusted Rand Index (ARI)</strong> measures how well your clustering matches them. ARI = 1.0 is a perfect match; ARI = 0 is random:</p>
+  <pre><code>from sklearn.metrics import adjusted_rand_score
+
+# true_labels: ground truth (e.g., genre ids)
+# pred_labels: cluster assignments from KMeans
+
+ari = adjusted_rand_score(true_labels, pred_labels)
+print(f"ARI: {ari:.4f}")
+# ARI = 1.0 → perfect match with ground truth
+# ARI = 0.0 → no better than random assignment
+# ARI can be negative if clustering is worse than random
+
+# Try different k values and compare ARI
+for k in range(3, 12):
+    km_k   = KMeans(n_clusters=k, n_init=10, random_state=42).fit(embeds)
+    sil    = silhouette_score(embeds, km_k.labels_, metric='cosine')
+    ari_k  = adjusted_rand_score(true_labels, km_k.labels_)
+    print(f"k={k:2d}  silhouette={sil:.3f}  ARI={ari_k:.3f}")</code></pre>
+
+  <div class="concept">
+    <strong>Silhouette vs. ARI:</strong> Silhouette score is <em>unsupervised</em> — it only uses the vectors, not any labels, so you can always compute it. ARI requires ground-truth labels, but it's a much more direct measure of whether your clusters match the real categories. Use silhouette when you have no labels; use ARI to validate when you do.
+  </div>
+
+  <h3>Putting It All Together — Movie Description Clustering</h3>
+  <pre><code>import pandas as pd
+from sentence_transformers import SentenceTransformer
+from sklearn.cluster import KMeans
+from sklearn.metrics import silhouette_score, adjusted_rand_score
+
+# Load movie descriptions (title, description, genre)
+df = pd.read_csv('movies.csv')
+
+# Encode descriptions
+sbert  = SentenceTransformer('all-MiniLM-L6-v2')
+embeds = sbert.encode(df['description'].tolist(), show_progress_bar=True)
+
+# Grid search over k
+results = []
+for k in range(3, 15):
+    km  = KMeans(n_clusters=k, n_init=10, random_state=42).fit(embeds)
+    sil = silhouette_score(embeds, km.labels_, metric='cosine')
+    ari = adjusted_rand_score(df['genre'], km.labels_)
+    results.append({'k': k, 'silhouette': sil, 'ARI': ari})
+
+results_df = pd.DataFrame(results)
+print(results_df.to_string(index=False))
+
+# Best k by silhouette
+best_k = results_df.loc[results_df['silhouette'].idxmax(), 'k']
+print(f"\nBest k by silhouette: {best_k}")</code></pre>
+
+  <h3>Hierarchical vs. K-Means — When to Use Each</h3>
+  <table>
+    <thead><tr><th>Property</th><th>Hierarchical (Agglomerative)</th><th>K-Means</th></tr></thead>
+    <tbody>
+      <tr><td>Number of clusters</td><td>Decide after fitting by cutting the dendrogram</td><td>Must choose k before fitting</td></tr>
+      <tr><td>Scalability</td><td>O(n² log n) — slow for &gt;10k documents</td><td>O(n·k·iter) — fast, scales to millions</td></tr>
+      <tr><td>Cluster shape</td><td>Flexible — depends on linkage</td><td>Assumes roughly spherical clusters</td></tr>
+      <tr><td>Deterministic</td><td>Yes — same result every time</td><td>No — random initialization (use n_init&gt;1)</td></tr>
+      <tr><td>Visualization</td><td>Dendrogram shows full merge history</td><td>Only final partition visible</td></tr>
+      <tr><td>Best for</td><td>Small corpora, exploring structure, unknown k</td><td>Large corpora, when k is roughly known</td></tr>
+    </tbody>
+  </table>
+
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <h2>Key Tools Summary</h2>
+  <!-- ═══════════════════════════════════════════════════════════ -->
+
+  <table>
+    <thead><tr><th>Tool / Function</th><th>Library</th><th>Purpose</th></tr></thead>
+    <tbody>
+      <tr><td><code>jaccard_similarity(a, b)</code></td><td>manual</td><td>Word-set overlap between two documents</td></tr>
+      <tr><td><code>hamming_distance(s1, s2)</code></td><td>manual / <code>scipy</code></td><td>Position-wise differences in equal-length strings</td></tr>
+      <tr><td><code>Levenshtein.distance(s1, s2)</code></td><td><code>python-Levenshtein</code></td><td>Minimum edit distance between two strings</td></tr>
+      <tr><td><code>SentenceTransformer('all-MiniLM-L6-v2')</code></td><td><code>sentence-transformers</code></td><td>Load pretrained SBERT model for semantic embeddings</td></tr>
+      <tr><td><code>model.encode(sentences)</code></td><td><code>sentence-transformers</code></td><td>Convert sentences to dense embedding vectors</td></tr>
+      <tr><td><code>AgglomerativeClustering(n_clusters, metric, linkage)</code></td><td><code>sklearn.cluster</code></td><td>Bottom-up hierarchical clustering</td></tr>
+      <tr><td><code>linkage(condensed, method)</code></td><td><code>scipy.cluster.hierarchy</code></td><td>Compute SciPy linkage matrix for dendrogram</td></tr>
+      <tr><td><code>dendrogram(Z)</code></td><td><code>scipy.cluster.hierarchy</code></td><td>Plot the merge tree</td></tr>
+      <tr><td><code>fcluster(Z, t, criterion)</code></td><td><code>scipy.cluster.hierarchy</code></td><td>Cut dendrogram to get flat cluster labels</td></tr>
+      <tr><td><code>KMeans(n_clusters=k, n_init=10)</code></td><td><code>sklearn.cluster</code></td><td>Partition documents into k clusters</td></tr>
+      <tr><td><code>km.cluster_centers_</code></td><td><code>sklearn</code></td><td>Centroid vectors for each cluster</td></tr>
+      <tr><td><code>silhouette_score(X, labels, metric)</code></td><td><code>sklearn.metrics</code></td><td>Unsupervised cluster quality (−1 to +1)</td></tr>
+      <tr><td><code>silhouette_samples(X, labels)</code></td><td><code>sklearn.metrics</code></td><td>Per-document silhouette scores</td></tr>
+      <tr><td><code>adjusted_rand_score(true, pred)</code></td><td><code>sklearn.metrics</code></td><td>Compare clustering to ground-truth labels</td></tr>
+      <tr><td><code>cosine_distances(X)</code></td><td><code>sklearn.metrics.pairwise</code></td><td>Pairwise cosine distance matrix</td></tr>
+      <tr><td><code>squareform(dist_matrix)</code></td><td><code>scipy.spatial.distance</code></td><td>Convert square distance matrix to condensed vector</td></tr>
+    </tbody>
+  </table>
+
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <h2>Notebooks for This Class</h2>
+  <!-- ═══════════════════════════════════════════════════════════ -->
+
   <ul>
-    <li><strong>Use metrics to determine similarity</strong> — Jaccard similarity, Hamming distance, and edit-distance measures for string and document comparison.</li>
-    <li><strong>Sentence embeddings & SBERT</strong> — encode sentences into dense vectors for semantic similarity, retrieval, and clustering.</li>
-    <li><strong>Hierarchical clustering</strong> — agglomerative clustering, dendrograms, and linkage methods for grouping similar texts.</li>
-    <li><strong>K‑means clustering</strong> — cluster sentence or document vectors, compare centroids and medoids, and evaluate cluster quality with silhouette score.</li>
-    <li><strong>Project preview</strong> — encode movie descriptions and speeches into vectors, cluster them, and choose the best parameter sets using silhouette score and adjusted Rand index.</li>
+    <li>
+      <a href="notebooks/class_5/Practice_Finding_Mismatches_index.html">Practice Finding Mismatches</a> — Hamming and Levenshtein distance for record linkage and fuzzy matching
+      <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/Practice_Finding_Mismatches.ipynb" target="_blank" rel="noopener">
+        <img class="colab-badge" src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab">
+      </a>
+    </li>
+    <li>
+      <a href="notebooks/class_5/Using_Metrics_To_Determine_Text_Similarity_index.html">Using Metrics To Determine Text Similarity</a> — Jaccard, cosine, and edit-distance comparison across document pairs
+      <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/Using%20Metrics%20To%20Determine%20Text%20Similarity.ipynb" target="_blank" rel="noopener">
+        <img class="colab-badge" src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab">
+      </a>
+    </li>
+    <li>
+      <a href="notebooks/class_5/Practice_Comparing_Sequences_index.html">Practice Comparing Sequences</a> — sequence alignment and comparison exercises
+      <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/class_5/Practice_Comparing_Sequences.ipynb" target="_blank" rel="noopener">
+        <img class="colab-badge" src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab">
+      </a>
+    </li>
+    <li>
+      <a href="notebooks/class_5/Practice_Using_Levenshtein_index.html">Practice Using Levenshtein</a> — computing and applying edit distance
+      <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/class_5/Practice_Using_Levenshtein.ipynb" target="_blank" rel="noopener">
+        <img class="colab-badge" src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab">
+      </a>
+    </li>
+    <li>
+      <a href="notebooks/class_5/Practice_Embedding_index.html">Practice Embedding</a> — encoding sentences with SBERT and computing semantic similarities
+      <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/class_5/Practice_Embedding.ipynb" target="_blank" rel="noopener">
+        <img class="colab-badge" src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab">
+      </a>
+    </li>
+    <li>
+      <a href="notebooks/class_5/Using_Metrics_index.html">Using Metrics</a> — applying distance and similarity metrics to real document sets
+      <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/class_5/Using_Metrics.ipynb" target="_blank" rel="noopener">
+        <img class="colab-badge" src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab">
+      </a>
+    </li>
+    <li>
+      <a href="notebooks/class_5/UsingMetrics_index.html">UsingMetrics</a> — additional similarity metric exercises
+      <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/class_5/UsingMetrics.ipynb" target="_blank" rel="noopener">
+        <img class="colab-badge" src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab">
+      </a>
+    </li>
+    <li>
+      <a href="notebooks/class_5/Hierarchical_Clustering_index.html">Hierarchical Clustering</a> — agglomerative clustering on sentence embeddings with linkage comparison
+      <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/class_5/Hierarchical_Clustering.ipynb" target="_blank" rel="noopener">
+        <img class="colab-badge" src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab">
+      </a>
+    </li>
+    <li>
+      <a href="notebooks/class_5/Dendrograms_index.html">Dendrograms</a> — building and reading dendrograms; cutting the tree at different thresholds
+      <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/class_5/Dendrograms.ipynb" target="_blank" rel="noopener">
+        <img class="colab-badge" src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab">
+      </a>
+    </li>
+    <li>
+      <a href="notebooks/class_5/Performing_Hierarchical_index.html">Performing Hierarchical Clustering</a> — end-to-end hierarchical clustering pipeline
+      <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/class_5/Performing_Hierarchical.ipynb" target="_blank" rel="noopener">
+        <img class="colab-badge" src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab">
+      </a>
+    </li>
+    <li>
+      <a href="notebooks/class_5/Performing_Hierarchical_Clustering_on_Sentence_Embeddings_To_Group_Similar_Texts_1_index.html">Performing Hierarchical Clustering on Sentence Embeddings To Group Similar Texts (1)</a>
+      <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/class_5/Performing%20Hierarchical%20Clustering%20on%20Sentence%20Embeddings%20To%20Group%20Similar%20Texts%20%281%29.ipynb" target="_blank" rel="noopener">
+        <img class="colab-badge" src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab">
+      </a>
+    </li>
+    <li>
+      <a href="notebooks/class_5/Movies_K_index.html">Movies K-Means</a> — cluster movie descriptions with K-means; evaluate with silhouette and ARI
+      <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/class_5/Movies_K.ipynb" target="_blank" rel="noopener">
+        <img class="colab-badge" src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab">
+      </a>
+    </li>
+    <li>
+      <a href="notebooks/class_5/Calculating-Centroids_index.html">Calculating Centroids</a> — computing cluster centroids and using them to summarize groups
+      <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/class_5/Calculating-Centroids.ipynb" target="_blank" rel="noopener">
+        <img class="colab-badge" src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab">
+      </a>
+    </li>
+    <li>
+      <a href="notebooks/class_5/Medoid_Movie_index.html">Medoid Movie</a> — finding medoids as real document representatives for each cluster
+      <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/class_5/Medoid_Movie.ipynb" target="_blank" rel="noopener">
+        <img class="colab-badge" src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab">
+      </a>
+    </li>
+    <li>
+      <a href="notebooks/class_5/Perform_K_index.html">Perform K-Means</a> — K-means clustering pipeline on sentence embeddings
+      <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/class_5/Perform_K.ipynb" target="_blank" rel="noopener">
+        <img class="colab-badge" src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab">
+      </a>
+    </li>
+    <li>
+      <a href="notebooks/class_5/Perform_K-Means_Clustering_on_Sentence_Embeddings_To_Group_Similar_Texts_1_index.html">Perform K-Means Clustering on Sentence Embeddings To Group Similar Texts (1)</a>
+      <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/class_5/Perform%20K-Means%20Clustering%20on%20Sentence%20Embeddings%20To%20Group%20Similar%20Texts%20%281%29.ipynb" target="_blank" rel="noopener">
+        <img class="colab-badge" src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab">
+      </a>
+    </li>
+    <li>
+      <a href="notebooks/class_5/Measuring_Clustering_index.html">Measuring Clustering</a> — silhouette score and ARI evaluation across different k values
+      <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/class_5/Measuring_Clustering.ipynb" target="_blank" rel="noopener">
+        <img class="colab-badge" src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab">
+      </a>
+    </li>
+    <li>
+      <a href="notebooks/class_5/Find_Movies_index.html">Find Movies</a> — semantic movie search using embedding similarity
+      <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/class_5/Find_Movies.ipynb" target="_blank" rel="noopener">
+        <img class="colab-badge" src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab">
+      </a>
+    </li>
   </ul>
-  <h2>Practical Exercises & Notebooks</h2>
-  <ul>
-    <li>Similarity metrics practice: <a href="notebooks/class_5/Practice_Finding_Mismatches_index.html">Practice_Finding_Mismatches.ipynb</a> <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/Practice_Finding_Mismatches.ipynb" target="_blank" rel="noopener"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" style="vertical-align:middle;margin-left:.3em"></a> and <a href="notebooks/class_5/Practice_Comparing_Sequences_index.html">class_5/Practice_Comparing_Sequences.ipynb</a> <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/class_5/Practice_Comparing_Sequences.ipynb" target="_blank" rel="noopener"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" style="vertical-align:middle;margin-left:.3em"></a></li>
-    <li>SBERT embedding and hierarchical clustering labs: <a href="notebooks/class_5/Hierarchical_Clustering_index.html">class_5/Hierarchical_Clustering.ipynb</a> <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/class_5/Hierarchical_Clustering.ipynb" target="_blank" rel="noopener"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" style="vertical-align:middle;margin-left:.3em"></a>, <a href="notebooks/class_5/Dendrograms_index.html">class_5/Dendrograms.ipynb</a> <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/class_5/Dendrograms.ipynb" target="_blank" rel="noopener"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" style="vertical-align:middle;margin-left:.3em"></a></li>
-    <li>K‑means and medoid/centroid practice: <a href="notebooks/class_5/Movies_K_index.html">class_5/Movies_K.ipynb</a> <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/class_5/Movies_K.ipynb" target="_blank" rel="noopener"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" style="vertical-align:middle;margin-left:.3em"></a>, <a href="notebooks/class_5/Calculating-Centroids_index.html">class_5/Calculating-Centroids.ipynb</a> <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/class_5/Calculating-Centroids.ipynb" target="_blank" rel="noopener"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" style="vertical-align:middle;margin-left:.3em"></a></li>
-  </ul>
-  <h2>Core Notebooks</h2>
-  <ul>
-    <li><a href="notebooks/class_5/Practice_Finding_Mismatches_index.html">Practice Finding Mismatches.ipynb</a> <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/Practice_Finding_Mismatches.ipynb" target="_blank" rel="noopener"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" style="vertical-align:middle;margin-left:.3em"></a></li>
-    <li><a href="notebooks/class_5/Using_Metrics_To_Determine_Text_Similarity_index.html">Using Metrics To Determine Text Similarity.ipynb</a> <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/Using%20Metrics%20To%20Determine%20Text%20Similarity.ipynb" target="_blank" rel="noopener"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" style="vertical-align:middle;margin-left:.3em"></a></li>
-    <li><a href="notebooks/class_5/Calculating-Centroids_index.html">class_5/Calculating-Centroids.ipynb</a> <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/class_5/Calculating-Centroids.ipynb" target="_blank" rel="noopener"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" style="vertical-align:middle;margin-left:.3em"></a></li>
-    <li><a href="notebooks/class_5/Dendrograms_index.html">class_5/Dendrograms.ipynb</a> <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/class_5/Dendrograms.ipynb" target="_blank" rel="noopener"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" style="vertical-align:middle;margin-left:.3em"></a></li>
-    <li><a href="notebooks/class_5/Find_Movies_index.html">class_5/Find_Movies.ipynb</a> <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/class_5/Find_Movies.ipynb" target="_blank" rel="noopener"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" style="vertical-align:middle;margin-left:.3em"></a></li>
-    <li><a href="notebooks/class_5/Hierarchical_Clustering_index.html">class_5/Hierarchical_Clustering.ipynb</a> <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/class_5/Hierarchical_Clustering.ipynb" target="_blank" rel="noopener"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" style="vertical-align:middle;margin-left:.3em"></a></li>
-    <li><a href="notebooks/class_5/Measuring_Clustering_index.html">class_5/Measuring_Clustering.ipynb</a> <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/class_5/Measuring_Clustering.ipynb" target="_blank" rel="noopener"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" style="vertical-align:middle;margin-left:.3em"></a></li>
-    <li><a href="notebooks/class_5/Medoid_Movie_index.html">class_5/Medoid_Movie.ipynb</a> <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/class_5/Medoid_Movie.ipynb" target="_blank" rel="noopener"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" style="vertical-align:middle;margin-left:.3em"></a></li>
-    <li><a href="notebooks/class_5/Movies_K_index.html">class_5/Movies_K.ipynb</a> <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/class_5/Movies_K.ipynb" target="_blank" rel="noopener"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" style="vertical-align:middle;margin-left:.3em"></a></li>
-    <li><a href="notebooks/class_5/Perform_K-Means_Clustering_on_Sentence_Embeddings_To_Group_Similar_Texts_1_index.html">class_5/Perform K-Means Clustering on Sentence Embeddings To Group Similar Texts (1).ipynb</a> <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/class_5/Perform%20K-Means%20Clustering%20on%20Sentence%20Embeddings%20To%20Group%20Similar%20Texts%20%281%29.ipynb" target="_blank" rel="noopener"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" style="vertical-align:middle;margin-left:.3em"></a></li>
-    <li><a href="notebooks/class_5/Perform_K_index.html">class_5/Perform_K.ipynb</a> <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/class_5/Perform_K.ipynb" target="_blank" rel="noopener"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" style="vertical-align:middle;margin-left:.3em"></a></li>
-    <li><a href="notebooks/class_5/Performing_Hierarchical_Clustering_on_Sentence_Embeddings_To_Group_Similar_Texts_1_index.html">class_5/Performing Hierarchical Clustering on Sentence Embeddings To Group Similar Texts (1).ipynb</a> <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/class_5/Performing%20Hierarchical%20Clustering%20on%20Sentence%20Embeddings%20To%20Group%20Similar%20Texts%20%281%29.ipynb" target="_blank" rel="noopener"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" style="vertical-align:middle;margin-left:.3em"></a></li>
-    <li><a href="notebooks/class_5/Performing_Hierarchical_index.html">class_5/Performing_Hierarchical.ipynb</a> <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/class_5/Performing_Hierarchical.ipynb" target="_blank" rel="noopener"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" style="vertical-align:middle;margin-left:.3em"></a></li>
-    <li><a href="notebooks/class_5/Practice_Comparing_Sequences_index.html">class_5/Practice_Comparing_Sequences.ipynb</a> <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/class_5/Practice_Comparing_Sequences.ipynb" target="_blank" rel="noopener"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" style="vertical-align:middle;margin-left:.3em"></a></li>
-    <li><a href="notebooks/class_5/Practice_Embedding_index.html">class_5/Practice_Embedding.ipynb</a> <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/class_5/Practice_Embedding.ipynb" target="_blank" rel="noopener"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" style="vertical-align:middle;margin-left:.3em"></a></li>
-    <li><a href="notebooks/class_5/Practice_Using_Levenshtein_index.html">class_5/Practice_Using_Levenshtein.ipynb</a> <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/class_5/Practice_Using_Levenshtein.ipynb" target="_blank" rel="noopener"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" style="vertical-align:middle;margin-left:.3em"></a></li>
-    <li><a href="notebooks/class_5/Using_Metrics_index.html">class_5/Using_Metrics.ipynb</a> <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/class_5/Using_Metrics.ipynb" target="_blank" rel="noopener"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" style="vertical-align:middle;margin-left:.3em"></a></li>
-    <li><a href="notebooks/class_5/UsingMetrics_index.html">class_5/UsingMetrics.ipynb</a> <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/class_5/UsingMetrics.ipynb" target="_blank" rel="noopener"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" style="vertical-align:middle;margin-left:.3em"></a></li>
-  </ul>
-  <p><a href="index.html">Back to notebook portal</a></p>
-  <hr>
-  <h2>Full class notes (from markdown)</h2>
-  <div id="md-content-5">Loading markdown…</div>
-  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-  <script>
-    (async function(){
-      try{
-        const res = await fetch('Class_5.md');
-        const md = await res.text();
-        document.getElementById('md-content-5').innerHTML = marked.parse(md);
-      }catch(e){
-        document.getElementById('md-content-5').innerHTML = '<pre>Unable to load Class_5.md — see <a href="Class_5.md">raw</a></pre>';
-      }
-    })();
-  </script>
+
+  <div class="nav">
+    <a href="class_4.html">← Class 4 — Topic Modeling</a> &nbsp;·&nbsp;
+    <a href="index.html">Back to notebook portal</a> &nbsp;·&nbsp;
+    <a href="class_6.html">Class 6 — Lexical Semantics &amp; Sentiment →</a>
+  </div>
+
 </body>
 </html>
