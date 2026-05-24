@@ -5,114 +5,605 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Class 6 — Conducting Semantic and Sentiment Analysis</title>
   <style>
-    body{font-family:system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;margin:1.5rem;line-height:1.6}
-    h1,h2{margin-top:1.6rem}
-    ul{margin:0.5rem 0 1rem 1.5rem}
-    li{margin:0.25rem 0}
+    *{box-sizing:border-box}
+    body{font-family:system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;margin:0;padding:1.5rem 2rem;line-height:1.7;color:#1a1a1a;max-width:960px}
+    h1{font-size:2rem;margin-bottom:.25rem}
+    h2{font-size:1.4rem;margin-top:2.5rem;margin-bottom:.5rem;padding-bottom:.3rem;border-bottom:2px solid #e1e4e8;color:#0366d6}
+    h3{font-size:1.1rem;margin-top:1.4rem;margin-bottom:.4rem;color:#24292e}
+    p{margin:.5rem 0 1rem}
+    ul,ol{margin:.4rem 0 1rem 1.5rem}
+    li{margin:.35rem 0}
     a{text-decoration:none;color:#0366d6}
     a:hover{text-decoration:underline}
-    .note{color:#555}
+    code{background:#f3f4f6;border:1px solid #e1e4e8;border-radius:4px;padding:.1em .4em;font-size:.9em;font-family:"SFMono-Regular",Consolas,monospace}
+    pre{background:#f6f8fa;border:1px solid #e1e4e8;border-radius:6px;padding:1rem 1.2rem;overflow-x:auto;font-size:.875rem;line-height:1.6}
+    pre code{background:none;border:none;padding:0;font-size:inherit}
+    .subtitle{color:#586069;font-size:1.05rem;margin-top:.25rem}
+    .tip{background:#fff8c5;border-left:4px solid #f0a000;border-radius:0 6px 6px 0;padding:.75rem 1rem;margin:1rem 0}
+    .tip strong{color:#a05000}
+    .concept{background:#f0f7ff;border-left:4px solid #0366d6;border-radius:0 6px 6px 0;padding:.75rem 1rem;margin:1rem 0}
+    .concept strong{color:#0366d6}
+    .warn{background:#fff0f0;border-left:4px solid #d73a49;border-radius:0 6px 6px 0;padding:.75rem 1rem;margin:1rem 0}
+    .warn strong{color:#d73a49}
+    table{border-collapse:collapse;width:100%;margin:1rem 0;font-size:.9rem}
+    th{background:#f6f8fa;font-weight:600;padding:.5rem .8rem;border:1px solid #ddd;text-align:left}
+    td{padding:.45rem .8rem;border:1px solid #ddd;vertical-align:top}
+    tr:nth-child(even) td{background:#fafafa}
+    .nav{margin-top:2.5rem;padding-top:1rem;border-top:1px solid #e1e4e8;color:#586069;font-size:.9rem}
+    .colab-badge{vertical-align:middle;margin-left:.5em}
+    .modules-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;margin:1rem 0}
+    .module-card{border:1px solid #e1e4e8;border-radius:8px;padding:1rem;background:#fff}
+    .module-card h4{margin:0 0 .5rem;font-size:1rem;color:#0366d6}
+    .module-card p{margin:0;font-size:.9rem;color:#444}
+    .data-flow{display:flex;flex-wrap:wrap;align-items:center;gap:.4rem;margin:1rem 0;font-size:.875rem}
+    .data-flow .step{background:#e8f4fd;border:1px solid #bcd9f1;border-radius:6px;padding:.4rem .75rem}
+    .data-flow .arrow{color:#999;font-size:1.1rem}
   </style>
 </head>
 <body>
-  <h1>Class 6 — Conducting Semantic and Sentiment Analysis</h1>
-  <p>This class explores semantic analysis, sentiment detection, and lexical relationships using classic NLP tools and sentiment models.</p>
-  <p class="note">These notebooks help you connect meaning, emotion, and lexical structure in text.</p>
-  <h2>Course Description</h2>
-  <p>Examine many kinds of semantic relationships that words can have (such as hypernyms, hyponyms, or meronyms), which go a long way toward extracting the meaning of documents at scale. You will also implement named entity recognition to identify proper nouns within a document and use several techniques to determine the sentiment of text: Is the tone positive or negative? These invaluable skills can easily turn the tide in a difficult project for your team at work or on the path toward achieving your personal goals.</p>
-  <p><a href="class_6/cis576_glossary.pdf">glossary</a> &nbsp; <a href="class_6/CIS576_course_transcript.pdf">transcript</a></p>
 
-  <h2>Module 1: Conduct Semantic Analysis Using WordNet</h2>
-  <h3>Key concepts</h3>
-  <ul>
-    <li><strong>WordNet</strong> — a large lexical database that groups words into synsets and links them via semantic relations: hypernyms, hyponyms, meronyms, holonyms, antonyms, and entailments.</li>
-    <li>Homophones: words that sound the same but have different senses (e.g., buy/by/bye).</li>
-    <li>Homographs: words spelled identically but with different senses (e.g., bat (animal) vs bat (baseball)).</li>
-    <li>Holonym / Meronym relationships: part-whole relations, e.g., lettuce and tomato are meronyms of sandwich (its holonym).</li>
-  </ul>
-  <h3>Lessons & Activities</h3>
+  <h1>Class 6 — Conducting Semantic and Sentiment Analysis</h1>
+  <p class="subtitle">Understanding word meaning, entity recognition, and emotional tone in text</p>
+
+  <p>The previous classes treated words as opaque tokens — counts or vectors with no inherent meaning. This class goes deeper: What does a word <em>mean</em>? How does meaning relate to other words? Who or what is mentioned in a document? Is the author happy, angry, or neutral? These questions are answered through lexical semantics (WordNet), named entity recognition (CRF models), and sentiment analysis (VADER, TextBlob, and trained classifiers).</p>
+
+  <div class="modules-grid">
+    <div class="module-card">
+      <h4>Module 1 — WordNet &amp; Lexical Semantics</h4>
+      <p>Synsets, lemmas, hypernyms, hyponyms, meronyms — navigate the graph of word meanings; compute semantic similarity between words and documents</p>
+    </div>
+    <div class="module-card">
+      <h4>Module 2 — Named Entity Recognition</h4>
+      <p>IOB tagging, CRF sequence models — identify people, places, organizations, and custom entities in text</p>
+    </div>
+    <div class="module-card">
+      <h4>Module 3 — Sentiment Analysis</h4>
+      <p>VADER for social text, TextBlob for polarity/subjectivity, trained classifiers — detect and quantify emotional tone; expand lexicons to improve F1</p>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <h2>Module 1 — Lexical Semantics with WordNet</h2>
+  <!-- ═══════════════════════════════════════════════════════════ -->
+
+  <p>WordNet is a large hand-curated lexical database that organizes English words into sets of cognitive synonyms (<strong>synsets</strong>) and links them through a rich set of semantic relations. Instead of treating "dog" and "canine" as unrelated tokens, WordNet knows they mean the same thing — and that both are types of mammal, which is a type of animal.</p>
+
+  <h3>Synsets and Lemmas</h3>
+  <p>A <strong>synset</strong> is a group of words that share the same meaning in a specific context. Each synset has a unique identifier. The words within a synset are called <strong>lemmas</strong>:</p>
+  <pre><code>import nltk
+from nltk.corpus import wordnet as wn
+
+nltk.download('wordnet')
+nltk.download('omw-1.4')
+
+# Look up all synsets for "bank"
+synsets = wn.synsets('bank')
+for s in synsets:
+    print(s.name(), '—', s.definition())
+# bank.n.01 — sloping land (especially the slope beside a body of water)
+# bank.n.02 — a financial institution that accepts deposits...
+# bank.n.03 — a long ridge or pile
+# ...   (bank has 18 senses!)
+
+# Access a specific synset
+dog = wn.synset('dog.n.01')
+print(dog.definition())     # "a domestic animal often kept as a pet"
+print(dog.examples())       # ['the dog barked all night']
+print([l.name() for l in dog.lemmas()])   # ['dog', 'domestic_dog', 'Canis_familiaris']</code></pre>
+
+  <h3>Polysemy, Homophones, and Homographs</h3>
   <table>
-    <tr><th>Lesson</th><th>Description</th><th>Colab link</th></tr>
-    <tr><td>Module Intro</td><td>Introduction to semantic analysis and how WordNet helps compare vocabularies across texts.</td><td></td></tr>
-    <tr><td>Retrieve Synsets and Lemmas Using WordNet</td><td>How to access and interpret synsets and lemmas using NLTK's WordNet.</td><td></td></tr>
-    <tr><td>Practice: Synsets & Lemmas</td><td>Exercises on synset attributes and lemma retrieval.</td><td><a href="notebooks/class_6/Synsets_Lemmas_index.html">Colab</a> <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/class_6/Synsets_Lemmas.ipynb" target="_blank" rel="noopener"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" style="vertical-align:middle;margin-left:.3em"></a></td></tr>
-    <tr><td>Retrieve Lexical Semantic Relationships</td><td>Analyze entailments, hyponyms/hypernyms, antonyms, paths and measure path similarity.</td><td></td></tr>
-    <tr><td>Practice Relationships</td><td>Optional practice using WordNet relationships and path similarity measures.</td><td><a href="notebooks/class_6/relationships_WordNet_index.html">Colab</a> <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/class_6/relationships_WordNet.ipynb" target="_blank" rel="noopener"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" style="vertical-align:middle;margin-left:.3em"></a></td></tr>
-    <tr><td>Compute Document Similarity Using WordNet</td><td>Aggregate synset similarities to compute document-level similarity.</td><td><a href="notebooks/class_6/P_index.html">Colab</a> <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/class_6/P.ipynb" target="_blank" rel="noopener"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" style="vertical-align:middle;margin-left:.3em"></a></td></tr>
+    <thead><tr><th>Term</th><th>Meaning</th><th>Example</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Polysemy</strong></td><td>One word with multiple related meanings</td><td>"bank" (financial) vs "bank" (riverbank) — same spelling, related concepts</td></tr>
+      <tr><td><strong>Homograph</strong></td><td>Same spelling, unrelated meanings</td><td>"bat" (animal) vs "bat" (baseball club)</td></tr>
+      <tr><td><strong>Homophone</strong></td><td>Same pronunciation, different spelling/meaning</td><td>buy / by / bye</td></tr>
+      <tr><td><strong>Synonym</strong></td><td>Different words, same meaning</td><td>"car" / "automobile" / "vehicle"</td></tr>
+    </tbody>
   </table>
 
-  <h2>Module 2: Train a Model To Predict Named Entity Tags</h2>
-  <h3>Key concepts</h3>
+  <h3>Lexical Semantic Relationships</h3>
+  <p>WordNet encodes a rich hierarchy of relationships between synsets:</p>
+  <pre><code>dog = wn.synset('dog.n.01')
+
+# Hypernym: the more general category above ("dog IS-A mammal")
+print(dog.hypernyms())
+# [Synset('domestic_animal.n.01'), Synset('canine.n.02')]
+
+# Hyponyms: more specific types below ("retriever IS-A dog")
+print(dog.hyponyms()[:3])
+# [Synset('basenji.n.01'), Synset('corgi.n.01'), Synset('dalmatian.n.02')]
+
+# Walk all the way up the hierarchy to root
+print(dog.hypernym_paths()[0])
+# [entity → physical_entity → object → whole → ... → canine → dog]
+
+# Meronyms: parts OF a dog
+print(dog.part_meronyms())    # [Synset('flag.n.07')]  — a dog's tail
+print(dog.substance_meronyms())
+
+# Holonym: the whole that this is PART OF
+wn.synset('wheel.n.01').part_holonyms()   # → [Synset('wheeled_vehicle.n.01')]
+
+# Antonyms (accessed via lemmas)
+good = wn.synset('good.a.01')
+print(good.lemmas()[0].antonyms())        # [Lemma('bad.a.01.bad')]
+
+# Entailment: if you snore, you must be sleeping
+wn.synset('snore.v.01').entailments()     # [Synset('sleep.v.01')]</code></pre>
+
+  <div class="concept">
+    <strong>Meronym vs. Holonym:</strong><br>
+    A <em>meronym</em> is a part — "wheel" is a meronym of "car" (wheel is part of car).<br>
+    A <em>holonym</em> is the whole — "car" is the holonym of "wheel" (car is the whole that contains wheel).<br>
+    WordNet provides both <code>part_meronyms()</code> and <code>part_holonyms()</code> to navigate either direction.
+  </div>
+
+  <h3>Semantic Similarity Between Words</h3>
+  <p>WordNet's hierarchy lets you compute how semantically close two words are. Several similarity measures are available:</p>
+  <pre><code>dog  = wn.synset('dog.n.01')
+cat  = wn.synset('cat.n.01')
+car  = wn.synset('car.n.01')
+wolf = wn.synset('wolf.n.01')
+
+# Path similarity: 1 / (shortest path + 1) in the hierarchy graph
+print(dog.path_similarity(cat))    # 0.200 — moderately similar
+print(dog.path_similarity(wolf))   # 0.333 — more similar (closer in hierarchy)
+print(dog.path_similarity(car))    # 0.077 — very different
+
+# Wu-Palmer similarity: based on depth in hierarchy
+print(dog.wup_similarity(cat))     # 0.857
+print(dog.wup_similarity(car))     # 0.267
+
+# Leacock-Chodorow: -log(path / (2 * max_depth))
+print(dog.lch_similarity(wolf))    # 2.539</code></pre>
+
+  <h3>Computing Document Similarity with WordNet</h3>
+  <p>Aggregate word-level similarities to get document-level semantic similarity — useful when two documents use different vocabulary but discuss the same topic:</p>
+  <pre><code>def wordnet_doc_similarity(doc_a, doc_b):
+    """Average pairwise Wu-Palmer similarity between content words."""
+    tokens_a = [w for w in doc_a.lower().split() if wn.synsets(w)]
+    tokens_b = [w for w in doc_b.lower().split() if wn.synsets(w)]
+    if not tokens_a or not tokens_b:
+        return 0.0
+    scores = []
+    for w_a in tokens_a:
+        syn_a = wn.synsets(w_a)[0]   # use most common sense
+        for w_b in tokens_b:
+            syn_b = wn.synsets(w_b)[0]
+            if syn_a.pos() == syn_b.pos():   # only compare same POS
+                sim = syn_a.wup_similarity(syn_b)
+                if sim is not None:
+                    scores.append(sim)
+    return sum(scores) / len(scores) if scores else 0.0
+
+a = "The dog ran through the park"
+b = "A canine sprinted across the field"
+c = "The stock market crashed on Monday"
+
+print(wordnet_doc_similarity(a, b))   # ≈ 0.72 — semantically close
+print(wordnet_doc_similarity(a, c))   # ≈ 0.41 — unrelated topics</code></pre>
+
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <h2>Module 2 — Named Entity Recognition</h2>
+  <!-- ═══════════════════════════════════════════════════════════ -->
+
+  <p>Named Entity Recognition (NER) identifies and classifies proper nouns in text — people, organizations, locations, dates, and more. It's a sequence labeling problem: every token gets a tag indicating whether it starts, continues, or is outside a named entity.</p>
+
+  <h3>IOB Tagging</h3>
+  <p>The IOB (Inside-Outside-Beginning) scheme encodes entity spans as a sequence of per-token tags:</p>
+  <pre><code># Example sentence with IOB tags
+# "Barack Obama was born in Hawaii on August 4, 1961"
+
+tokens = ["Barack", "Obama", "was", "born", "in", "Hawaii", "on", "August", "4", ",", "1961"]
+iob    = ["B-PER",  "I-PER", "O",   "O",    "O",  "B-LOC",  "O",  "B-DATE", "I-DATE", "I-DATE", "I-DATE"]
+
+# B- = Beginning of a named entity span
+# I- = Inside (continuation of) a named entity span
+# O  = Outside any named entity
+
+# Entity types:
+# PER = Person
+# ORG = Organization
+# LOC = Location
+# DATE = Date/time expression
+# GPE = Geopolitical entity</code></pre>
+
+  <div class="concept">
+    <strong>Why IOB and not just a label per entity?</strong> A sentence can have multiple entities of the same type adjacent to each other. IOB tags let you distinguish "Barack Obama" (one B-PER + I-PER) from two separate people mentioned back-to-back (B-PER followed by B-PER).
+  </div>
+
+  <h3>CRF-Based NER with <code>sklearn-crfsuite</code></h3>
+  <p>Conditional Random Fields (CRF) are sequence models that assign labels to tokens while considering neighboring tokens. They work well for NER because entity boundaries depend on context — whether the previous word was also an entity matters:</p>
+  <pre><code>import sklearn_crfsuite
+from sklearn_crfsuite import metrics
+
+def word_features(sent, i):
+    """Feature dictionary for the token at position i."""
+    word = sent[i][0]   # (word, pos_tag) tuples
+    pos  = sent[i][1]
+    features = {
+        'word.lower()':    word.lower(),
+        'word.isupper()':  word.isupper(),
+        'word.istitle()':  word.istitle(),   # starts with capital
+        'word.isdigit()':  word.isdigit(),
+        'word[-3:]':       word[-3:],        # suffix
+        'word[-2:]':       word[-2:],
+        'word[:3]':        word[:3],         # prefix
+        'pos':             pos,
+        'pos[:2]':         pos[:2],
+    }
+    if i > 0:
+        prev_word, prev_pos = sent[i-1]
+        features.update({
+            '-1:word.lower()': prev_word.lower(),
+            '-1:word.istitle()': prev_word.istitle(),
+            '-1:pos':           prev_pos,
+        })
+    else:
+        features['BOS'] = True   # beginning of sentence
+
+    if i < len(sent)-1:
+        next_word, next_pos = sent[i+1]
+        features.update({
+            '+1:word.lower()': next_word.lower(),
+            '+1:word.istitle()': next_word.istitle(),
+            '+1:pos':           next_pos,
+        })
+    else:
+        features['EOS'] = True   # end of sentence
+    return features
+
+def sent_features(sent):
+    return [word_features(sent, i) for i in range(len(sent))]
+
+def sent_labels(sent):
+    return [label for _, _, label in sent]   # (word, pos, iob_tag)
+
+# Train
+crf = sklearn_crfsuite.CRF(
+    algorithm='lbfgs',
+    c1=0.1,   # L1 regularization
+    c2=0.1,   # L2 regularization
+    max_iterations=100,
+    all_possible_transitions=True,
+)
+X_train = [sent_features(s) for s in train_sents]
+y_train = [sent_labels(s)   for s in train_sents]
+crf.fit(X_train, y_train)
+
+# Evaluate
+X_test = [sent_features(s) for s in test_sents]
+y_test = [sent_labels(s)   for s in test_sents]
+y_pred = crf.predict(X_test)
+print(metrics.flat_classification_report(y_test, y_pred, labels=["B-PER","I-PER","B-LOC","B-ORG"]))</code></pre>
+
+  <h3>NER with spaCy (Out of the Box)</h3>
+  <p>For production use without training a custom model, spaCy's pretrained pipelines provide high-quality NER instantly:</p>
+  <pre><code>import spacy
+
+nlp = spacy.load('en_core_web_sm')
+doc = nlp("Apple was founded by Steve Jobs in Cupertino, California in 1976.")
+
+for ent in doc.ents:
+    print(f"{ent.text:20s}  {ent.label_:10s}  {spacy.explain(ent.label_)}")
+# Apple                 ORG        Companies, agencies, institutions
+# Steve Jobs            PERSON     People, including fictional
+# Cupertino             GPE        Countries, cities, states
+# California            GPE        Countries, cities, states
+# 1976                  DATE       Absolute or relative dates or periods
+
+# Access named entities programmatically
+org_names = [ent.text for ent in doc.ents if ent.label_ == 'ORG']</code></pre>
+
+  <div class="tip">
+    <strong>When to train vs. use pretrained:</strong> Use spaCy's pretrained model when entities are standard (people, places, orgs, dates). Train a custom CRF or fine-tune a BERT-NER model when you need domain-specific entities — movie characters, medical terms, product names — that the pretrained model was never trained on.
+  </div>
+
+  <h3>Named Entity Linking (NEL)</h3>
+  <p>NER tells you <em>that</em> "Apple" is an organization. Named Entity Linking (also called NEL or NED — Disambiguation) tells you <em>which</em> Apple — the tech company, or the fruit? It links each recognized span to a knowledge base entry (e.g., a Wikidata or Wikipedia node):</p>
+  <pre><code># spaCy with entity linker (requires kb component)
+# Example: "Jaguars beat the Eagles" — are these sports teams or animals?
+# NEL resolves ambiguity using surrounding context.</code></pre>
+
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <h2>Module 3 — Sentiment Analysis</h2>
+  <!-- ═══════════════════════════════════════════════════════════ -->
+
+  <p>Sentiment analysis determines the emotional tone of text: is it positive, negative, or neutral? It ranges from simple lexicon lookups to trained neural classifiers. The right approach depends on your data — social media posts behave very differently from formal reviews or news articles.</p>
+
+  <h3>VADER — Valence Aware Dictionary and sEntiment Reasoner</h3>
+  <p>VADER is a <em>lexicon-based</em> sentiment analyzer built specifically for short social media text. It handles emoticons, slang, capitalization, punctuation emphasis, and negation — without any training data:</p>
+  <pre><code>from nltk.sentiment.vader import SentimentIntensityAnalyzer
+import nltk
+nltk.download('vader_lexicon')
+
+sia = SentimentIntensityAnalyzer()
+
+texts = [
+    "I LOVE this product! It's absolutely amazing!!!",
+    "This is terrible. Worst purchase ever :(",
+    "It's okay, not great but not bad either.",
+    "Not bad at all — actually pretty good!",    # negation handled
+]
+
+for text in texts:
+    scores = sia.polarity_scores(text)
+    print(f"{scores}  |  {text[:50]}")
+
+# {'neg': 0.0, 'neu': 0.258, 'pos': 0.742, 'compound': 0.836}  | I LOVE this...
+# {'neg': 0.534, 'neu': 0.466, 'pos': 0.0, 'compound': -0.765} | This is terrible...
+# {'neg': 0.0, 'neu': 1.0, 'pos': 0.0, 'compound': 0.0}        | It's okay...
+# {'neg': 0.0, 'neu': 0.513, 'pos': 0.487, 'compound': 0.431}  | Not bad at all...</code></pre>
+
+  <div class="concept">
+    <strong>VADER's four scores:</strong><br>
+    <code>pos</code>, <code>neu</code>, <code>neg</code> — proportion of text that is positive / neutral / negative (sum to 1.0)<br>
+    <code>compound</code> — normalized overall score from −1 (most negative) to +1 (most positive)<br><br>
+    Typical thresholds: compound ≥ 0.05 → positive; compound ≤ −0.05 → negative; between → neutral
+  </div>
+
+  <pre><code># Classify using compound score
+def vader_label(text, sia):
+    compound = sia.polarity_scores(text)['compound']
+    if compound >= 0.05:
+        return 'positive'
+    elif compound <= -0.05:
+        return 'negative'
+    else:
+        return 'neutral'
+
+# VADER handles linguistic modifiers automatically:
+sia.polarity_scores("good")['compound']          # 0.467
+sia.polarity_scores("GOOD")['compound']          # 0.583  — all-caps = emphasis
+sia.polarity_scores("good!!!")['compound']        # 0.540  — exclamation = emphasis
+sia.polarity_scores("not good")['compound']       # -0.431 — negation detected
+sia.polarity_scores("kind of good")['compound']   # 0.304  — downtoned</code></pre>
+
+  <h3>TextBlob — Polarity and Subjectivity</h3>
+  <p>TextBlob provides a simpler API with two sentiment dimensions: <strong>polarity</strong> (positive/negative) and <strong>subjectivity</strong> (opinion vs. fact):</p>
+  <pre><code>from textblob import TextBlob
+
+texts = [
+    "The food was absolutely delicious and the service was great.",
+    "The stock market fell 3% on Tuesday.",
+    "I think this is probably the worst movie I've ever seen.",
+]
+
+for text in texts:
+    blob = TextBlob(text)
+    pol  = blob.sentiment.polarity      # -1.0 (negative) to +1.0 (positive)
+    sub  = blob.sentiment.subjectivity  #  0.0 (objective) to  1.0 (subjective)
+    print(f"polarity={pol:+.3f}  subjectivity={sub:.3f}  |  {text[:50]}")
+
+# polarity=+0.556  subjectivity=0.700  | The food was absolutely delicious...
+# polarity=+0.000  subjectivity=0.000  | The stock market fell...   (factual)
+# polarity=-0.550  subjectivity=0.850  | I think this is probably the worst...</code></pre>
+
+  <h3>Comparing VADER and TextBlob</h3>
+  <table>
+    <thead><tr><th>Property</th><th>VADER</th><th>TextBlob</th></tr></thead>
+    <tbody>
+      <tr><td>Approach</td><td>Lexicon + heuristic rules</td><td>Lexicon (Pattern library)</td></tr>
+      <tr><td>Output</td><td>pos/neu/neg fractions + compound</td><td>polarity + subjectivity</td></tr>
+      <tr><td>Handles emoticons</td><td>Yes (:D, :( etc.)</td><td>No</td></tr>
+      <tr><td>Handles ALL CAPS</td><td>Yes (boosts intensity)</td><td>No</td></tr>
+      <tr><td>Handles negation</td><td>Yes ("not good" → negative)</td><td>Partially</td></tr>
+      <tr><td>Best for</td><td>Tweets, reviews, social media</td><td>General text, when subjectivity matters</td></tr>
+      <tr><td>Training required</td><td>No</td><td>No</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Training a Supervised Sentiment Classifier</h3>
+  <p>For domain-specific text where lexicon methods underperform, train a classifier on labeled examples. The full pipeline from Class 3 applies directly:</p>
+  <pre><code>from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.linear_model import LogisticRegression
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import classification_report
+
+# Assume: reviews = list of strings, labels = list of 0/1 (neg/pos)
+X_train_raw, X_test_raw, y_train, y_test = train_test_split(
+    reviews, labels, test_size=0.2, stratify=labels, random_state=42
+)
+
+tfidf   = TfidfVectorizer(stop_words='english', ngram_range=(1, 2), max_features=30000)
+X_train = tfidf.fit_transform(X_train_raw)
+X_test  = tfidf.transform(X_test_raw)
+
+model = LogisticRegression(C=5.0, max_iter=1000)
+model.fit(X_train, y_train)
+
+print(classification_report(y_test, model.predict(X_test), target_names=['negative','positive']))</code></pre>
+
+  <h3>Expanding the VADER Lexicon with TextBlob</h3>
+  <p>VADER's lexicon assigns a valence score (−4 to +4) to each word. You can expand it with new words using TextBlob polarity scores as proxy valence values — then compare F1 before and after expansion:</p>
+  <pre><code>from nltk.sentiment.vader import SentimentIntensityAnalyzer
+from textblob import TextBlob
+
+sia = SentimentIntensityAnalyzer()
+
+# Domain-specific words not in VADER's default lexicon
+new_words = ['amazing', 'garbage', 'flawless', 'dreadful', 'mediocre']
+
+# Score each with TextBlob polarity, scale to VADER's [-4, 4] range
+new_entries = {}
+for word in new_words:
+    pol = TextBlob(word).sentiment.polarity   # [-1, 1]
+    if abs(pol) > 0.1:    # only add words with clear polarity
+        new_entries[word] = pol * 4           # scale to [-4, 4]
+
+# Update VADER's lexicon
+sia.lexicon.update(new_entries)
+print("Added:", new_entries)
+
+# Now test
+sia.polarity_scores("The product is absolutely flawless")['compound']
+# Higher than before 'flawless' was added</code></pre>
+
+  <div class="tip">
+    <strong>Evaluating lexicon expansion:</strong> Hold out a labeled test set, compute F1 with the original VADER lexicon, add new words, recompute F1. If the domain words were missing from the default lexicon, F1 should improve — especially recall for positive or negative examples.
+  </div>
+
+  <h3>Sentiment Analysis Pipeline for a Corpus</h3>
+  <pre><code>import pandas as pd
+from nltk.sentiment.vader import SentimentIntensityAnalyzer
+
+sia = SentimentIntensityAnalyzer()
+
+df = pd.read_csv('reviews.csv')   # columns: 'text', 'rating'
+
+# Apply VADER to every row
+df['compound'] = df['text'].apply(lambda t: sia.polarity_scores(t)['compound'])
+df['vader_label'] = df['compound'].apply(
+    lambda c: 'positive' if c >= 0.05 else ('negative' if c <= -0.05 else 'neutral')
+)
+
+# Compare VADER predictions to star ratings
+df['true_label'] = df['rating'].apply(lambda r: 'positive' if r >= 4 else 'negative')
+from sklearn.metrics import f1_score
+f1 = f1_score(df['true_label'], df['vader_label'], pos_label='positive', average='binary')
+print(f"VADER F1 on reviews: {f1:.3f}")</code></pre>
+
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <h2>Key Tools Summary</h2>
+  <!-- ═══════════════════════════════════════════════════════════ -->
+
+  <table>
+    <thead><tr><th>Tool / Function</th><th>Library</th><th>Purpose</th></tr></thead>
+    <tbody>
+      <tr><td><code>wn.synsets('word')</code></td><td><code>nltk.corpus.wordnet</code></td><td>Look up all senses of a word</td></tr>
+      <tr><td><code>synset.definition()</code>, <code>.examples()</code></td><td><code>nltk</code></td><td>Human-readable definition and usage examples</td></tr>
+      <tr><td><code>synset.lemmas()</code></td><td><code>nltk</code></td><td>Words belonging to this synset</td></tr>
+      <tr><td><code>synset.hypernyms()</code></td><td><code>nltk</code></td><td>More general categories (IS-A upward)</td></tr>
+      <tr><td><code>synset.hyponyms()</code></td><td><code>nltk</code></td><td>More specific types (IS-A downward)</td></tr>
+      <tr><td><code>synset.part_meronyms()</code></td><td><code>nltk</code></td><td>Parts that make up this concept</td></tr>
+      <tr><td><code>synset.part_holonyms()</code></td><td><code>nltk</code></td><td>Wholes that this concept is part of</td></tr>
+      <tr><td><code>synset.lemmas()[0].antonyms()</code></td><td><code>nltk</code></td><td>Opposite-meaning words</td></tr>
+      <tr><td><code>s1.path_similarity(s2)</code></td><td><code>nltk</code></td><td>Similarity by shortest path in WordNet hierarchy</td></tr>
+      <tr><td><code>s1.wup_similarity(s2)</code></td><td><code>nltk</code></td><td>Wu-Palmer similarity (considers depth)</td></tr>
+      <tr><td><code>s1.lch_similarity(s2)</code></td><td><code>nltk</code></td><td>Leacock-Chodorow similarity</td></tr>
+      <tr><td><code>sklearn_crfsuite.CRF()</code></td><td><code>sklearn-crfsuite</code></td><td>Train a CRF sequence labeler for NER</td></tr>
+      <tr><td><code>crf.fit(X, y)</code> / <code>crf.predict(X)</code></td><td><code>sklearn-crfsuite</code></td><td>Train and apply the CRF model</td></tr>
+      <tr><td><code>spacy.load('en_core_web_sm')</code></td><td><code>spacy</code></td><td>Load pretrained NER pipeline</td></tr>
+      <tr><td><code>doc.ents</code></td><td><code>spacy</code></td><td>Iterate over recognized named entities</td></tr>
+      <tr><td><code>SentimentIntensityAnalyzer()</code></td><td><code>nltk.sentiment.vader</code></td><td>VADER lexicon-based sentiment scorer</td></tr>
+      <tr><td><code>sia.polarity_scores(text)</code></td><td><code>nltk</code></td><td>Get pos/neu/neg/compound scores</td></tr>
+      <tr><td><code>sia.lexicon.update(dict)</code></td><td><code>nltk</code></td><td>Expand VADER with custom word valence scores</td></tr>
+      <tr><td><code>TextBlob(text).sentiment</code></td><td><code>textblob</code></td><td>polarity and subjectivity scores</td></tr>
+    </tbody>
+  </table>
+
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <h2>Notebooks for This Class</h2>
+  <!-- ═══════════════════════════════════════════════════════════ -->
+
   <ul>
-    <li>IOB tagging: inside–outside–beginning tagging scheme for NER annotations.</li>
-    <li>Conditional Random Fields (CRF) for sequence labeling using neighboring-word features and POS tags.</li>
-  </ul>
-  <h3>Lessons & Activities</h3>
-  <ul>
-    <li>Introduction to NER and named entity linking/disambiguation (NEL).</li>
-    <li>IOB tagging examples using the Groningen Meaning Bank (GMB) corpus.</li>
-    <li>Practice building and evaluating a CRF-based NER model with <code>sklearn_crfsuite</code>: <a href="notebooks/class_6/NER_index.html">NER.ipynb</a> <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/class_6/NER.ipynb" target="_blank" rel="noopener"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" style="vertical-align:middle;margin-left:.3em"></a>.</li>
-    <li>Course project: train and evaluate a CRF NER model to recognize movie-related entities: <a href="notebooks/class_6/Train_index.html">Train.ipynb</a> <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/class_6/Train.ipynb" target="_blank" rel="noopener"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" style="vertical-align:middle;margin-left:.3em"></a> / <a href="notebooks/class_6/Train1_index.html">Train1.ipynb</a> <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/class_6/Train1.ipynb" target="_blank" rel="noopener"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" style="vertical-align:middle;margin-left:.3em"></a>.</li>
+    <li>
+      <a href="notebooks/class_6/Synsets_Lemmas_index.html">Synsets and Lemmas</a> — navigate WordNet synsets, inspect definitions, lemmas, and examples
+      <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/class_6/Synsets_Lemmas.ipynb" target="_blank" rel="noopener">
+        <img class="colab-badge" src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab">
+      </a>
+    </li>
+    <li>
+      <a href="notebooks/class_6/Lexical_Relationships_index.html">Lexical Relationships</a> — hypernyms, hyponyms, meronyms, holonyms, antonyms, and entailments
+      <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/class_6/Lexical_Relationships.ipynb" target="_blank" rel="noopener">
+        <img class="colab-badge" src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab">
+      </a>
+    </li>
+    <li>
+      <a href="notebooks/class_6/relationships_WordNet_index.html">WordNet Relationships Practice</a> — path similarity, Wu-Palmer, and Leacock-Chodorow semantic similarity measures
+      <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/class_6/relationships_WordNet.ipynb" target="_blank" rel="noopener">
+        <img class="colab-badge" src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab">
+      </a>
+    </li>
+    <li>
+      <a href="notebooks/class_6/Computing_WordNet_index.html">Computing WordNet</a> — aggregate synset similarity to compare documents
+      <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/class_6/Computing%20WordNet.ipynb" target="_blank" rel="noopener">
+        <img class="colab-badge" src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab">
+      </a>
+    </li>
+    <li>
+      <a href="notebooks/class_6/P_index.html">Document Similarity with WordNet</a> — compute document-level semantic similarity using WordNet word similarity
+      <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/class_6/P.ipynb" target="_blank" rel="noopener">
+        <img class="colab-badge" src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab">
+      </a>
+    </li>
+    <li>
+      <a href="notebooks/class_6/NER_index.html">Named Entity Recognition</a> — IOB tagging and CRF model training with sklearn-crfsuite on the GMB corpus
+      <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/class_6/NER.ipynb" target="_blank" rel="noopener">
+        <img class="colab-badge" src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab">
+      </a>
+    </li>
+    <li>
+      <a href="notebooks/class_6/Train_index.html">Train NER Model</a> — train a CRF NER model to recognize movie-related entities
+      <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/class_6/Train.ipynb" target="_blank" rel="noopener">
+        <img class="colab-badge" src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab">
+      </a>
+    </li>
+    <li>
+      <a href="notebooks/class_6/Train1_index.html">Train NER Model (1)</a> — extended NER training and evaluation exercises
+      <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/class_6/Train1.ipynb" target="_blank" rel="noopener">
+        <img class="colab-badge" src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab">
+      </a>
+    </li>
+    <li>
+      <a href="notebooks/class_6/VADER_index.html">VADER Sentiment</a> — VADER compound scores, polarity classification, and handling of emphasis/negation
+      <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/class_6/VADER.ipynb" target="_blank" rel="noopener">
+        <img class="colab-badge" src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab">
+      </a>
+    </li>
+    <li>
+      <a href="notebooks/class_6/TextBlob_index.html">TextBlob Sentiment</a> — polarity and subjectivity scores; comparison with VADER
+      <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/class_6/TextBlob.ipynb" target="_blank" rel="noopener">
+        <img class="colab-badge" src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab">
+      </a>
+    </li>
+    <li>
+      <a href="notebooks/class_6/Practice_Conducting_Sentiment_Analysis_With_the_TextBlob_Model_index.html">Practice Conducting Sentiment Analysis With the TextBlob Model</a>
+      <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/class_6/Practice%20Conducting%20Sentiment%20Analysis%20With%20the%20TextBlob%20Model.ipynb" target="_blank" rel="noopener">
+        <img class="colab-badge" src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab">
+      </a>
+    </li>
+    <li>
+      <a href="notebooks/class_6/Conduct_index.html">Conduct Sentiment Analysis</a> — applying VADER and TextBlob to a real review corpus
+      <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/class_6/Conduct.ipynb" target="_blank" rel="noopener">
+        <img class="colab-badge" src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab">
+      </a>
+    </li>
+    <li>
+      <a href="notebooks/class_6/Conduct_Sentiment_index.html">Conduct Sentiment (Extended)</a> — deeper sentiment analysis pipeline with evaluation metrics
+      <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/class_6/Conduct_Sentiment.ipynb" target="_blank" rel="noopener">
+        <img class="colab-badge" src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab">
+      </a>
+    </li>
+    <li>
+      <a href="notebooks/class_6/Conduct2_index.html">Conduct Sentiment — Project Starter</a> — expand VADER's lexicon using TextBlob; compare F1 before and after
+      <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/class_6/Conduct2.ipynb" target="_blank" rel="noopener">
+        <img class="colab-badge" src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab">
+      </a>
+    </li>
+    <li>
+      <a href="notebooks/class_6/final_index.html">Final Project — Completed</a> — finished lexicon-expansion project with full evaluation
+      <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/class_6/final.ipynb" target="_blank" rel="noopener">
+        <img class="colab-badge" src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab">
+      </a>
+    </li>
   </ul>
 
-  <h2>Module 3: Conduct Sentiment Analysis</h2>
-  <h3>Key concepts</h3>
-  <ul>
-    <li>Lexicon-based sentiment models (VADER) and simple feature-based models (TextBlob).</li>
-    <li>Sentiment metrics: polarity, valence, objectivity, and discrete polarity labels.</li>
-  </ul>
-  <h3>Lessons & Activities</h3>
-  <ul>
-    <li>VADER: lexicon-based model tuned for short social text, emoticons, and slang. Practice with <a href="notebooks/class_6/VADER_index.html">VADER.ipynb</a> <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/class_6/VADER.ipynb" target="_blank" rel="noopener"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" style="vertical-align:middle;margin-left:.3em"></a>.</li>
-    <li>TextBlob sentiment analyzer and comparisons with VADER: <a href="notebooks/class_6/TextBlob_index.html">TextBlob.ipynb</a> <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/class_6/TextBlob.ipynb" target="_blank" rel="noopener"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" style="vertical-align:middle;margin-left:.3em"></a>.</li>
-    <li>Course project: expand VADER's lexicon using TextBlob and compare F1 scores between original and expanded lexicons. Starter and finished notebooks: <a href="notebooks/class_6/Conduct2_index.html">Conduct2.ipynb</a> <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/class_6/Conduct2.ipynb" target="_blank" rel="noopener"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" style="vertical-align:middle;margin-left:.3em"></a> / <a href="notebooks/class_6/final_index.html">final.ipynb</a> <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/class_6/final.ipynb" target="_blank" rel="noopener"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" style="vertical-align:middle;margin-left:.3em"></a>.</li>
-  </ul>
+  <p style="margin-top:1.5rem">
+    <a href="class_6/cis576_glossary.pdf">Course Glossary (PDF)</a> &nbsp;·&nbsp;
+    <a href="class_6/CIS576_course_transcript.pdf">Course Transcript (PDF)</a>
+  </p>
 
-  <h2>Practice Notebooks</h2>
-  <ul>
-    <li><a href="notebooks/class_6/Synsets_Lemmas_index.html">Synsets_Lemmas.ipynb</a> <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/class_6/Synsets_Lemmas.ipynb" target="_blank" rel="noopener"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" style="vertical-align:middle;margin-left:.3em"></a></li>
-    <li><a href="notebooks/class_6/Lexical_Relationships_index.html">Lexical_Relationships.ipynb</a> <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/class_6/Lexical_Relationships.ipynb" target="_blank" rel="noopener"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" style="vertical-align:middle;margin-left:.3em"></a></li>
-    <li><a href="notebooks/class_6/relationships_WordNet_index.html">relationships_WordNet.ipynb</a> <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/class_6/relationships_WordNet.ipynb" target="_blank" rel="noopener"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" style="vertical-align:middle;margin-left:.3em"></a></li>
-    <li><a href="notebooks/class_6/NER_index.html">NER.ipynb</a> <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/class_6/NER.ipynb" target="_blank" rel="noopener"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" style="vertical-align:middle;margin-left:.3em"></a></li>
-    <li><a href="notebooks/class_6/Train_index.html">Train.ipynb</a> <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/class_6/Train.ipynb" target="_blank" rel="noopener"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" style="vertical-align:middle;margin-left:.3em"></a></li>
-    <li><a href="notebooks/class_6/VADER_index.html">VADER.ipynb</a> <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/class_6/VADER.ipynb" target="_blank" rel="noopener"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" style="vertical-align:middle;margin-left:.3em"></a></li>
-    <li><a href="notebooks/class_6/TextBlob_index.html">TextBlob.ipynb</a> <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/class_6/TextBlob.ipynb" target="_blank" rel="noopener"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" style="vertical-align:middle;margin-left:.3em"></a></li>
-    <li><a href="notebooks/class_6/Conduct2_index.html">Conduct2.ipynb</a> <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/class_6/Conduct2.ipynb" target="_blank" rel="noopener"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" style="vertical-align:middle;margin-left:.3em"></a> &mdash; starter project</li>
-    <li><a href="notebooks/class_6/final_index.html">final.ipynb</a> <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/class_6/final.ipynb" target="_blank" rel="noopener"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" style="vertical-align:middle;margin-left:.3em"></a> &mdash; finished project</li>
-  </ul>
-  <h2>Core Notebooks</h2>
-  <ul>
-    <li><a href="notebooks/class_6/Computing_WordNet_index.html">class_6/Computing WordNet.ipynb</a> <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/class_6/Computing%20WordNet.ipynb" target="_blank" rel="noopener"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" style="vertical-align:middle;margin-left:.3em"></a></li>
-    <li><a href="notebooks/class_6/Lexical_Relationships_index.html">class_6/Lexical_Relationships.ipynb</a> <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/class_6/Lexical_Relationships.ipynb" target="_blank" rel="noopener"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" style="vertical-align:middle;margin-left:.3em"></a></li>
-    <li><a href="notebooks/class_6/Synsets_Lemmas_index.html">class_6/Synsets_Lemmas.ipynb</a> <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/class_6/Synsets_Lemmas.ipynb" target="_blank" rel="noopener"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" style="vertical-align:middle;margin-left:.3em"></a></li>
-    <li><a href="notebooks/class_6/relationships_WordNet_index.html">class_6/relationships_WordNet.ipynb</a> <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/class_6/relationships_WordNet.ipynb" target="_blank" rel="noopener"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" style="vertical-align:middle;margin-left:.3em"></a></li>
-    <li><a href="notebooks/class_6/NER_index.html">class_6/NER.ipynb</a> <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/class_6/NER.ipynb" target="_blank" rel="noopener"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" style="vertical-align:middle;margin-left:.3em"></a></li>
-    <li><a href="notebooks/class_6/Conduct_index.html">class_6/Conduct.ipynb</a> <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/class_6/Conduct.ipynb" target="_blank" rel="noopener"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" style="vertical-align:middle;margin-left:.3em"></a></li>
-    <li><a href="notebooks/class_6/Conduct2_index.html">class_6/Conduct2.ipynb</a> <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/class_6/Conduct2.ipynb" target="_blank" rel="noopener"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" style="vertical-align:middle;margin-left:.3em"></a></li>
-    <li><a href="notebooks/class_6/Conduct_Sentiment_index.html">class_6/Conduct_Sentiment.ipynb</a> <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/class_6/Conduct_Sentiment.ipynb" target="_blank" rel="noopener"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" style="vertical-align:middle;margin-left:.3em"></a></li>
-    <li><a href="notebooks/class_6/TextBlob_index.html">class_6/TextBlob.ipynb</a> <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/class_6/TextBlob.ipynb" target="_blank" rel="noopener"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" style="vertical-align:middle;margin-left:.3em"></a></li>
-    <li><a href="notebooks/class_6/Practice_Conducting_Sentiment_Analysis_With_the_TextBlob_Model_index.html">class_6/Practice Conducting Sentiment Analysis With the TextBlob Model.ipynb</a> <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/class_6/Practice%20Conducting%20Sentiment%20Analysis%20With%20the%20TextBlob%20Model.ipynb" target="_blank" rel="noopener"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" style="vertical-align:middle;margin-left:.3em"></a></li>
-    <li><a href="notebooks/class_6/VADER_index.html">class_6/VADER.ipynb</a> <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/class_6/VADER.ipynb" target="_blank" rel="noopener"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" style="vertical-align:middle;margin-left:.3em"></a></li>
-    <li><a href="notebooks/class_6/Train_index.html">class_6/Train.ipynb</a> <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/class_6/Train.ipynb" target="_blank" rel="noopener"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" style="vertical-align:middle;margin-left:.3em"></a></li>
-    <li><a href="notebooks/class_6/Train1_index.html">class_6/Train1.ipynb</a> <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/class_6/Train1.ipynb" target="_blank" rel="noopener"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" style="vertical-align:middle;margin-left:.3em"></a></li>
-    <li><a href="notebooks/class_6/P_index.html">class_6/P.ipynb</a> <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/class_6/P.ipynb" target="_blank" rel="noopener"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" style="vertical-align:middle;margin-left:.3em"></a></li>
-    <li><a href="notebooks/class_6/final_index.html">class_6/final.ipynb</a> <a href="https://colab.research.google.com/github/matsunagateitoku/stdp-class/blob/main/class_6/final.ipynb" target="_blank" rel="noopener"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" style="vertical-align:middle;margin-left:.3em"></a></li>
-  </ul>
-  <p><a href="index.html">Back to notebook portal</a></p>
-  <hr>
-  <h2>Full class notes (from markdown)</h2>
-  <div id="md-content-6">Loading markdown…</div>
-  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-  <script>
-    (async function(){
-      try{
-        const res = await fetch('Class__6.md');
-        const md = await res.text();
-        document.getElementById('md-content-6').innerHTML = marked.parse(md);
-      }catch(e){
-        document.getElementById('md-content-6').innerHTML = '<pre>Unable to load Class__6.md — see <a href="Class__6.md">raw</a></pre>';
-      }
-    })();
-  </script>
+  <div class="nav">
+    <a href="class_5.html">← Class 5 — Document Clustering</a> &nbsp;·&nbsp;
+    <a href="index.html">Back to notebook portal</a>
+  </div>
+
 </body>
 </html>
