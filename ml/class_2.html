@@ -1,0 +1,262 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>ML Class 2 — Estimating Probability Distributions</title>
+  <style>
+  <style>
+    *{box-sizing:border-box}
+    body{font-family:system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;margin:0;padding:1.5rem 2rem;line-height:1.7;color:#1a1a1a;max-width:960px}
+    h1{font-size:2rem;margin-bottom:.25rem}
+    h2{font-size:1.4rem;margin-top:2.5rem;margin-bottom:.5rem;padding-bottom:.3rem;border-bottom:2px solid #e1e4e8;color:#0366d6}
+    h3{font-size:1.1rem;margin-top:1.4rem;margin-bottom:.4rem;color:#24292e}
+    p{margin:.5rem 0 1rem}
+    ul,ol{margin:.4rem 0 1rem 1.5rem}
+    li{margin:.35rem 0}
+    a{text-decoration:none;color:#0366d6}
+    a:hover{text-decoration:underline}
+    code{background:#f3f4f6;border:1px solid #e1e4e8;border-radius:4px;padding:.1em .4em;font-size:.9em;font-family:"SFMono-Regular",Consolas,monospace}
+    pre{background:#f6f8fa;border:1px solid #e1e4e8;border-radius:6px;padding:1rem 1.2rem;overflow-x:auto;font-size:.875rem;line-height:1.6}
+    pre code{background:none;border:none;padding:0;font-size:inherit}
+    .subtitle{color:#586069;font-size:1.05rem;margin-top:.25rem}
+    .tip{background:#fff8c5;border-left:4px solid #f0a000;border-radius:0 6px 6px 0;padding:.75rem 1rem;margin:1rem 0}
+    .tip strong{color:#a05000}
+    .concept{background:#f0f7ff;border-left:4px solid #0366d6;border-radius:0 6px 6px 0;padding:.75rem 1rem;margin:1rem 0}
+    .concept strong{color:#0366d6}
+    .warn{background:#fff0f0;border-left:4px solid #d73a49;border-radius:0 6px 6px 0;padding:.75rem 1rem;margin:1rem 0}
+    .warn strong{color:#d73a49}
+    .pipeline{background:#f9f9f9;border:1px solid #ddd;border-radius:8px;padding:1rem 1.2rem;margin:1rem 0;font-family:"SFMono-Regular",Consolas,monospace;font-size:.9rem;overflow-x:auto}
+    .tag{display:inline-block;background:#e1ecf4;color:#0c5460;border-radius:4px;padding:.1em .5em;font-size:.8rem;font-weight:600;margin:.1em .1em}
+    table{border-collapse:collapse;width:100%;margin:1rem 0;font-size:.9rem}
+    th{background:#f6f8fa;font-weight:600;padding:.5rem .8rem;border:1px solid #ddd;text-align:left}
+    td{padding:.45rem .8rem;border:1px solid #ddd;vertical-align:top}
+    tr:nth-child(even) td{background:#fafafa}
+    .nav{margin-top:2.5rem;padding-top:1rem;border-top:1px solid #e1e4e8;color:#586069;font-size:.9rem}
+    .colab-badge{vertical-align:middle;margin-left:.5em}
+    .modules-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;margin:1rem 0}
+    .module-card{border:1px solid #e1e4e8;border-radius:8px;padding:1rem;background:#fff}
+    .module-card h4{margin:0 0 .5rem;font-size:1rem;color:#0366d6}
+    .module-card p{margin:0;font-size:.9rem;color:#444}
+    .data-flow{display:flex;flex-wrap:wrap;align-items:center;gap:.4rem;margin:1rem 0;font-size:.875rem}
+    .data-flow .step{background:#e8f4fd;border:1px solid #bcd9f1;border-radius:6px;padding:.4rem .75rem}
+    .data-flow .arrow{color:#999;font-size:1.1rem}
+    .matrix-demo{border-collapse:collapse;font-size:.82rem;margin:1rem 0}
+    .matrix-demo th,.matrix-demo td{border:1px solid #ccc;padding:.3rem .55rem;text-align:center}
+    .matrix-demo th{background:#f0f4f8;font-weight:600}
+    .matrix-demo .row-label{text-align:left;font-weight:600;background:#f0f4f8}
+    .matrix-demo .nonzero{background:#d4edda;font-weight:600}
+  </style>
+</head>
+<body>
+
+  <h1>Class 2 — Estimating Probability Distributions</h1>
+  <p class="subtitle">From data to probabilities: the Bayes optimal classifier, MLE, smoothing, and Naive Bayes</p>
+
+  <p>If we knew the true probability distribution behind our data, classification would be easy: just pick the most probable label. We never know it, but we can <strong>estimate</strong> it from data. This class covers how to estimate distributions with Maximum Likelihood Estimation (MLE), why that breaks down in high dimensions, and how the <strong>Naive Bayes</strong> assumption gets around the problem. The project builds a classifier that predicts whether a baby name belongs to a boy or a girl.</p>
+
+  <div class="modules-grid">
+    <div class="module-card">
+      <h4>Module 1 — Estimate Distributions from Data</h4>
+      <p>Statistics refresher, the Bayes optimal classifier, MLE for the binomial distribution, and smoothing for small data sets</p>
+    </div>
+    <div class="module-card">
+      <h4>Module 2 — Naive Bayes</h4>
+      <p>Why MLE fails in high dimensions, the Naive Bayes assumption, and deriving the categorical Naive Bayes classifier</p>
+    </div>
+    <div class="module-card">
+      <h4>Module 3 — Baby Name Classifier</h4>
+      <p>Compute class priors and conditional probabilities, hash names into feature vectors, and train a boy/girl name classifier</p>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <h2>Module 1 — Estimate Distributions from Data</h2>
+  <!-- ═══════════════════════════════════════════════════════════ -->
+
+  <p>This module starts with the <strong>Bayes optimal classifier</strong>, the best possible way to predict labels when the data's distribution is known. In practice the distribution is almost never known, so the module then shows how to estimate it from data. The worked example estimates the probability of a coin flip from sample flips, using <strong>Maximum Likelihood Estimation (MLE)</strong>. These ideas set up the later modules, which deal with estimating distributions in high dimensions.</p>
+
+  <h3>Statistics Refresher</h3>
+  <table>
+    <tr><th>Term</th><th>Notation</th><th>Meaning</th></tr>
+    <tr><td>Joint probability</td><td><code>P(X, Y)</code></td><td>Probability that X and Y both occur</td></tr>
+    <tr><td>Conditional probability</td><td><code>P(Y | X) = P(X, Y) / P(X)</code></td><td>Probability of Y once we know X</td></tr>
+    <tr><td>Marginal</td><td><code>P(X) = Σ<sub>y</sub> P(X, y)</code></td><td>Sum the joint over all values of the other variable</td></tr>
+    <tr><td>Bayes' rule</td><td><code>P(Y | X) = P(X | Y) P(Y) / P(X)</code></td><td>Flip a conditional around</td></tr>
+    <tr><td>Independence</td><td><code>P(X, Y) = P(X) P(Y)</code></td><td>Knowing one tells you nothing about the other</td></tr>
+  </table>
+
+  <h3>The Bayes Optimal Classifier</h3>
+  <p>Assume the data is drawn from some distribution <code>P(X, Y)</code>. If we knew <code>P(Y | X)</code> exactly, the best possible prediction for an input <code>x</code> is the label with the highest conditional probability:</p>
+  <pre><code>h_opt(x) = argmax_y P(y | x)</code></pre>
+  <div class="concept"><strong>Why it matters:</strong> no classifier can beat the Bayes optimal classifier. Its error rate, <code>1 − P(h_opt(x) | x)</code>, is the lowest error achievable on that data (the <em>Bayes error</em>). It is a theoretical benchmark. In practice we don't know <code>P</code>, so we estimate it from data.</div>
+  <p>Example: if 80% of emails containing the word "lottery" are spam, the Bayes optimal classifier labels every "lottery" email as spam and is still wrong 20% of the time. That 20% is error no model can remove.</p>
+
+  <h3>Maximum Likelihood Estimation (MLE)</h3>
+  <p>MLE picks the parameters <code>θ</code> that make the observed data most probable:</p>
+  <pre><code>θ_MLE = argmax_θ P(D; θ)</code></pre>
+  <p><strong>Coin-flip example (binomial distribution).</strong> We flip a coin <code>n</code> times and see <code>n<sub>H</sub></code> heads and <code>n<sub>T</sub></code> tails. With <code>θ = P(heads)</code>:</p>
+  <pre><code>P(D; θ) = C(n, n_H) · θ^n_H · (1 − θ)^n_T
+
+# Take the log (same argmax, easier math):
+log P(D; θ) = log C(n, n_H) + n_H log θ + n_T log(1 − θ)
+
+# Set the derivative to zero:
+n_H / θ − n_T / (1 − θ) = 0
+⇒  θ_MLE = n_H / (n_H + n_T)</code></pre>
+  <div class="tip"><strong>Intuition:</strong> the MLE is just the observed fraction. Count how often something happened and divide by the number of trials.</div>
+
+  <h3>Smoothing for Small Data Sets</h3>
+  <p>MLE is unreliable when data is scarce. Flip a coin twice, get two heads, and MLE says <code>P(tails) = 0</code>. A zero probability is especially harmful in a classifier because it wipes out the whole product of probabilities.</p>
+  <p><strong>Additive (Laplace) smoothing</strong> adds <code>m</code> imaginary observations of each outcome:</p>
+  <pre><code>θ = (n_H + m) / (n_H + n_T + 2m)</code></pre>
+  <ul>
+    <li><code>m = 0</code> → plain MLE</li>
+    <li><code>m = 1</code> → classic "add-one" Laplace smoothing</li>
+    <li>As <code>n → ∞</code>, the imaginary counts stop mattering and the estimate converges to the MLE</li>
+  </ul>
+  <div class="concept"><strong>Bayesian view:</strong> smoothing is equivalent to the MAP (maximum a posteriori) estimate with a Beta prior on <code>θ</code>. The <code>m</code> fake counts encode a prior belief that the coin is roughly fair.</div>
+  <pre><code>import numpy as np
+
+flips = np.array([1, 1])          # two heads
+n_h, n = flips.sum(), len(flips)
+
+for m in [0, 1, 5]:
+    theta = (n_h + m) / (n + 2 * m)
+    print(f"m={m}: P(heads) = {theta:.3f}")
+# m=0: P(heads) = 1.000
+# m=1: P(heads) = 0.750
+# m=5: P(heads) = 0.583</code></pre>
+
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <h2>Module 2 — Classification with the Naive Bayes Algorithm</h2>
+  <!-- ═══════════════════════════════════════════════════════════ -->
+
+  <h3>The Curse of Dimensionality in MLE</h3>
+  <p>To estimate <code>P(y | x)</code> directly with MLE, we count how often each exact <code>x</code> appears with each label:</p>
+  <pre><code>P(y | x) ≈ count(x, y) / count(x)</code></pre>
+  <p>This works with one or two features. But with <code>d</code> binary features there are <code>2<sup>d</sup></code> possible inputs. With <code>d = 30</code> that's over a billion combinations. Most will never appear in the training data, so <code>count(x) = 0</code> and the estimate is undefined.</p>
+  <table>
+    <tr><th>Binary features <code>d</code></th><th>Possible inputs <code>2<sup>d</sup></code></th></tr>
+    <tr><td>2</td><td>4</td></tr>
+    <tr><td>10</td><td>1,024</td></tr>
+    <tr><td>30</td><td>~1.07 billion</td></tr>
+    <tr><td>100</td><td>~1.27 × 10<sup>30</sup></td></tr>
+  </table>
+  <div class="warn"><strong>Takeaway:</strong> the data needed to cover every combination grows exponentially with <code>d</code>. Direct MLE of <code>P(y | x)</code> is hopeless for realistic feature counts.</div>
+
+  <h3>The Naive Bayes Assumption</h3>
+  <p>First flip the problem with Bayes' rule, so we model <code>P(x | y)</code> and <code>P(y)</code> instead:</p>
+  <pre><code>P(y | x) = P(x | y) P(y) / P(x)</code></pre>
+  <p><code>P(y)</code> is easy to estimate. <code>P(x | y)</code> is still high-dimensional. Naive Bayes makes it tractable by assuming <strong>the features are conditionally independent given the label</strong>:</p>
+  <pre><code>P(x | y) = Π_α P(x_α | y)</code></pre>
+  <p>Now we estimate <code>d</code> one-dimensional distributions per class instead of one <code>d</code>-dimensional distribution. Each needs only a modest amount of data.</p>
+  <div class="concept"><strong>When does it hold?</strong> Rarely exactly. In spam filtering, "free" and "money" are clearly correlated. Naive Bayes still often classifies well, because it only needs the <em>argmax</em> to be right, not the probabilities themselves.</div>
+
+  <h3>The Naive Bayes Classifier</h3>
+  <p>Since <code>P(x)</code> is the same for every label, drop it:</p>
+  <pre><code>h(x) = argmax_y  P(y) · Π_α P(x_α | y)
+
+# In practice use logs to avoid numerical underflow:
+h(x) = argmax_y  [ log P(y) + Σ_α log P(x_α | y) ]</code></pre>
+
+  <h3>Categorical Naive Bayes</h3>
+  <p>When each feature takes one of a fixed set of values (e.g. a letter, a color, yes/no), estimate each conditional by counting, with smoothing:</p>
+  <pre><code>P(y = c)             = count(y = c) / n
+P(x_α = j | y = c)   = (count(x_α = j, y = c) + l) / (count(y = c) + l · K_α)
+
+# K_α = number of possible values of feature α
+# l   = smoothing constant (l = 1 is Laplace smoothing)</code></pre>
+  <table>
+    <tr><th>Variant</th><th>Feature type</th><th>Typical use</th><th>scikit-learn</th></tr>
+    <tr><td>Categorical</td><td>Discrete categories</td><td>Survey answers, letters</td><td><code>CategoricalNB</code></td></tr>
+    <tr><td>Bernoulli</td><td>Binary (present/absent)</td><td>Word present in document?</td><td><code>BernoulliNB</code></td></tr>
+    <tr><td>Multinomial</td><td>Counts</td><td>Word counts in text</td><td><code>MultinomialNB</code></td></tr>
+    <tr><td>Gaussian</td><td>Continuous</td><td>Measurements (height, weight)</td><td><code>GaussianNB</code></td></tr>
+  </table>
+  <div class="tip"><strong>Bonus:</strong> Naive Bayes with Multinomial or Gaussian (shared variance) features turns out to be a <em>linear classifier</em>. Its decision boundary is a hyperplane, the same form as logistic regression.</div>
+
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <h2>Module 3 — Build a Baby Name Classifier</h2>
+  <!-- ═══════════════════════════════════════════════════════════ -->
+
+  <p>The course project: given a first name, predict whether it is more likely a boy's or a girl's name. Labels are <code>+1</code> (boy) and <code>−1</code> (girl).</p>
+
+  <div class="data-flow">
+    <div class="step">Name string</div><div class="arrow">→</div>
+    <div class="step">Extract features</div><div class="arrow">→</div>
+    <div class="step">Hash into vector</div><div class="arrow">→</div>
+    <div class="step">Priors + conditionals</div><div class="arrow">→</div>
+    <div class="step">Predict ±1</div>
+  </div>
+
+  <h3>Step 1 — Class Prior Probability</h3>
+  <p>The fraction of training examples with each label, smoothed:</p>
+  <pre><code>import numpy as np
+
+def naivebayesPY(X, Y):
+    # Add one fake boy and one fake girl (smoothing)
+    Y = np.concatenate([Y, [-1, 1]])
+    pos = np.mean(Y == 1)
+    neg = np.mean(Y == -1)
+    return pos, neg</code></pre>
+
+  <h3>Step 2 — Conditional Probability</h3>
+  <p>For each feature, estimate <code>P(x<sub>α</sub> | y)</code> separately for boys and girls. With count (multinomial) features, use the share of total feature mass for that class, smoothed by adding 1 to every count:</p>
+  <pre><code>def naivebayesPXY(X, Y):
+    n, d = X.shape
+    # Smoothing: one fake example per class with all features on
+    X = np.concatenate([X, np.ones((2, d))])
+    Y = np.concatenate([Y, [-1, 1]])
+
+    posprob = X[Y == 1].sum(axis=0) / X[Y == 1].sum()
+    negprob = X[Y == -1].sum(axis=0) / X[Y == -1].sum()
+    return posprob, negprob</code></pre>
+
+  <h3>Step 3 — Feature Vectors via Hashing</h3>
+  <p>Names have different lengths, so convert each one to a fixed-size vector. The <strong>hashing trick</strong> maps every feature string (a letter, a prefix, a suffix) to one of <code>d</code> buckets:</p>
+  <pre><code>def hashfeatures(name, d=128, prefix_len=3, suffix_len=3):
+    v = np.zeros(d)
+    name = name.lower()
+    feats = [name[:prefix_len] + ">", "<" + name[-suffix_len:]]
+    feats += list(name)                       # individual letters
+    for f in feats:
+        v[hash(f) % d] += 1
+    return v
+
+hashfeatures("Emma")   # array of length 128 with a few nonzero counts</code></pre>
+  <div class="concept"><strong>Improving features:</strong> suffixes carry a lot of signal ("‑a" leans girl, "‑o" leans boy). Adding prefix/suffix features of different lengths usually helps more than tuning the model.</div>
+
+  <h3>Step 4 — Classify</h3>
+  <p>Compute the log-odds. If it's positive, predict boy; otherwise girl:</p>
+  <pre><code>def naivebayes(x, pos_py, neg_py, posprob, negprob):
+    log_pos = np.log(pos_py) + x @ np.log(posprob)
+    log_neg = np.log(neg_py) + x @ np.log(negprob)
+    return log_pos - log_neg                 # log P(y=+1|x) / P(y=-1|x)
+
+def classify(x, *params):
+    return np.sign(naivebayes(x, *params))</code></pre>
+  <div class="tip"><strong>Shortcut:</strong> because the log-odds is linear in <code>x</code>, the whole model collapses to a weight vector <code>w = log(posprob) − log(negprob)</code> and bias <code>b = log(pos_py) − log(neg_py)</code>. Prediction is just <code>sign(w · x + b)</code>.</div>
+
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <h2>Key Formulas</h2>
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <table>
+    <tr><th>Concept</th><th>Formula</th></tr>
+    <tr><td>Bayes optimal classifier</td><td><code>argmax_y P(y | x)</code></td></tr>
+    <tr><td>Binomial MLE</td><td><code>θ = n_H / n</code></td></tr>
+    <tr><td>Smoothed estimate</td><td><code>θ = (n_H + m) / (n + 2m)</code></td></tr>
+    <tr><td>Naive Bayes assumption</td><td><code>P(x | y) = Π_α P(x_α | y)</code></td></tr>
+    <tr><td>Naive Bayes classifier</td><td><code>argmax_y log P(y) + Σ_α log P(x_α | y)</code></td></tr>
+  </table>
+
+  <div class="nav">
+    <a href="../index.html">Back to notebook portal</a>
+  </div>
+
+</body>
+</html>
